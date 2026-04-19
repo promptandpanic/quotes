@@ -1,7 +1,8 @@
 {
   "posted_hashes": [
     "bb10cc43e655bc30",
-    "0019ab4f55b8629a"
+    "0019ab4f55b8629a",
+    "864dee76d65012a3"
   ],
   "history": [
     {
@@ -17,7 +18,14 @@
       "author": "Joan Didion",
       "theme": "latenight",
       "posted_at": "2026-04-19T19:58:43.929856+00:00"
+    },
+    {
+      "hash": "864dee76d65012a3",
+      "text": "I’m the gap between what I’d like to be and what others have made of me.",
+      "author": "Fernando Pessoa",
+      "theme": "latenight",
+      "posted_at": "2026-04-19T20:28:01.879477+00:00"
     }
   ],
-  "last_updated": "2026-04-19T19:58:43.929868+00:00"
+  "last_updated": "2026-04-19T20:28:01.879486+00:00"
 }
