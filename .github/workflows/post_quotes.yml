@@ -46,7 +46,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # ── 4. Determine theme ───────────────────────────────────────────────
+      # ── 4. Install ffmpeg ────────────────────────────────────────────────
+      - name: Install ffmpeg
+        run: sudo apt-get install -y ffmpeg
+
+      # ── 5. Determine theme ───────────────────────────────────────────────
       # Map the cron UTC hour to the theme key.
       # For manual dispatch, use the workflow_dispatch input.
       - name: Set THEME environment variable
@@ -68,7 +72,7 @@ jobs:
             fi
           fi
 
-      # ── 5. Run the bot ───────────────────────────────────────────────────
+      # ── 6. Run the bot ───────────────────────────────────────────────────
       - name: Run bot
         env:
           THEME: ${{ env.THEME }}
