@@ -1,17 +1,17 @@
 name: Post Daily Quotes
 
 on:
-  # ──────────────────────────────────────────────
-  # 6 scheduled posts per day in Indian Standard Time (IST = UTC+5:30)
+  # ──────────────────────────────────────────────────────────────────
+  # 6 scheduled posts per day (IST = UTC+5:30 | EDT = UTC-4 | EST = UTC-5)
   # Cron fires 5 min early so posts land on time
-  # ──────────────────────────────────────────────
+  # ──────────────────────────────────────────────────────────────────
   schedule:
-    - cron: "25 1 * * *"   # 07:00 AM IST  →  Morning Motivation
-    - cron: "25 6 * * *"   # 12:00 PM IST  →  Wisdom & Philosophy
-    - cron: "25 9 * * *"   # 03:00 PM IST  →  Love & Relationships
-    - cron: "25 12 * * *"  # 06:00 PM IST  →  Mindfulness & Peace
-    - cron: "25 15 * * *"  # 09:00 PM IST  →  Goodnight Inspiration
-    - cron: "55 19 * * *"  # 01:30 AM IST  →  Late Night Feels (LLM-generated + validated)
+    - cron: "25 1 * * *"   # 07:00 AM IST | 09:25 PM EDT / 08:25 PM EST (prev day)  →  Morning Motivation
+    - cron: "25 6 * * *"   # 12:00 PM IST | 02:25 AM EDT / 01:25 AM EST             →  Wisdom & Philosophy
+    - cron: "25 9 * * *"   # 03:00 PM IST | 05:25 AM EDT / 04:25 AM EST             →  Love & Relationships
+    - cron: "25 12 * * *"  # 06:00 PM IST | 08:25 AM EDT / 07:25 AM EST             →  Mindfulness & Peace
+    - cron: "25 15 * * *"  # 09:00 PM IST | 11:25 AM EDT / 10:25 AM EST             →  Goodnight Inspiration
+    - cron: "55 19 * * *"  # 01:30 AM IST | 03:55 PM EDT / 02:55 PM EST             →  Late Night Feels (LLM-generated + validated)
 
   # Manual trigger (for testing)
   workflow_dispatch:
