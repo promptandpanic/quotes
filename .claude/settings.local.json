@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 *)",
+      "Bash(ffmpeg -y -i /Users/deepakrout/Documents/codebase/personal/quotes/assets/audio/background.mp3 -t 30 -c:a libmp3lame -q:a 2 /Users/deepakrout/Documents/codebase/personal/quotes/assets/audio/background_30s.mp3)"
+    ]
+  }
+}

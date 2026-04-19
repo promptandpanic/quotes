@@ -1,0 +1,7 @@
+# Core
+Pillow>=10.3.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# Google Gemini / Imagen
+google-genai>=0.3.0

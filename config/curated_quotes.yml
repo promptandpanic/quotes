@@ -1,0 +1,125 @@
+# Curated real quotes from known authors/sources
+# Used ~20% of the time to give the feed authentic variety
+#
+# Format per quote:
+#   text:      the quote exactly as it should appear
+#   author:    display name (shown small below quote)
+#   highlight: optional — 3-6 most powerful consecutive words
+#              if omitted, extracted automatically
+#
+# Keep quotes SHORT (under 30 words) and visually clean.
+# Avoid quotes that are overexposed/cliché online.
+
+quotes:
+
+  morning:
+    - text: "Do the hard thing first. Everything else gets easier after that."
+      author: "Unknown"
+    - text: "You don't have to be great to start. But you have to start to be great."
+      author: "Zig Ziglar"
+      highlight: "you have to start"
+    - text: "The secret of getting ahead is getting started."
+      author: "Mark Twain"
+    - text: "Done is better than perfect."
+      author: "Sheryl Sandberg"
+    - text: "Small disciplines repeated with consistency every day lead to great achievements gained slowly over time."
+      author: "John Maxwell"
+      highlight: "repeated with consistency"
+    - text: "Your future is created by what you do today, not tomorrow."
+      author: "Robert Kiyosaki"
+    - text: "Work hard in silence. Let success be your noise."
+      author: "Frank Ocean"
+      highlight: "let success be your noise"
+
+  wisdom:
+    - text: "We do not learn from experience. We learn from reflecting on experience."
+      author: "John Dewey"
+      highlight: "reflecting on experience"
+    - text: "The measure of intelligence is the ability to change."
+      author: "Albert Einstein"
+    - text: "Not all those who wander are lost."
+      author: "J.R.R. Tolkien"
+    - text: "What you resist, persists."
+      author: "Carl Jung"
+    - text: "In the middle of difficulty lies opportunity."
+      author: "Albert Einstein"
+    - text: "The wound is the place where the light enters you."
+      author: "Rumi"
+      highlight: "where the light enters"
+    - text: "Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself."
+      author: "Rumi"
+      highlight: "I am changing myself"
+    - text: "We accept the love we think we deserve."
+      author: "Stephen Chbosky"
+
+  love:
+    - text: "The best thing to hold onto in life is each other."
+      author: "Audrey Hepburn"
+    - text: "You don't love someone because they're perfect. You love them in spite of the fact that they're not."
+      author: "Jodi Picoult"
+      highlight: "in spite of the fact"
+    - text: "Love is not about possession. It's about appreciation."
+      author: "Osho"
+    - text: "Being deeply loved by someone gives you strength. Loving someone deeply gives you courage."
+      author: "Lao Tzu"
+      highlight: "gives you courage"
+    - text: "The heart wants what it wants."
+      author: "Emily Dickinson"
+    - text: "Love is when the other person's happiness is more important than your own."
+      author: "H. Jackson Brown Jr."
+      highlight: "more important than your own"
+
+  mindfulness:
+    - text: "Wherever you are, be all there."
+      author: "Jim Elliot"
+    - text: "The present moment always will have been."
+      author: "Eckhart Tolle"
+    - text: "You can't stop the waves, but you can learn to surf."
+      author: "Jon Kabat-Zinn"
+      highlight: "you can learn to surf"
+    - text: "Almost everything will work again if you unplug it for a few minutes — including you."
+      author: "Anne Lamott"
+      highlight: "including you"
+    - text: "Rest is not idleness, and to lie sometimes on the grass on a summer day is by no means a waste of time."
+      author: "John Lubbock"
+      highlight: "rest is not idleness"
+    - text: "In today's rush we all think too much, seek too much, want too much and forget about the joy of just being."
+      author: "Eckhart Tolle"
+      highlight: "joy of just being"
+
+  goodnight:
+    - text: "Night is a time of rigor, but also of mercy. There are truths which one can see only when it's dark."
+      author: "Elie Wiesel"
+      highlight: "only when it's dark"
+    - text: "Sleep is the best meditation."
+      author: "Dalai Lama"
+    - text: "Each night, when I go to sleep, I die. And the next morning, when I wake up, I am reborn."
+      author: "Mahatma Gandhi"
+      highlight: "I am reborn"
+    - text: "The day is done, and the darkness falls from the wings of Night."
+      author: "Henry Wadsworth Longfellow"
+    - text: "Let the soft animal of your body love what it loves."
+      author: "Mary Oliver"
+      highlight: "love what it loves"
+    - text: "Good night, good night! Parting is such sweet sorrow."
+      author: "Shakespeare"
+
+  latenight:
+    - text: "At 2 AM, everything feels like the end of the world. At 10 AM, it feels manageable. Wait for 10 AM."
+      author: "Unknown"
+      highlight: "wait for 10 AM"
+    - text: "Loneliness is the human condition. No one is ever going to fill that space."
+      author: "Janet Fitch"
+    - text: "I exist in two places, here and where you are."
+      author: "Margaret Atwood"
+    - text: "The loneliest moment in someone's life is when they are watching their whole world fall apart."
+      author: "F. Scott Fitzgerald"
+      highlight: "their whole world fall apart"
+    - text: "Do you ever just crave someone's presence? Not even anything physical, just their being there."
+      author: "Unknown"
+      highlight: "just their being there"
+    - text: "She was a girl who knew how to be happy even when she was sad. And that's important."
+      author: "Marilyn Monroe"
+      highlight: "happy even when she was sad"
+    - text: "It's okay to be a glowstick — sometimes we have to break before we can shine."
+      author: "Unknown"
