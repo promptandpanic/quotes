@@ -1,0 +1,234 @@
+# Quote topic configuration for @_daily_dose_of_wisdom__
+#
+# Each top-level key matches a posting-slot category.
+# Add / remove topics freely — the LLM picks from them and rotates variety.
+#
+# max_words: hard cap enforced in the prompt and in code validation.
+#
+# Special keys:
+#   topics        — used on most days
+#   day_topics    — keyed by day name (monday..sunday); injected on that day only
+#   topic_groups  — weighted groups (latenight); weight = approximate % of posts
+
+categories:
+
+  morning:
+    name: "Morning Motivation"
+    max_words: 20
+
+    topics:
+      - "starting before you feel ready — action over readiness"
+      - "consistency over motivation — showing up on low-energy days"
+      - "silent work that compounds invisibly — no applause, just results"
+      - "earned success vs entitled expectation"
+      - "the gap between who you are now and who you're becoming"
+      - "discipline that looks boring from outside but builds everything"
+      - "choosing discomfort today to avoid regret tomorrow"
+
+    # Workout / fitness — injected ~30% of mornings
+    workout_topics:
+      - "gym consistency — showing up even when motivation is zero"
+      - "the body as discipline: what training teaches the mind"
+      - "rest days are part of the plan — recovery is not laziness"
+      - "fitness as a daily vote for the person you want to become"
+      - "the rep nobody sees — the unglamorous work that builds everything"
+      - "pain in the gym vs pain of regret — you choose which one"
+
+    # Day-of-week specific topics — injected automatically based on current day
+    day_topics:
+      monday:
+        - "Monday blues — finding momentum when the weekend just ended"
+        - "the Sunday-night dread that Monday morning always proves wrong"
+        - "starting the week with intention, not just obligation"
+        - "Monday is just a day — the resistance is in your head"
+      tuesday:
+        - "building momentum past Monday — the real week starts now"
+        - "Tuesday grind — past the first hurdle, finding rhythm"
+      wednesday:
+        - "midweek checkpoint — are you building or just busy?"
+        - "Wednesday energy: not at the start, not at the end — just in it"
+      thursday:
+        - "almost there — Thursday's job is to not let up now"
+        - "the quiet power of finishing what you started"
+      friday:
+        - "Friday isn't the finish line — it's the measure of your week"
+        - "TGIF but also: did you show up this week?"
+        - "ending the week strong — not coasting because the weekend is close"
+      saturday:
+        - "Saturday wins — getting ahead while the world sleeps in"
+        - "using the weekend to recover without losing your edge"
+      sunday:
+        - "Sunday prep — the people who win the week plan it on Sunday"
+        - "Sunday scaries: anxiety about Monday is just unprocessed emotion"
+        - "the Sunday reset — reflect on last week before building next week"
+        - "doing a little on Sunday makes Monday feel like continuation, not a cold start"
+
+  wisdom:
+    name: "Life Wisdom"
+    max_words: 28
+
+    topics:
+      - "what we say vs what we actually do — the gap between words and actions"
+      - "truths we only understand in hindsight, not when they're happening"
+      - "the real cost of avoiding hard conversations and hard decisions"
+      - "how pain and failure teach what comfort and success cannot"
+      - "patterns we repeat without realising we're repeating them"
+      - "the version of events we choose to replay — and why it hurts most"
+      - "the people we quietly become without meaning to"
+      - "things that look like strength but are just unexplored fear"
+
+    # Cultural and traditional wisdom — rotated for variety
+    cultural_topics:
+
+      - tradition: "African proverb"
+        topics:
+          - "Ubuntu philosophy — I am because we are; community as identity"
+          - "patience and the long view — African proverbs on time and perseverance"
+          - "collective strength vs individual pride"
+          - "the wisdom of the elders — knowledge passed without books"
+
+      - tradition: "Japanese wisdom"
+        topics:
+          - "wabi-sabi — finding beauty in imperfection and impermanence"
+          - "ikigai — the reason to get up in the morning"
+          - "kaizen — the philosophy of 1% better every day"
+          - "ma (間) — the wisdom of empty space, pause, and silence"
+          - "mono no aware — the bittersweet awareness that nothing lasts"
+
+      - tradition: "Chinese proverb"
+        topics:
+          - "ancient Chinese wisdom on patience, time, and the long game"
+          - "balance and opposites — yin and yang in everyday life"
+          - "the sage who does not speak — wisdom in restraint"
+
+      - tradition: "Indian wisdom"
+        topics:
+          - "Vedic philosophy on the nature of the self and consciousness"
+          - "karma and action — doing right without attachment to outcome (Gita)"
+          - "Indian grandparent wisdom — things elders say that take years to understand"
+          - "dharma — your duty, your path, and the cost of abandoning it"
+
+      - tradition: "old man wisdom"
+        topics:
+          - "lessons only age teaches — things you can't learn young"
+          - "what 80-year-olds wish they'd known at 25"
+          - "regret is the most expensive thing — elders on choices they'd change"
+          - "the old man who says little but understands everything"
+
+      - tradition: "animal kingdom"
+        topics:
+          - "lessons from nature — how animals embody patience, adaptation, and instinct"
+          - "the wolf, the oak, the eagle — metaphors from the natural world"
+          - "how animals teach what humans overcomplicate"
+
+  love:
+    name: "Love & Relationships"
+    max_words: 28
+
+    topics:
+      - "choosing someone every day beyond the grand gesture phase"
+      - "the comfort of being truly known — no performance required"
+      - "love that shows in small invisible things: attention, patience, remembering"
+      - "friendship that slowly becomes the safest place you know"
+      - "loving someone through change — they became different, you stayed"
+      - "the specific intimacy of a relationship that has survived something hard"
+      - "relationships across family expectations — tradition vs modern love"
+      - "the person you become in a healthy love vs an anxious one"
+
+    # Red flag / green flag — very high engagement format on Indian Instagram
+    red_green_flag_topics:
+      - "green flag: someone who stays consistent even when you're difficult"
+      - "green flag: safety — feeling fully yourself without editing"
+      - "green flag: disagreements that don't turn into character attacks"
+      - "green flag: someone who remembers what matters to you"
+      - "red flag: love that arrives only when they need something"
+      - "red flag: feeling smaller, dimmer, less yourself after time with them"
+      - "red flag: apologising becomes your default even when you're not wrong"
+      - "red flag: the love that's conditional on your performance"
+      - "the difference between someone who loves you and someone who needs you"
+      - "healthy love doesn't make you anxious — that's not passion, it's stress"
+
+  mindfulness:
+    name: "Mindfulness & Inner Peace"
+    max_words: 22
+
+    topics:
+      - "the relief of stopping — permission to do nothing for a moment"
+      - "rest as courage, not laziness or giving up"
+      - "the mind's tendency to borrow trouble from a future that hasn't arrived"
+      - "finding stillness inside noise — external chaos, internal quiet"
+      - "attention as the only real currency we have"
+      - "the body holding tension the mind pretends isn't there"
+      - "the difference between solving a problem and just worrying about it"
+
+    # Meditation / spiritual teachers — find real attributed quotes from these sources
+    spiritual_topics:
+      - "Sadhguru (Jaggi Vasudev) — on the nature of the mind, wellbeing, and consciousness"
+      - "Thich Nhat Hanh — on interbeing, breath, and the present moment"
+      - "Eckhart Tolle — on presence, ego, and the pain body"
+      - "Osho — on freedom, awareness, and dropping the mind's noise"
+      - "Ramana Maharshi — on self-inquiry and the silence within"
+      - "meditation as training attention — not emptying the mind but watching it"
+      - "the gap between stimulus and response — where all freedom lives"
+      - "inner peace as a daily practice, not a destination you arrive at"
+
+  goodnight:
+    name: "Goodnight & Gratitude"
+    max_words: 26
+    topics:
+      - "ending the day with softness — releasing what you couldn't control"
+      - "gratitude for the unremarkable ordinary: hot meal, safe bed, small kindness"
+      - "rest as an act of self-respect, not reward for productivity"
+      - "what it means to simply make it through a genuinely hard day"
+      - "tomorrow as a clean page — hope without pressure"
+      - "the quiet dignity in showing up even when no one noticed"
+      - "forgiving yourself for what today wasn't"
+
+  latenight:
+    name: "Late Night Feels"
+    max_words: 30
+    topic_groups:
+
+      - name: "relationships_loss"
+        weight: 25
+        topics:
+          - "missing someone who chose to leave — while pretending you're completely fine"
+          - "loving a version of someone that no longer exists in the person they became"
+          - "the silence after it ends — somehow louder than all the fights"
+          - "typing 'I'm okay' when you are genuinely not, and everyone believes you"
+          - "the grief of a relationship that didn't end with a fight — just faded"
+
+      - name: "ambition_parental_pressure"
+        weight: 30
+        topics:
+          - "the 3AM gap between who you are and who you told everyone you'd become"
+          - "comparing your chapter 1 to everyone else's polished chapter 10"
+          - "working hard and staying invisible — effort that doesn't seem to be enough"
+          - "the weight of being the 'responsible one' who never gets to fall apart"
+          - "parents aging in real time while you're still trying to figure yourself out"
+          - "the version of you your parents brag about to relatives — a stranger you haven't met"
+          - "placement packages, LinkedIn updates, and the quiet shame of still figuring it out"
+
+      - name: "identity_belonging"
+        weight: 20
+        topics:
+          - "feeling like a supporting character in a life that's supposed to be yours"
+          - "loneliness of being surrounded by people who know you but don't really know you"
+          - "exhaustion of performing a version of yourself everyone else is comfortable with"
+          - "living between two worlds — too modern for home, too traditional for everywhere else"
+          - "having a different laugh for different rooms — not sure which one is real"
+
+      - name: "nostalgia_change"
+        weight: 15
+        topics:
+          - "missing a time before everything got complicated — not even that good, just simpler"
+          - "realising the last truly carefree moment has already passed — you just didn't know it then"
+          - "the specific sadness of a friendship that faded without a single fight"
+          - "the old group chat that went quiet — no fight, no reason, just life"
+
+      - name: "existential_overthinking"
+        weight: 10
+        topics:
+          - "the 3AM spiral that turns a small worry into an existential crisis"
+          - "lying awake wondering if you're building the right life or just the one you fell into"
+          - "the terrifying possibility that you've been waiting to start living for years now"

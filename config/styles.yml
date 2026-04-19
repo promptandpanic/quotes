@@ -1,0 +1,134 @@
+# Visual style configuration for @_daily_dose_of_wisdom__
+#
+# Each style has:
+#   description   — exact creative brief sent to Gemini/Imagen (be specific)
+#   categories    — which posting slots this style suits (controls what Gemini sees)
+#   weight        — relative selection probability within a category: high/medium/low
+#
+# Research-backed mapping for Indian Instagram youth audience (18-35):
+#   - flat vector illustrations: highest saves/shares, very cultural
+#   - cozy aesthetic: strong emotional resonance, family/home connection
+#   - dark moody: best for latenight/mental health introspection content
+#   - watercolour: high trust/"handmade" feel, save-worthy
+#   - minimalist nature: universal calming appeal
+#
+# Add new styles freely. Remove by deleting the block.
+# Re-order categories[] to change which themes can use a style.
+
+styles:
+
+  indian_vector_girl:
+    description: >
+      Flat 2D minimalist vector illustration of a stylised Indian girl — saree, lehenga,
+      or kurti; bold jewellery (jhumkas, maang tikka, bangles); vibrant 4-5 colour palette
+      (terracotta, saffron, teal, gold, rose dust); clean crisp outlines; character against
+      solid or soft gradient background. Detailed but graphically simplified — never realistic.
+    categories: [love, goodnight]
+    weight: high
+
+  indian_flat_illustration:
+    description: >
+      Flat 2D vector illustration — NO human figures. Symbolic Indian objects or scenes:
+      steaming chai in a terracotta cup, an open book with marigold petals, a diyas and
+      rangoli pattern, a lone bicycle on a misty lane, a rooftop under stars with string
+      lights, Rajasthani arches at sunset. Bold 3-5 colour palette, clean graphic shapes,
+      modern Indian design aesthetic. Content-first — the scene reflects the quote's mood.
+    categories: [morning, wisdom, mindfulness, latenight]
+    weight: high
+
+  indian_vector_couple:
+    description: >
+      Same flat 2D vector style — illustrated Indian couple or two close women friends;
+      festival or everyday attire; warm complementary palette; connection visible in
+      body language — a glance, a shared smile, proximity.
+    categories: [love, goodnight]
+    weight: high
+
+  minimalist_vector:
+    description: >
+      Flat 2D poster illustration with NO human figures — bold geometric shapes, abstract
+      or symbolic scene (lotus, lamp, compass, staircase), 3-4 strong colours, modern
+      Indian graphic design aesthetic. Clean and powerful like a good book cover.
+    categories: [morning, wisdom, mindfulness]
+    weight: medium
+
+  whimsical_sketch:
+    description: >
+      Hand-drawn pencil or ink sketch style — loose expressive lines, slightly imperfect,
+      warm parchment or cream background. Could be figures, objects, or small scenes.
+      Feels personal, like a journal page or letter.
+    categories: [wisdom, love, goodnight, latenight]
+    weight: medium
+
+  watercolour_ink:
+    description: >
+      Hand-painted watercolour wash on cold-press paper texture — ink outlines, delicate
+      bleeds and blooms, soft botanical or emotional scene (hands, flowers, rain, a face).
+      Very tactile and organic. Feels like something a person made with care.
+    categories: [love, mindfulness, goodnight, wisdom]
+    weight: high
+
+  pixel_art:
+    description: >
+      Retro 8-bit or 16-bit scene — blocky but emotionally evocative; limited palette
+      6-8 colours; atmospheric pixel lighting. Scene should feel nostalgic — a bedroom
+      window, a late-night street, a lone figure under stars.
+    categories: [latenight, wisdom, morning]
+    weight: medium
+
+  paper_cut:
+    description: >
+      Layered paper silhouette art — geometric depth through cast shadow, 2-4 colour
+      layers, very clean and graphic. Subjects: mountain range, city skyline, tree,
+      bird in flight. Modern and Instagram-worthy.
+    categories: [wisdom, mindfulness, goodnight]
+    weight: medium
+
+  minimalist_nature:
+    description: >
+      One powerful natural element with extreme negative space — single tree, rain on
+      a dark window, moon over still water, misty mountain ridge at dawn. Quiet and
+      meditative. Muted or monochrome palette. Feels like a held breath.
+    categories: [mindfulness, wisdom, goodnight, latenight]
+    weight: high
+
+  india_landscape:
+    description: >
+      Iconic Indian scene treated cinematically — Rajasthan haveli at golden hour,
+      Kerala backwater mist at dawn, Himalayan trail under stars, Mumbai monsoon street
+      with neon reflections. Painterly or illustrated, never tourist-photo literal.
+    categories: [morning, wisdom, love]
+    weight: medium
+
+  cozy_aesthetic:
+    description: >
+      Intimate indoor scene — candlelit wooden desk with open journal, chai cup with
+      wisps of steam by a rain-streaked window, fairy lights blurred in bokeh behind
+      an open book. Warm amber-gold tones. The "staying in tonight" aesthetic.
+      Highly relatable for Indian youth.
+    categories: [goodnight, latenight, love, mindfulness]
+    weight: high
+
+  abstract_fluid:
+    description: >
+      Flowing liquid gradients and energy fields — no literal subject, pure colour and
+      form. Should match the quote's emotional temperature: deep indigo + teal for
+      late-night dread; warm amber + rose for love; cool blue + white for clarity.
+    categories: [latenight, mindfulness, wisdom]
+    weight: medium
+
+  double_exposure:
+    description: >
+      Silhouette of a person (or hands, or a figure from behind) filled with landscape
+      or texture — forest inside a face, city inside a silhouette. Dreamlike blended
+      layers. Cinematic and conceptually rich.
+    categories: [latenight, love, wisdom]
+    weight: medium
+
+  dark_surreal:
+    description: >
+      Impossible or dreamlike scene — floating objects, gravity-defying elements,
+      inverted world, a figure walking on ceiling while city below is normal. Dark
+      and moody, conceptually tied to the quote's feeling of being untethered or lost.
+    categories: [latenight, wisdom]
+    weight: low

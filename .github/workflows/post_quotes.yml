@@ -1,0 +1,83 @@
+name: Post Daily Quotes
+
+on:
+  # ──────────────────────────────────────────────
+  # 6 scheduled posts per day in Indian Standard Time (IST = UTC+5:30)
+  # Cron fires 5 min early so posts land on time
+  # ──────────────────────────────────────────────
+  schedule:
+    - cron: "25 1 * * *"   # 07:00 AM IST  →  Morning Motivation
+    - cron: "25 6 * * *"   # 12:00 PM IST  →  Wisdom & Philosophy
+    - cron: "25 9 * * *"   # 03:00 PM IST  →  Love & Relationships
+    - cron: "25 12 * * *"  # 06:00 PM IST  →  Mindfulness & Peace
+    - cron: "25 15 * * *"  # 09:00 PM IST  →  Goodnight Inspiration
+    - cron: "55 19 * * *"  # 01:30 AM IST  →  Late Night Feels (LLM-generated + validated)
+
+  # Manual trigger (for testing)
+  workflow_dispatch:
+    inputs:
+      theme:
+        description: "Theme to post (morning | wisdom | love | mindfulness | goodnight | latenight)"
+        required: false
+        default: "morning"
+
+permissions:
+  contents: write   # needed to update data/posted_quotes.json and upload release assets
+
+jobs:
+  post:
+    name: Generate & Post Quote
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # ── 1. Checkout ──────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. Python ────────────────────────────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      # ── 3. Dependencies ──────────────────────────────────────────────────
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ── 4. Determine theme ───────────────────────────────────────────────
+      # Map the cron UTC hour to the theme key.
+      # For manual dispatch, use the workflow_dispatch input.
+      - name: Set THEME environment variable
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "THEME=${{ github.event.inputs.theme }}" >> $GITHUB_ENV
+          else
+            HOUR=$(date -u +%H)
+            HOUR_INT=$((10#$HOUR))
+            if   [ "$HOUR_INT" -eq 1 ];  then echo "THEME=morning"      >> $GITHUB_ENV
+            elif [ "$HOUR_INT" -eq 6 ];  then echo "THEME=wisdom"       >> $GITHUB_ENV
+            elif [ "$HOUR_INT" -eq 9 ];  then echo "THEME=love"         >> $GITHUB_ENV
+            elif [ "$HOUR_INT" -eq 12 ]; then echo "THEME=mindfulness"  >> $GITHUB_ENV
+            elif [ "$HOUR_INT" -eq 15 ]; then echo "THEME=goodnight"    >> $GITHUB_ENV
+            elif [ "$HOUR_INT" -eq 19 ]; then echo "THEME=latenight"    >> $GITHUB_ENV
+            else
+              echo "THEME=morning" >> $GITHUB_ENV
+              echo "::warning::Unexpected UTC hour $HOUR — defaulting to morning"
+            fi
+          fi
+
+      # ── 5. Run the bot ───────────────────────────────────────────────────
+      - name: Run bot
+        env:
+          THEME: ${{ env.THEME }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_BUSINESS_ACCOUNT_ID: ${{ secrets.INSTAGRAM_BUSINESS_ACCOUNT_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          NOTIFY_EMAILS: ${{ secrets.NOTIFY_EMAILS }}
+        run: python main.py
