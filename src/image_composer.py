@@ -359,9 +359,10 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
         _stroke_text(draw, (x, y), line, f, fill=fill, stroke_color=(0, 0, 0), stroke=2)
         y += line_h
 
-    # Author attribution — skip when unknown/anonymous/original/empty
+    # Author attribution — show when all lines are visible (full image or last reveal step)
     _SKIP_AUTHOR = {"unknown", "anonymous", "original"}
-    if (n_lines is None and author
+    all_visible = n_lines is None or n_lines >= len(all_lines)
+    if (all_visible and author
             and author.lower() not in _SKIP_AUTHOR
             and not author.startswith("@")):
         # Brief can supply author_color; default to a bright near-white
