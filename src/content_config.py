@@ -19,6 +19,46 @@ def _load(filename: str) -> dict:
 _topics = _load("topics.yml")["categories"]
 _styles = _load("styles.yml")["styles"]
 
+# Portrait image hints for featured authors — painterly/illustrated style only
+_AUTHOR_IMAGE_HINTS = {
+    "Rumi": (
+        "Illustrated portrait of Rumi — warm golden candlelight, Persian manuscript textures, "
+        "flowing dark robes, soft bokeh background with calligraphy. Oil-painting style, NOT photorealistic."
+    ),
+    "Swami Vivekananda": (
+        "Illustrated portrait of Swami Vivekananda — saffron robes, deep confident gaze, "
+        "soft temple or Himalayan backdrop. Painterly Indian portrait style, NOT photorealistic."
+    ),
+    "Kabir Das": (
+        "Illustrated portrait of Kabir Das — simple weaver's loom setting, earthy tones, "
+        "humble expression, warm village light. Madhubani-inspired folk art portrait style."
+    ),
+    "APJ Abdul Kalam": (
+        "Illustrated portrait of APJ Abdul Kalam — warm smile, windswept hair, starry sky or "
+        "rocket silhouette in background. Soft watercolor portrait style, NOT photorealistic."
+    ),
+    "Khalil Gibran": (
+        "Illustrated portrait of Khalil Gibran — moody oil-painting style, dark romantic background, "
+        "Lebanese cedar or night sky. Classic early-1900s portrait painterly aesthetic."
+    ),
+    "Paulo Coelho": (
+        "Illustrated portrait of Paulo Coelho — warm desert dunes or open road in background, "
+        "thoughtful gaze, adventurous spirit. Soft painterly watercolor style, NOT photorealistic."
+    ),
+    "Chanakya": (
+        "Illustrated portrait of ancient Chanakya — wise elder, sharp eyes, scrolls or ancient "
+        "Pataliputra palace backdrop. Indian ink-wash or miniature painting style."
+    ),
+    "Rabindranath Tagore": (
+        "Illustrated portrait of Rabindranath Tagore — long white beard, flowing robes, soft Bengal "
+        "light, nature backdrop. Painterly impressionist portrait style, NOT photorealistic."
+    ),
+    "Osho": (
+        "Illustrated portrait of Osho — serene expression, layered robes, soft ethereal light and "
+        "abstract spiritual geometry in background. Dreamlike painterly style."
+    ),
+}
+
 # Image hints per wisdom tradition — passed to design director so it can
 # choose an illustration style that matches the cultural context
 _TRADITION_IMAGE_HINTS = {
@@ -106,7 +146,8 @@ def get_topic_info(category: str) -> dict:
                 f"  - Choose a lesser-known gem — not their most circulated line\n"
                 f"  - Must resonate emotionally with an Indian aged 18-35 today"
             )
-            return {"topic_block": topic_block, "image_hint": image_hint}
+            author_image_hint = _AUTHOR_IMAGE_HINTS.get(name, "")
+            return {"topic_block": topic_block, "image_hint": author_image_hint}
 
         # 40% — cultural tradition
         if cultural and roll < 0.65:
