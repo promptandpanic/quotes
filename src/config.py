@@ -99,7 +99,7 @@ IMAGE_HEIGHT = 1920   # 9:16 portrait — ideal for Reels
 REEL_DURATION_SEC = 15
 AUDIO_FILE        = "assets/audio/background.mp3"
 
-REPEAT_WINDOW_DAYS = int(os.environ.get("REPEAT_WINDOW_DAYS", "10"))
+REPEAT_WINDOW_DAYS = int(os.environ.get("REPEAT_WINDOW_DAYS", "3"))
 
 GITHUB_DB_PATH    = "data/posted_quotes.json"
 MEDIA_RELEASE_TAG = "media-pool"
