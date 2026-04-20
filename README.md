@@ -1,7 +1,7 @@
 # Daily Dose of Wisdom — Instagram Bot
 
 Fully automated Instagram Reels bot for **@_daily_dose_of_wisdom__**  
-Posts **6 quote Reels per day** with AI-generated visuals — zero manual effort.
+Posts **7 quote Reels per day** with AI-generated visuals — zero manual effort.
 
 ---
 
@@ -111,6 +111,7 @@ GitHub Actions cron always runs in UTC. Each trigger maps to a theme via `github
 | 11:00 AM | 5:30 AM | 1:30 AM | 12:30 AM | Life Wisdom | `wisdom` |
 | 3:00 PM | 9:30 AM | 5:30 AM | 4:30 AM | Love & Relationships | `love` |
 | 6:00 PM | 12:30 PM | 8:30 AM | 7:30 AM | Mindfulness & Inner Peace | `mindfulness` |
+| 8:15 PM | 2:45 PM | 10:45 AM | 9:45 AM | Life Wisdom (Evening) | `wisdom` |
 | 10:00 PM | 4:30 PM | 12:30 PM | 11:30 AM | Goodnight & Gratitude | `goodnight` |
 | 1:00 AM (next day) | 7:30 PM | 3:30 PM | 2:30 PM | Late Night Feels | `latenight` |
 
