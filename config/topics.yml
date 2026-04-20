@@ -124,6 +124,30 @@ categories:
           - "adapting without losing yourself"
           - "instinct over overthinking"
 
+    # Featured authors — spotlight one per post, ~25% of wisdom runs
+    # Picked for resonance with Indian Instagram audience aged 18-35
+    featured_authors:
+      - name: "Rumi"
+        note: "13th-century Sufi poet — soul, longing, love, spiritual depth"
+      - name: "Swami Vivekananda"
+        note: "Indian monk — strength, fearlessness, duty, self-belief"
+      - name: "Kabir Das"
+        note: "15th-century Indian saint-poet — raw honest wisdom, non-attachment"
+      - name: "APJ Abdul Kalam"
+        note: "India's beloved president/scientist — dreams, youth, resilience"
+      - name: "Khalil Gibran"
+        note: "Lebanese poet (The Prophet) — love, pain, grief, beauty of life"
+      - name: "Paulo Coelho"
+        note: "Brazilian novelist (The Alchemist) — destiny, courage, following your heart"
+      - name: "Chanakya"
+        note: "Ancient Indian strategist — sharp life wisdom, power, self-discipline"
+      - name: "Rabindranath Tagore"
+        note: "Nobel laureate Indian poet — beauty, humanity, spiritual depth"
+      - name: "Osho"
+        note: "Indian mystic — awareness, ego, freedom, presence"
+      - name: "Sadhguru"
+        note: "Contemporary Indian yogi — inner engineering, consciousness, clarity"
+
   love:
     name: "Love & Relationships"
     max_words: 24

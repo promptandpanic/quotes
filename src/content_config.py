@@ -88,14 +88,32 @@ def get_topic_info(category: str) -> dict:
 
     # ── WISDOM ───────────────────────────────────────────────────────────────
     if category == "wisdom":
-        base = list(cfg.get("topics", []))
+        base     = list(cfg.get("topics", []))
         cultural = cfg.get("cultural_topics", [])
+        authors  = cfg.get("featured_authors", [])
 
-        if cultural and random.random() < 0.40:
-            tradition = random.choice(cultural)
-            trad_name = tradition["tradition"]
+        roll = random.random()
+
+        # 25% — featured author spotlight
+        if authors and roll < 0.25:
+            pick = random.choice(authors)
+            name, note = pick["name"], pick["note"]
+            topic_block = (
+                f"TODAY: Find a quote by {name.upper()}.\n"
+                f"Context: {note}\n\n"
+                f"Rules:\n"
+                f"  - Must be a REAL, verifiable quote genuinely attributed to {name}\n"
+                f"  - Choose a lesser-known gem — not their most circulated line\n"
+                f"  - Must resonate emotionally with an Indian aged 18-35 today"
+            )
+            return {"topic_block": topic_block, "image_hint": image_hint}
+
+        # 40% — cultural tradition
+        if cultural and roll < 0.65:
+            tradition  = random.choice(cultural)
+            trad_name  = tradition["tradition"]
             trad_topics = tradition["topics"]
-            t_lines = "\n".join(f"    - {t}" for t in trad_topics)
+            t_lines    = "\n".join(f"    - {t}" for t in trad_topics)
             image_hint = _TRADITION_IMAGE_HINTS.get(trad_name, "")
             topic_block = (
                 f"TODAY focus on: {trad_name.upper()}\n"
