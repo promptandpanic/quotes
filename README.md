@@ -203,10 +203,6 @@ categories:
     workout_topics:         # injected ~30% of morning posts
       - "gym consistency — showing up even when motivation is zero"
 
-    day_topics:             # injected automatically based on IST day
-      monday:
-        - "Monday blues — finding momentum when the weekend just ended"
-
   wisdom:
     max_words: 24
     topics:

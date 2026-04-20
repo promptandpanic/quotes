@@ -13,7 +13,6 @@
 #
 # Special keys:
 #   topics        — used on most days
-#   day_topics    — keyed by day name (monday..sunday); injected on that day only
 #   topic_groups  — weighted groups (latenight); weight = approximate % of posts
 
 categories:
@@ -41,34 +40,6 @@ categories:
       - "discipline through training"
       - "the effort nobody sees"
       - "consistency over intensity"
-
-    day_topics:
-      monday:
-        - "starting the week without overthinking"
-        - "Monday feels easier once you begin"
-        - "new week, better focus"
-        - "you do not need perfect energy to start"
-      tuesday:
-        - "building momentum after Monday"
-        - "finding rhythm in the middle of effort"
-      wednesday:
-        - "midweek honesty with yourself"
-        - "growing instead of just staying busy"
-      thursday:
-        - "staying steady when the weekend is close"
-        - "finishing what you started"
-      friday:
-        - "ending the week with self-respect"
-        - "Friday reveals your consistency"
-        - "not slowing down too early"
-      saturday:
-        - "resting without losing direction"
-        - "using the weekend with intention"
-      sunday:
-        - "preparing calmly for the week ahead"
-        - "turning Sunday anxiety into preparation"
-        - "reflecting before restarting"
-        - "making Monday feel lighter"
 
   wisdom:
     name: "Life Wisdom"

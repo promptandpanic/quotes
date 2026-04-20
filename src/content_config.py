@@ -3,7 +3,6 @@ Loads topics.yml and styles.yml at startup.
 Provides helpers used by quote_generator and design_director.
 """
 import random
-from datetime import datetime, timezone, timedelta
 from pathlib import Path
 import yaml
 
@@ -100,12 +99,6 @@ def get_max_words(category: str) -> int:
     return _topics.get(category, {}).get("max_words", 28)
 
 
-def _ist_day_name() -> str:
-    """Current day name in IST (lower case: monday..sunday)."""
-    ist = datetime.now(timezone(timedelta(hours=5, minutes=30)))
-    return ist.strftime("%A").lower()
-
-
 def get_topic_info(category: str) -> dict:
     """
     Returns {'topic_block': str, 'image_hint': str}.
@@ -113,7 +106,6 @@ def get_topic_info(category: str) -> dict:
     image_hint is stored in the quote dict and used by the design director.
     """
     cfg = _topics.get(category, {})
-    day = _ist_day_name()
     image_hint = ""
 
     # ── MORNING ──────────────────────────────────────────────────────────────
@@ -121,18 +113,13 @@ def get_topic_info(category: str) -> dict:
         base = list(cfg.get("topics", []))
         extras: list[str] = []
 
-        day_map = cfg.get("day_topics", {})
-        if day in day_map:
-            extras.extend(day_map[day])
-
         if random.random() < 0.30:
             extras.extend(cfg.get("workout_topics", []))
 
         pool = extras + base if extras else base
         random.shuffle(pool)
         lines = "\n".join(f"  - {t}" for t in pool[:12])
-        day_note = f" (today is {day.capitalize()})" if day in day_map else ""
-        topic_block = f"Pick from these topic areas{day_note}. Prioritise the top of the list:\n{lines}"
+        topic_block = f"Pick from these topic areas. Prioritise the top of the list:\n{lines}"
         return {"topic_block": topic_block, "image_hint": image_hint}
 
     # ── WISDOM ───────────────────────────────────────────────────────────────
