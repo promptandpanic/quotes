@@ -3,7 +3,8 @@
     "bb10cc43e655bc30",
     "0019ab4f55b8629a",
     "864dee76d65012a3",
-    "98ea82fd7e523fc2"
+    "98ea82fd7e523fc2",
+    "f18a23c06507a659"
   ],
   "history": [
     {
@@ -33,7 +34,15 @@
       "author": "Original",
       "theme": "morning",
       "posted_at": "2026-04-19T21:58:01.180381+00:00"
+    },
+    {
+      "hash": "f18a23c06507a659",
+      "text": "You didn’t outgrow your childhood home; you just stopped liking the version of yourself you had to play to survive the l",
+      "author": "Original",
+      "theme": "wisdom",
+      "style": "metaphorical_digital",
+      "posted_at": "2026-04-20T05:03:57.813709+00:00"
     }
   ],
-  "last_updated": "2026-04-19T21:58:01.180391+00:00"
+  "last_updated": "2026-04-20T05:03:57.813727+00:00"
 }
