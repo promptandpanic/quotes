@@ -292,6 +292,39 @@ def _apply_overlay(img: Image.Image, brief: dict) -> Image.Image:
 
 
 
+def _bg_luminance(img: Image.Image, zone: str) -> float:
+    """Return average perceptual luminance (0–255) of the text zone after overlay."""
+    W, H = IMAGE_WIDTH, IMAGE_HEIGHT
+    if zone == "top":
+        box = (MARGIN_X, int(H * 0.06), W - MARGIN_X, int(H * 0.45))
+    elif zone == "center":
+        box = (MARGIN_X, int(H * 0.18), W - MARGIN_X, int(H * 0.82))
+    else:
+        box = (MARGIN_X, int(H * 0.38), W - MARGIN_X, H - 80)
+    small = img.crop(box).resize((16, 16), Image.LANCZOS).convert("RGB")
+    pixels = list(small.getdata())
+    return sum(0.299 * r + 0.587 * g + 0.114 * b for r, g, b in pixels) / len(pixels)
+
+
+def _contrast_ratio(lum_a: float, lum_b: float) -> float:
+    """WCAG relative contrast ratio between two luminance values (0–255)."""
+    a = (lum_a / 255) ** 2.2 + 0.05
+    b = (lum_b / 255) ** 2.2 + 0.05
+    lighter, darker = max(a, b), min(a, b)
+    return lighter / darker
+
+
+def _ensure_readable(color: tuple, bg_lum: float) -> tuple:
+    """Return color if it contrasts sufficiently with bg_lum, else white or near-black."""
+    txt_lum = 0.299 * color[0] + 0.587 * color[1] + 0.114 * color[2]
+    if _contrast_ratio(txt_lum, bg_lum) >= 3.5:
+        return color
+    # Pick whichever of white / dark gives higher contrast
+    white_cr = _contrast_ratio(255, bg_lum)
+    dark_cr  = _contrast_ratio(20, bg_lum)
+    return (255, 255, 255) if white_cr >= dark_cr else (20, 20, 20)
+
+
 def _stroke_text(draw, xy, text, font, fill, stroke_color=(0, 0, 0), stroke=3):
     """Draw text with a multi-pixel outline for readability on any background."""
     x, y = xy
@@ -323,6 +356,10 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
 
     upper     = font_key == "bebas"
     disp_text = text.upper() if upper else text
+
+    # Override AI-picked colors if they lack contrast against the actual (overlaid) background
+    bg_lum   = _bg_luminance(img, text_zone)
+    txt_color = _ensure_readable(txt_color, bg_lum)
 
     font_size = max(88, int(brief.get("font_size", 88)))
     all_lines, f, font_size = _fit_text(disp_text, font_key, font_size, layout, text_zone)

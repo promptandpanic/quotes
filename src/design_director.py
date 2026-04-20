@@ -119,10 +119,14 @@ Absolutely no text, signs, words, numbers, logos, or watermarks anywhere in the 
   }},
 
   "font": "bebas|anton|oswald|montserrat|cinzel|raleway|josefin|playfair|merriweather|cormorant|dancing|satisfy|specialelite|lato",
-  "text_color": "#FFFFFF",
-  "highlight_color": "#RRGGBB",
-  "author_color": "#RRGGBB — colour for the author name. Make it readable but distinct from \
-the quote text. Often the highlight_color, a softer tint of it, or a warm off-white. \
+  "text_color": "#RRGGBB — CRITICAL: must have strong contrast against the overlay/background. \
+If the overlay is dark (opacity ≥ 140), use near-white (#FFFFFF, #F5F5F5, #FFFAF0). \
+If the overlay is light or the background is pale/bright, use near-black (#111111, #1a1a1a). \
+NEVER pick a colour similar in brightness to the background — low contrast makes text unreadable.",
+  "highlight_color": "#RRGGBB — accent colour for the key phrase. Must contrast with BOTH the \
+background AND text_color. Avoid colours close in hue or brightness to text_color.",
+  "author_color": "#RRGGBB — colour for the author name. Must be readable against the background. \
+Often the highlight_color, a softer tint of it, or a warm off-white. \
 Only rendered when a real author exists — skip for Unknown/anonymous.",
   "decoration": "rule|quote_mark|none",
   "layout": "big_center|sentence_reveal|full_card",

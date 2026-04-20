@@ -189,7 +189,12 @@ def _create_reel_fade(image_bytes: bytes, quote: dict, brief: dict, theme: str =
             stream_dur += durs[i + 1] - cf
 
         for i, sf in enumerate(start_frames):
-            parts.append(f"[{i}:v]{sc},{_zoompan_at(total_frames, sf)}[v{i}]")
+            # Ken Burns only on intro/fade-out background frames — text frames stay static
+            # so longer quotes don't drift out of frame as the zoom increases
+            if i == 0 or i == N - 1:
+                parts.append(f"[{i}:v]{sc},{_zoompan_at(total_frames, sf)}[v{i}]")
+            else:
+                parts.append(f"[{i}:v]{sc},setsar=1,fps={FPS}[v{i}]")
 
         # xfade chain
         prev       = "v0"
