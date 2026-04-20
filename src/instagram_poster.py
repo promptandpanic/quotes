@@ -15,6 +15,9 @@ GRAPH_BASE        = "https://graph.facebook.com/v21.0"
 MAX_POLL_ATTEMPTS = 30
 POLL_INTERVAL_SEC = 10
 
+# Bhubaneswar, Odisha — Facebook Place ID
+_LOCATION_ID = "108645072500373"
+
 
 def _access_token() -> str:
     return os.environ.get("INSTAGRAM_ACCESS_TOKEN", "")
@@ -74,11 +77,12 @@ def post_reel(video_url: str, caption: str,
     Returns the post ID on success, None on failure.
     """
     payload = {
-        "media_type":   "REELS",
-        "video_url":    video_url,
-        "caption":      caption,
+        "media_type":    "REELS",
+        "video_url":     video_url,
+        "caption":       caption,
         "share_to_feed": "true",
-        "access_token": _access_token(),
+        "location_id":   _LOCATION_ID,
+        "access_token":  _access_token(),
     }
     if thumb_url:
         payload["cover_url"] = thumb_url
@@ -117,8 +121,9 @@ def post_image(image_url: str, caption: str) -> str | None:
     resp = requests.post(
         f"{GRAPH_BASE}/{_user_id()}/media",
         data={
-            "image_url":    image_url,
-            "caption":      caption,
+            "image_url":   image_url,
+            "caption":     caption,
+            "location_id": _LOCATION_ID,
             "access_token": _access_token(),
         },
         timeout=30,
