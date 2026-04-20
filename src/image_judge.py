@@ -1,8 +1,18 @@
 """
 Gemini multimodal quality check — looks at the composed image before posting.
 
-Scores: text readability, visual aesthetics, engagement potential.
-Hard gate: readability < 5 always rejects regardless of overall score.
+Scoring philosophy:
+  - Image is the scroll-stopping HOOK — judged independently on visual merit
+  - Quote is the WISDOM — judged independently on emotional impact
+  - Harmony (image mood matching quote) is a bonus, not a requirement
+  - Text readability is a hard gate — invisible text always rejects
+
+Dimensions (see _JUDGE_PROMPT for details):
+  image_hook       25%  — scroll-stopping visual power, independent of quote
+  image_quality    20%  — aesthetics, composition, art style execution
+  text_readability 20%  — clarity and legibility of the quote text overlay (hard gate ≥5)
+  quote_impact     25%  — emotional punch, relatability, not clichéd
+  image_text_harmony 10% — bonus: does image mood enhance the quote? never penalised if low
 """
 import json
 import logging
@@ -11,42 +21,74 @@ import re
 
 logger = logging.getLogger(__name__)
 
-_MIN_SCORE        = 6
-_MIN_READABILITY  = 5   # hard floor — invisible/illegible text always rejects
+_MIN_READABILITY = 5   # hard gate — illegible text always rejects
+_MIN_SCORE       = 6   # minimum weighted score to accept
 
 _JUDGE_PROMPT = '''\
 You are a quality reviewer for @_daily_dose_of_wisdom__, \
 an Indian Instagram quotes page for emotionally intelligent youth aged 18-35.
 
-Judge this composed post image AS IT WILL APPEAR on a mobile phone screen.
+Judge this composed post AS IT WILL APPEAR on a mobile phone screen.
 
 Quote displayed: "{text}"
+Author: {author}
 
-Score 1-10 on each — be honest and strict:
+IMPORTANT PHILOSOPHY:
+The image is the scroll-stopping HOOK — it does not need to literally illustrate the quote.
+A beautiful or striking image that has nothing to do with the quote is fine.
+The quote stands on its own as emotional wisdom.
+BONUS points if image mood enhances the quote — but NEVER penalise mismatches.
 
-1. readability  — Can you clearly read every word of the quote?
-                  Score 1-3 if text is invisible, tiny, or barely legible.
-                  Score 4-6 if readable but contrast or size is marginal.
-                  Score 7-10 only if text is large, clear, and high-contrast.
-                  DEDUCT -4 if background contains watermarks, AI-generated text,
-                  labels, or typography bleeding through behind the quote.
+Score each dimension 1-10 (be honest and strict):
 
-2. aesthetics   — Is the visual design beautiful and professional?
+1. image_hook
+   Does this image stop someone from scrolling before they even read the text?
+   Score high for: visually striking, unusual, beautiful, distinctive art style.
+   Score low for: generic, boring, cluttered, or obviously AI-bland.
 
-3. engagement   — Would an Indian aged 18-35 stop scrolling for this?
+2. image_quality
+   Is the image aesthetically beautiful and well-composed?
+   Art style executed cleanly? No muddy AI artifacts, no unintended text/logos in image?
+   DEDUCT heavily for: watermarks, AI-generated text bleeding through, technical artifacts.
 
-Respond ONLY with valid JSON (no markdown):
-{{"score":<integer average 1-10>,"readability":<1-10>,"aesthetics":<1-10>,\
-"engagement":<1-10>,"issues":"<main issue if score<7, else empty string>",\
-"accept":<true if score>=6 AND readability>=5, else false>}}
+3. text_readability
+   Can you clearly read every word of the quote in the overlay?
+   Score 1-3 if text is invisible, tiny, or barely legible.
+   Score 4-6 if readable but contrast or size is marginal.
+   Score 7-10 only if text is large, clear, and high-contrast.
+   DEDUCT -4 if background contains watermarks or typography artifacts behind the quote.
+
+4. quote_impact
+   Is the quote emotionally powerful, relatable, and save-worthy?
+   Would an Indian aged 18-35 feel something reading this?
+   Score low for: generic clichés, overused internet quotes, hollow motivational filler.
+   Score high for: specific, emotionally precise, something someone would screenshot.
+
+5. image_text_harmony
+   Does the image mood or energy enhance the quote's emotional feel?
+   This is a BONUS dimension — a 5/10 here is perfectly fine.
+   Score 8-10 only if the image and quote feel like they were made for each other.
+   Never score below 4 just because they don't match — mismatches are acceptable.
+
+Respond ONLY with valid JSON (no markdown, no extra text):
+{{"image_hook":<1-10>,"image_quality":<1-10>,"text_readability":<1-10>,\
+"quote_impact":<1-10>,"image_text_harmony":<1-10>,\
+"issues":"<main issue if any, empty string if none>",\
+"accept":<true or false>}}
 '''
+
+_ARTIFACT_KEYWORDS = (
+    "watermark", "artifact", "text artifact", "label", "template",
+    "placeholder", "code", "typography bleeding", "gibberish", "symbol",
+    "technical text", "ai-generated text", "generated text",
+)
 
 
 def judge_image(image_bytes: bytes, quote: dict) -> dict:
     """
     Send composed image to Gemini Vision for quality assessment.
-    Returns {score, readability, aesthetics, engagement, issues, accept}.
-    Defaults to accept=True if Gemini is unavailable (don't block on API failure).
+    Returns scores on 5 dimensions plus an accept/reject verdict.
+    Defaults to accept=True if Gemini is unavailable.
     """
     api_key = os.environ.get("GEMINI_API_KEY", "")
     if not api_key:
@@ -58,7 +100,9 @@ def judge_image(image_bytes: bytes, quote: dict) -> dict:
         from src.config import GEMINI_TEXT_MODEL
 
         client = genai.Client(api_key=api_key)
-        prompt = _JUDGE_PROMPT.format(text=quote.get("text", "")[:200].replace('"', "'"))
+        text   = quote.get("text", "")[:200].replace('"', "'")
+        author = quote.get("author", "Unknown")
+        prompt = _JUDGE_PROMPT.format(text=text, author=author)
 
         response = client.models.generate_content(
             model=GEMINI_TEXT_MODEL,
@@ -66,38 +110,56 @@ def judge_image(image_bytes: bytes, quote: dict) -> dict:
                 types.Part.from_bytes(data=image_bytes, mime_type="image/jpeg"),
                 types.Part(text=prompt),
             ],
+            config=types.GenerateContentConfig(
+                automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
+            ),
         )
         raw = response.text.strip()
         m = re.search(r"\{.*\}", raw, re.DOTALL)
         if m:
-            result       = json.loads(m.group())
-            score        = int(result.get("score", 8))
-            readability  = int(result.get("readability", 8))
-            result["score"]       = score
-            result["readability"] = readability
-            # Hard gate 1: reject if quote text is not clearly readable
-            # Hard gate 2: reject if background contains AI-generated text/watermark artifacts
-            _ARTIFACT_KEYWORDS = (
-                "watermark", "artifact", "text artifact", "label", "template",
-                "placeholder", "code", "typography bleeding", "gibberish", "symbol",
-                "technical text", "ai-generated text", "generated text",
+            result = json.loads(m.group())
+
+            image_hook    = int(result.get("image_hook", 7))
+            image_quality = int(result.get("image_quality", 7))
+            readability   = int(result.get("text_readability", 7))
+            quote_impact  = int(result.get("quote_impact", 7))
+            harmony       = int(result.get("image_text_harmony", 6))
+
+            # Weighted score: image (45%) + readability (20%) + quote (25%) + harmony bonus (10%)
+            weighted = round(
+                0.25 * image_hook
+                + 0.20 * image_quality
+                + 0.20 * readability
+                + 0.25 * quote_impact
+                + 0.10 * harmony
             )
+
+            result["score"]            = weighted
+            result["image_hook"]       = image_hook
+            result["image_quality"]    = image_quality
+            result["text_readability"] = readability
+            result["quote_impact"]     = quote_impact
+            result["image_text_harmony"] = harmony
+
             issues_lower = result.get("issues", "").lower()
             has_artifact = any(kw in issues_lower for kw in _ARTIFACT_KEYWORDS)
+
             result["accept"] = (
-                score >= _MIN_SCORE
+                weighted >= _MIN_SCORE
                 and readability >= _MIN_READABILITY
                 and not has_artifact
             )
+
             issues = result.get("issues", "")
             logger.info(
-                f"  Judge: score={score}  "
-                f"readability={readability}  "
-                f"aesthetics={result.get('aesthetics')}  "
-                f"engagement={result.get('engagement')}"
+                f"  Judge: score={weighted}  "
+                f"hook={image_hook}  quality={image_quality}  "
+                f"readability={readability}  impact={quote_impact}  "
+                f"harmony={harmony}"
                 + (f"  | {issues}" if issues else "")
             )
             return result
+
     except Exception as exc:
         logger.warning(f"Judge failed: {exc} — accepting by default")
 

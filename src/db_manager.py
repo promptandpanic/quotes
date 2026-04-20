@@ -115,7 +115,25 @@ class DBManager:
     # ------------------------------------------------------------------
     # Record
     # ------------------------------------------------------------------
-    def mark_posted(self, quote: dict, theme: str) -> None:
+    def recent_styles(self, days: int | None = None, max_entries: int = 20) -> list[str]:
+        """Style names used in recent posts — fed back to design director to rotate variety."""
+        from src.config import REPEAT_WINDOW_DAYS
+        days = days if days is not None else REPEAT_WINDOW_DAYS
+        data = self.load()
+        cutoff = datetime.now(timezone.utc) - timedelta(days=days)
+        styles = []
+        for entry in data.get("history", []):
+            try:
+                posted_at = datetime.fromisoformat(entry["posted_at"])
+                if posted_at >= cutoff:
+                    s = entry.get("style", "")
+                    if s:
+                        styles.append(s)
+            except Exception:
+                pass
+        return styles[-max_entries:]
+
+    def mark_posted(self, quote: dict, theme: str, style: str = "") -> None:
         data = self.load()
         qhash = _quote_hash(quote["text"])
         if qhash not in data["posted_hashes"]:
@@ -125,6 +143,7 @@ class DBManager:
             "text": quote["text"][:120],
             "author": quote.get("author", "Unknown"),
             "theme": theme,
+            "style": style,
             "posted_at": datetime.now(timezone.utc).isoformat(),
         })
         data["last_updated"] = datetime.now(timezone.utc).isoformat()

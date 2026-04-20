@@ -1,134 +1,198 @@
 # Visual style configuration for @_daily_dose_of_wisdom__
 #
-# Each style has:
-#   description   — exact creative brief sent to Gemini/Imagen (be specific)
-#   categories    — which posting slots this style suits (controls what Gemini sees)
-#   weight        — relative selection probability within a category: high/medium/low
+# Each style:
+#   description — creative brief sent to Gemini; it writes the image_prompt
+#   categories  — which posting slots this style appears in
+#   weight      — high / medium / low (controls selection probability)
 #
-# Research-backed mapping for Indian Instagram youth audience (18-35):
-#   - flat vector illustrations: highest saves/shares, very cultural
-#   - cozy aesthetic: strong emotional resonance, family/home connection
-#   - dark moody: best for latenight/mental health introspection content
-#   - watercolour: high trust/"handmade" feel, save-worthy
-#   - minimalist nature: universal calming appeal
-#
-# Add new styles freely. Remove by deleting the block.
-# Re-order categories[] to change which themes can use a style.
+# Design philosophy:
+#   Image = the scroll-stopping hook. Text appears after.
+#   Every style must be instantly distinctive from typical AI quote imagery.
+#   Avoid overly Indian imagery everywhere — cultural context only when quote calls for it.
 
 styles:
 
-  indian_vector_girl:
+  # ── HIGH VISUAL IMPACT — the scroll-stoppers ─────────────────────────────
+
+  anthropomorphic_vintage:
     description: >
-      Flat 2D minimalist vector illustration of a stylised Indian girl — saree, lehenga,
-      or kurti; bold jewellery (jhumkas, maang tikka, bangles); vibrant 4-5 colour palette
-      (terracotta, saffron, teal, gold, rose dust); clean crisp outlines; character against
-      solid or soft gradient background. Detailed but graphically simplified — never realistic.
-    categories: [love, goodnight]
+      Vintage illustrated animals living as humans — a fox in a tailored jacket reading a letter,
+      a rabbit at a café table deep in thought, a bear writing by warm lamplight. Style: 1930s–50s
+      children's book illustration for adults. Muted earth tones — warm ochre, forest green,
+      burgundy, cream. Aged paper texture, fine detailed linework, scenes with quiet emotional
+      subtext. Nobody else does this in quote content — it stops scrolling instantly.
+    categories: [morning, wisdom, love, latenight]
     weight: high
 
-  indian_flat_illustration:
+  ghibli_anime:
     description: >
-      Flat 2D vector illustration — NO human figures. Symbolic Indian objects or scenes:
-      steaming chai in a terracotta cup, an open book with marigold petals, a diyas and
-      rangoli pattern, a lone bicycle on a misty lane, a rooftop under stars with string
-      lights, Rajasthani arches at sunset. Bold 3-5 colour palette, clean graphic shapes,
-      modern Indian design aesthetic. Content-first — the scene reflects the quote's mood.
-    categories: [morning, wisdom, mindfulness, latenight]
+      2D hand-drawn animation frame inspired by classic Japanese animated cinema — a small figure
+      in a vast landscape, glowing forest spirits in mist, rain-soaked streets with warm window
+      light, someone watching a starry sky. Soft flat colors, that unmistakable melancholy warmth.
+      1990s anime aesthetic — slightly painterly, perfectly composed, emotionally rich. Extremely
+      save-worthy. Attire and setting should match the quote's mood, not be specifically Indian.
+    categories: [morning, love, goodnight, mindfulness, wisdom]
     weight: high
-
-  indian_vector_couple:
-    description: >
-      Same flat 2D vector style — illustrated Indian couple or two close women friends;
-      festival or everyday attire; warm complementary palette; connection visible in
-      body language — a glance, a shared smile, proximity.
-    categories: [love, goodnight]
-    weight: high
-
-  minimalist_vector:
-    description: >
-      Flat 2D poster illustration with NO human figures — bold geometric shapes, abstract
-      or symbolic scene (lotus, lamp, compass, staircase), 3-4 strong colours, modern
-      Indian graphic design aesthetic. Clean and powerful like a good book cover.
-    categories: [morning, wisdom, mindfulness]
-    weight: medium
 
   whimsical_sketch:
     description: >
-      Hand-drawn pencil or ink sketch style — loose expressive lines, slightly imperfect,
-      warm parchment or cream background. Could be figures, objects, or small scenes.
-      Feels personal, like a journal page or letter.
-    categories: [wisdom, love, goodnight, latenight]
-    weight: medium
+      Hand-drawn pencil sketch base on warm cream or parchment — loose expressive lines, slightly
+      imperfect. BUT with bold strategic color pops against the greyscale: flowers that burst in
+      cobalt blue and golden yellow while the rest stays graphite, a figure rendered in grey except
+      for a single red thread or vivid scarf, leaves exploding in emerald and amber. The selective
+      colorization creates extreme scroll-stopping contrast — dark pencil world with moments of
+      vivid saturated life. Never fully colored, never fully grey. Always vibrant where it matters.
+    categories: [wisdom, love, goodnight, latenight, morning]
+    weight: high
+
+  silhouette_landscape:
+    description: >
+      A tiny dark human silhouette against a breathtaking landscape — perfect mirror reflection in
+      still water below, large glowing sun or moon on the horizon filling a third of the frame.
+      Expansive negative space creates visual breathing room. Muted pastel palette — lavender dusk,
+      rose gold, soft teal, blush pink. Perfectly symmetrical, meditative, compositionally stunning.
+      The kind of image that makes someone want to be there. Clean, beautiful, universally relatable.
+    categories: [mindfulness, morning, wisdom, goodnight]
+    weight: high
+
+  nocturnal_aesthetic:
+    description: >
+      Atmospheric glowing night scene — a large luminous moon, soft aurora ribbons, or warm lanterns
+      over rooftop silhouettes. Aesthetic digital painting: deep midnight blue and indigo sky, soft
+      luminous lighting, stylized flora glowing in rose and gold (cherry blossoms, firefly meadow,
+      lit windows in a quiet lane). Lo-fi anime background art energy — warm, dreamy, perfectly
+      composed. Makes late-night emotions feel beautiful rather than lonely.
+    categories: [latenight, goodnight, love, mindfulness]
+    weight: high
+
+  minimalist_line_art:
+    description: >
+      A single continuous flowing ink line drawing on off-white textured paper — a face, two figures
+      leaning toward each other, hands clasped, a figure curled in thought. One unbroken stroke that
+      implies the whole scene. Elegantly simple, emotionally precise. Sometimes one colour accent
+      fills a single section (a red heart shape, a blue wash of tears, a golden sun). Feels like
+      something from a poetry collection. Ultra-clean — stops scrolling because the simplicity
+      itself demands attention.
+    categories: [wisdom, love, mindfulness, latenight]
+    weight: high
+
+  metaphorical_digital:
+    description: >
+      Dark cinematic digital painting where the image IS the concept — a person watering a wilting
+      plant in a rainstorm, hands holding broken glass that reflects stars, a figure walking toward
+      a lit doorway in total darkness, two people growing apart like diverging tree roots. Deep earthy
+      palette: charcoal, dusty amber, midnight blue, warm rust. Dramatic directional lighting. The
+      image should convey the quote's meaning BEFORE the words are read. Moody, rich, painterly.
+    categories: [latenight, wisdom, love]
+    weight: high
+
+  # ── WARM & PERSONAL ──────────────────────────────────────────────────────
+
+  vector_girl:
+    description: >
+      Clean flat 2D vector illustration of a stylised girl figure — warm and expressive, not
+      specifically Indian unless the quote calls for it. Attire matches the quote's context: casual
+      modern (hoodie, denim jacket) for everyday themes, traditional (saree, kurti) only when
+      culturally resonant. Bold clear outlines, 4-5 colour palette, character set against a solid
+      or soft gradient background. Modern graphic novel energy — detailed but graphically simplified,
+      never realistic. Pose and expression carry the emotion of the quote.
+    categories: [love, goodnight]
+    weight: high
+
+  vector_couple:
+    description: >
+      Same clean flat 2D vector style — two illustrated figures, body language conveying the quote's
+      emotion (leaning in close, walking together, a meaningful glance, holding hands). Attire is
+      context-driven: modern for contemporary themes, traditional only when the quote calls for it.
+      Warm complementary colour palette. Connection visible in every line — one frame that tells a
+      story. Background kept simple so the figures are the emotional focus.
+    categories: [love, goodnight]
+    weight: high
 
   watercolour_ink:
     description: >
-      Hand-painted watercolour wash on cold-press paper texture — ink outlines, delicate
-      bleeds and blooms, soft botanical or emotional scene (hands, flowers, rain, a face).
-      Very tactile and organic. Feels like something a person made with care.
+      Hand-painted watercolour on cold-press paper texture — delicate bleeds and blooms, ink line
+      details, deeply organic and tactile. Subject echoes the quote's emotion directly: two hands
+      almost touching, a single candle flame against dark, rain on a window, a face in profile
+      looking away. Palette: blush, dusty rose, sage, warm ivory, soft indigo. Feels genuinely
+      handmade, which is why it gets saved — in a feed of clean AI, this feels like someone made it.
     categories: [love, mindfulness, goodnight, wisdom]
     weight: high
 
-  pixel_art:
+  cozy_aesthetic:
     description: >
-      Retro 8-bit or 16-bit scene — blocky but emotionally evocative; limited palette
-      6-8 colours; atmospheric pixel lighting. Scene should feel nostalgic — a bedroom
-      window, a late-night street, a lone figure under stars.
-    categories: [latenight, wisdom, morning]
-    weight: medium
+      A single perfectly composed scene that makes you want to be inside it — but shot with hook
+      energy, not just prettiness. One sharp vivid element in the foreground (a steaming cup, an
+      open journal, a candle flame, a hand holding a book) while everything behind it dissolves into
+      warm bokeh blur. Amber-gold and honey tones. Fairy lights as soft orbs. The "I want this
+      feeling" scroll-stopper — compositionally tight, not wide-angle room shots. Emotionally
+      magnetic because it feels like safety and rest at the same time.
+    categories: [goodnight, latenight, love, mindfulness]
+    weight: high
 
-  paper_cut:
+  # ── CLEAN & BOLD ─────────────────────────────────────────────────────────
+
+  minimalist_vector:
     description: >
-      Layered paper silhouette art — geometric depth through cast shadow, 2-4 colour
-      layers, very clean and graphic. Subjects: mountain range, city skyline, tree,
-      bird in flight. Modern and Instagram-worthy.
-    categories: [wisdom, mindfulness, goodnight]
+      Bold flat 2D poster illustration with no human figures — clean geometric shapes, abstract
+      symbolic imagery: a compass, a lone doorway, a winding staircase, a lighthouse beam, a path
+      splitting in two. 3-4 strong contrasting colours, modern graphic design sensibility. No
+      cultural markers unless the quote is explicitly cultural. Feels like a premium book cover or
+      editorial print — powerful, universally relatable, clean enough to read at thumbnail size.
+    categories: [morning, wisdom, mindfulness]
     weight: medium
 
   minimalist_nature:
     description: >
-      One powerful natural element with extreme negative space — single tree, rain on
-      a dark window, moon over still water, misty mountain ridge at dawn. Quiet and
-      meditative. Muted or monochrome palette. Feels like a held breath.
+      One powerful natural element in extreme negative space — a single bare branch with one blossom,
+      a rain-caught spider web at dawn, crescent moon over perfectly still dark water, a lone tree
+      on a ridge at dusk. Nearly monochrome palette — charcoal, slate, soft sage, ivory. The image
+      holds its breath. Quiet and meditative — pairs with introspective quotes to create emotional
+      amplification through restraint.
     categories: [mindfulness, wisdom, goodnight, latenight]
-    weight: high
-
-  india_landscape:
-    description: >
-      Iconic Indian scene treated cinematically — Rajasthan haveli at golden hour,
-      Kerala backwater mist at dawn, Himalayan trail under stars, Mumbai monsoon street
-      with neon reflections. Painterly or illustrated, never tourist-photo literal.
-    categories: [morning, wisdom, love]
     weight: medium
 
-  cozy_aesthetic:
+  wholesome_doodle:
     description: >
-      Intimate indoor scene — candlelit wooden desk with open journal, chai cup with
-      wisps of steam by a rain-streaked window, fairy lights blurred in bokeh behind
-      an open book. Warm amber-gold tones. The "staying in tonight" aesthetic.
-      Highly relatable for Indian youth.
-    categories: [goodnight, latenight, love, mindfulness]
-    weight: high
-
-  abstract_fluid:
-    description: >
-      Flowing liquid gradients and energy fields — no literal subject, pure colour and
-      form. Should match the quote's emotional temperature: deep indigo + teal for
-      late-night dread; warm amber + rose for love; cool blue + white for clarity.
-    categories: [latenight, mindfulness, wisdom]
+      Simple charming doodle illustration — figures with just enough detail to read the emotion
+      clearly: a hug, two people sharing an umbrella, someone journaling at a window, a small figure
+      cheering at a mountain peak. Thick confident outlines, flat pastel colour fills, no complex
+      shading. Feels like a beloved webcomic panel — instantly readable, warm, extremely shareable.
+      Clean cream or white background. Approachable energy that makes the quote feel like a friend
+      talking to you.
+    categories: [morning, love, latenight]
     weight: medium
+
+  risograph_print:
+    description: >
+      Duotone risograph print effect — the entire image rendered in just two overlapping ink colours
+      with visible halftone grain and slight misregistration between layers for that authentic analog
+      feel. Colour pairings: indigo + mustard, deep teal + warm coral, forest green + cream, navy +
+      rose. Subject can be a figure, a landscape, or abstract forms — but the printing aesthetic
+      itself is the differentiator. Looks hand-printed and indie in a way that smooth digital AI
+      images never do. Unique in the quote content space — immediately recognizable as something
+      different.
+    categories: [wisdom, latenight, mindfulness]
+    weight: medium
+
+  # ── ACCENT — used sparingly for high impact ──────────────────────────────
 
   double_exposure:
     description: >
-      Silhouette of a person (or hands, or a figure from behind) filled with landscape
-      or texture — forest inside a face, city inside a silhouette. Dreamlike blended
-      layers. Cinematic and conceptually rich.
+      Silhouette of a person (or hands, or a figure seen from behind) filled with layered landscape
+      texture — a dense forest growing inside a face, a starry sky inside a silhouette, clouds
+      moving through outstretched hands. Dreamlike double-exposure blend. Cinematic and conceptually
+      rich. Used sparingly — save for quotes with strong metaphorical depth where the technique
+      genuinely amplifies the meaning.
     categories: [latenight, love, wisdom]
-    weight: medium
+    weight: low
 
   dark_surreal:
     description: >
-      Impossible or dreamlike scene — floating objects, gravity-defying elements,
-      inverted world, a figure walking on ceiling while city below is normal. Dark
-      and moody, conceptually tied to the quote's feeling of being untethered or lost.
+      Impossible dream-logic scene — a figure walking calmly on a ceiling while the room below
+      continues normally, a door standing alone in open ocean, a city built upside-down reflected
+      in a lake that shouldn't reflect it. Dark and slightly disorienting. Used rarely — best for
+      late-night existential content where the image should feel as unmoored as the thought itself.
+      When it fits, the impact is high. When it doesn't, skip it.
     categories: [latenight, wisdom]
     weight: low

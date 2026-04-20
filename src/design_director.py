@@ -28,6 +28,7 @@ THEME : {theme}
 {image_hint_block}
 ──────────────────────────────────────────────
 {style_block}
+{recent_styles_block}
 
 ──────────────────────────────────────────────
 AVAILABLE FONTS (pick the one that best matches the quote's emotion):
@@ -96,11 +97,20 @@ Be specific and emotionally precise. The image must DIRECTLY evoke this quote's 
 
 Return ONLY valid JSON — no markdown, no text outside the JSON:
 {{
-  "image_prompt": "Specific illustrated/painted scene that DIRECTLY reflects this quote's emotion. \
-Include: exact subject + action, precise setting, art style (illustration/painting/vector), \
-colour palette with 2-3 hex values, which region (e.g. lower 35%) should be \
-dark soft bokeh where text will live. No text, signs, words, numbers, logos anywhere. \
-Ultra-HD cinematic photography, 9:16 portrait.",
+  "image_prompt": "MUST start with [chosen_style_name] in brackets. Then write 5-6 richly detailed \
+sentences: (1) Exact subject and action — who or what is in the scene, what they are doing, \
+which specific emotion this conveys. (2) Setting and environment — time of day, location, \
+surface textures, weather, atmosphere. (3) Art style execution — the specific technique, \
+medium, brushwork, linework, or texture that defines the chosen style (e.g. 'loose expressive \
+pencil lines with vivid selective color pops on warm cream parchment', or 'flat 2D vector with \
+clean outlines and bold 4-colour palette against a soft gradient'). (4) Full colour palette — \
+4-5 colours with hex values and names (e.g. midnight blue #1a1a3e, warm ochre #c4832a, \
+blush rose #e8a5a5). (5) Lighting — direction, quality, and emotional temperature (e.g. 'single \
+warm candle from the left casting long soft shadows', 'flat overcast light, grey and muted'). \
+(6) Composition — where the subject sits in the 9:16 frame, and which third of the image \
+(lower or upper) stays open, dark, and visually simple so quote text can sit clearly on it. \
+Absolutely no text, signs, words, numbers, logos, or watermarks anywhere in the image. \
+9:16 portrait format.",
 
   "overlay": {{
     "type": "gradient_bottom|gradient_top|gradient_center|solid|vignette",
@@ -111,6 +121,9 @@ Ultra-HD cinematic photography, 9:16 portrait.",
   "font": "bebas|anton|oswald|montserrat|cinzel|raleway|josefin|playfair|merriweather|cormorant|dancing|satisfy|specialelite|lato",
   "text_color": "#FFFFFF",
   "highlight_color": "#RRGGBB",
+  "author_color": "#RRGGBB — colour for the author name. Make it readable but distinct from \
+the quote text. Often the highlight_color, a softer tint of it, or a warm off-white. \
+Only rendered when a real author exists — skip for Unknown/anonymous.",
   "decoration": "rule|quote_mark|none",
   "layout": "big_center|sentence_reveal|full_card",
   "highlight": "3-6 most emotionally powerful CONSECUTIVE words from the quote — \
@@ -171,9 +184,9 @@ bokeh fairy lights behind, lower 40% fades to near-black for text. 9:16 portrait
         "layout": "sentence_reveal",
     },
     "latenight": {
-        "image_prompt": "[abstract_fluid] Deep indigo and teal flowing liquid gradients, \
-swirling energy fields, no literal subject — pure colour and emotional temperature \
-matching 3 AM introspection. 9:16 portrait.",
+        "image_prompt": "[nocturnal_aesthetic] Deep midnight blue sky, large glowing moon, \
+soft lanterns and rooftop silhouettes, warm luminous light against indigo darkness, \
+lo-fi anime background painting energy — lower 40% open and dark for text. 9:16 portrait.",
         "overlay": {"type": "solid", "opacity": 210, "color": "#000005"},
         "font": "specialelite", "text_color": "#E0E0E0",
         "highlight_color": "#00CFCF", "decoration": "none",
@@ -186,7 +199,7 @@ matching 3 AM introspection. 9:16 portrait.",
 # Public API
 # ---------------------------------------------------------------------------
 
-def generate_brief(quote: dict, theme: str) -> dict:
+def generate_brief(quote: dict, theme: str, recent_styles: list[str] | None = None) -> dict:
     """
     Ask Gemini to act as creative director and return a full render spec.
     Falls back to theme defaults if Gemini is unavailable.
@@ -207,15 +220,28 @@ def generate_brief(quote: dict, theme: str) -> dict:
             image_hint_block = (
                 f"IMAGE DIRECTION: {image_hint}\n" if image_hint else ""
             )
+            if recent_styles:
+                unique = list(dict.fromkeys(recent_styles))[-10:]
+                recent_styles_block = (
+                    f"RECENTLY USED STYLES (last 14 days — avoid repeating unless clearly the best fit):\n"
+                    f"  {', '.join(unique)}\n"
+                )
+            else:
+                recent_styles_block = ""
             prompt = _BRIEF_PROMPT.format(
                 text=text, theme=theme,
                 style_block=style_block,
                 image_hint_block=image_hint_block,
+                recent_styles_block=recent_styles_block,
             )
 
+            from google.genai import types as _types
             response = client.models.generate_content(
                 model=GEMINI_TEXT_MODEL,
                 contents=prompt,
+                config=_types.GenerateContentConfig(
+                    automatic_function_calling=_types.AutomaticFunctionCallingConfig(disable=True),
+                ),
             )
             raw = response.text.strip()
             m = re.search(r"\{.*\}", raw, re.DOTALL)

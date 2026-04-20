@@ -351,13 +351,28 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
         _stroke_text(draw, (x, y), line, f, fill=fill, stroke_color=(0, 0, 0), stroke=2)
         y += line_h
 
-    # Author attribution (full frame only)
-    if n_lines is None and author and not author.startswith("@"):
-        a_font = _font("lato_light", 28)
-        a_text = f"— {author}"
-        bb  = a_font.getbbox(a_text)
-        ax  = (IMAGE_WIDTH - (bb[2] - bb[0])) // 2
-        draw.text((ax, y + 10), a_text, font=a_font, fill=(180, 180, 180))
+    # Author attribution — skip when unknown/anonymous/original/empty
+    _SKIP_AUTHOR = {"unknown", "anonymous", "original"}
+    if (n_lines is None and author
+            and author.lower() not in _SKIP_AUTHOR
+            and not author.startswith("@")):
+        # Brief can supply author_color; default to a bright near-white
+        raw_ac = brief.get("author_color", "#CCCCCC")
+        try:
+            ac = tuple(int(raw_ac.lstrip("#")[i:i+2], 16) for i in (0, 2, 4))
+        except Exception:
+            ac = (204, 204, 204)
+        a_font  = _font("lato_light", 38)
+        dash_font = _font("lato_light", 38)
+        # Render "— " in highlight color, author name in author_color
+        dash = "— "
+        d_bb = dash_font.getbbox(dash)
+        n_bb = a_font.getbbox(author)
+        total_w = (d_bb[2] - d_bb[0]) + (n_bb[2] - n_bb[0])
+        ax = (IMAGE_WIDTH - total_w) // 2
+        ay = y + 16
+        draw.text((ax, ay), dash, font=dash_font, fill=hi_color)
+        draw.text((ax + (d_bb[2] - d_bb[0]), ay), author, font=a_font, fill=ac)
 
     _watermark(draw)
     return img

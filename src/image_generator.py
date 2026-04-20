@@ -2,22 +2,22 @@
 Generate background images.
 
 Priority:
-  1. Gemini Imagen 4 Fast  (native 9:16, ~768×1408, ~$0.02/image — primary)
-  2. Gemini Flash Image     (free, square → center-cropped to 9:16)
-  3. Pollinations.ai        (free fallback, variable quality)
-  4. PIL gradient           (zero-dependency final fallback)
+  1. Leonardo AI      (free tier ~150 tokens/day, high quality — primary)
+  2. Gemini Imagen    (paid, excellent quality)
+  3. Gemini Flash     (free Gemini tier)
+  4. Pollinations.ai  (free, no key needed)
+  5. Static images    (assets/static/{theme}.jpg — pre-generated, always works)
+  6. PIL gradient     (zero-dependency absolute last resort)
 
-Model is controlled by GEMINI_IMAGE_MODEL in .env:
-  imagen-4.0-fast-generate-001  ← default, best quality, ~$3.60/mo at 6 posts/day
-  gemini-2.5-flash-image         ← free tier, lower quality
-
-The code auto-detects which API to use based on the model name prefix.
+Set LEONARDO_API_KEY in .env to enable Leonardo.
+Set GEMINI_IMAGE_MODEL in .env to control which Gemini image model is primary.
 """
 import hashlib
 import io
 import logging
 import os
-import random
+import time
+from pathlib import Path
 from urllib.parse import quote as url_encode
 
 import requests
@@ -27,9 +27,125 @@ from src.config import GEMINI_IMAGE_MODEL, IMAGE_HEIGHT, IMAGE_WIDTH
 
 logger = logging.getLogger(__name__)
 
+_STATIC_DIR = Path(__file__).parent.parent / "assets" / "static"
+
+_NO_TEXT = (
+    " CRITICAL: absolutely no text, letters, numbers, words, labels, watermarks, "
+    "signs, banners, or typography of any kind anywhere in the image. "
+    "No photorealistic humans or portrait photography — use illustrations, paintings, "
+    "flat vector art, ink sketches, or abstract art instead. "
+    "Pure visual only — zero written characters."
+)
+
 
 # ---------------------------------------------------------------------------
-# Gemini Imagen 4 Fast — native 9:16, high quality
+# 1. Leonardo AI — free tier, high quality, 9:16 native
+# ---------------------------------------------------------------------------
+
+# Model ID: set LEONARDO_MODEL_ID in .env
+#   Leonardo Phoenix (free):  6bef9f1b-29cb-40c7-b9df-32b51c1f67d3  (v1 API, UUID)
+#   Flux Dev (free tier):     b2614463-296c-462a-9586-aafdb8f00e36  (v1 API, UUID)
+#   Flux 2 Pro (paid, $):     flux-pro-2.0                           (v2 API, string)
+_LEONARDO_MODEL_ID      = os.environ.get("LEONARDO_MODEL_ID", "6bef9f1b-29cb-40c7-b9df-32b51c1f67d3")
+_LEONARDO_FREE_MODEL_ID = "6bef9f1b-29cb-40c7-b9df-32b51c1f67d3"  # Leonardo Phoenix — always free
+_LEONARDO_V1_URL   = "https://cloud.leonardo.ai/api/rest/v1"
+_LEONARDO_V2_URL   = "https://cloud.leonardo.ai/api/rest/v2"
+
+# Models confirmed to use v2 API (string IDs, native aspect_ratio: "9:16")
+# UUID-based models (Phoenix, Flux Dev) use v1 API with explicit width/height
+_LEONARDO_V2_MODELS = {"flux-pro-2.0", "flux-pro-ultra"}
+
+
+def _leonardo(prompt: str, model_id: str | None = None) -> bytes | None:
+    api_key = os.environ.get("LEONARDO_API_KEY", "")
+    if not api_key:
+        return None
+
+    model_id = model_id or _LEONARDO_MODEL_ID
+    is_v2 = model_id in _LEONARDO_V2_MODELS
+    base_url = _LEONARDO_V2_URL if is_v2 else _LEONARDO_V1_URL
+
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type":  "application/json",
+        "accept":        "application/json",
+    }
+    try:
+        # Step 1: create generation
+        if is_v2:
+            # v2 API: model at root, all generation params nested under "parameters"
+            payload = {
+                "public": False,
+                "model":  model_id,
+                "parameters": {
+                    "prompt":   prompt[:1500],
+                    "quantity": 1,
+                    "width":    810,    # 810×1440 = exact 9:16, max quality
+                    "height":   1440,
+                },
+            }
+        else:
+            payload = {
+                "prompt":          prompt[:1500],
+                "modelId":         model_id,
+                "width":           832,
+                "height":          1472,   # ~9:16
+                "num_images":      1,
+                "guidance_scale":  7,
+                "negative_prompt": (
+                    "text, letters, words, watermark, logo, signature, caption, label, "
+                    "typography, graffiti, banner, photorealistic human, portrait photo"
+                ),
+            }
+
+        r = requests.post(f"{base_url}/generations",
+                          headers=headers, json=payload, timeout=30)
+        if r.status_code == 402:
+            logger.warning("Leonardo: daily token quota exhausted")
+            return None
+        if r.status_code != 200:
+            logger.warning(f"Leonardo: API error {r.status_code} {r.text[:120]}")
+            return None
+
+        body = r.json()
+        # v1 wraps under "sdGenerationJob", v2 wraps under "generate"
+        job = body.get("sdGenerationJob") or body.get("generate") or {}
+        gen_id = job.get("generationId")
+        if not gen_id:
+            logger.warning(f"Leonardo: could not find generationId in response: {body}")
+            return None
+        if is_v2 and job.get("cost"):
+            logger.info(f"Leonardo Flux 2 Pro cost: ${job['cost'].get('amount', '?')}")
+        logger.info(f"Leonardo generation started ({gen_id[:8]}…)")
+
+        # Step 2: poll until complete (max 90 s — v2 models are slower)
+        poll_url = f"{_LEONARDO_V1_URL}/generations/{gen_id}"
+        for _ in range(45):
+            time.sleep(2)
+            poll = requests.get(poll_url, headers=headers, timeout=15)
+            gen  = poll.json().get("generations_by_pk", {})
+            status = gen.get("status", "")
+            if status == "COMPLETE":
+                images = gen.get("generated_images", [])
+                if images:
+                    img_url = images[0]["url"]
+                    data = requests.get(img_url, timeout=30).content
+                    logger.info(f"✓ Leonardo ({model_id}) image ({len(data)//1024}KB)")
+                    return data
+                logger.warning("Leonardo: COMPLETE but no images returned")
+                return None
+            if status == "FAILED":
+                logger.warning("Leonardo: generation FAILED")
+                return None
+
+        logger.warning("Leonardo: timed out waiting for generation")
+    except Exception as exc:
+        logger.warning(f"Leonardo failed: {exc}")
+    return None
+
+
+# ---------------------------------------------------------------------------
+# 2. Gemini Imagen — paid, native 9:16
 # ---------------------------------------------------------------------------
 
 def _imagen(prompt: str) -> bytes | None:
@@ -47,12 +163,6 @@ def _imagen(prompt: str) -> bytes | None:
             config=types.GenerateImagesConfig(
                 number_of_images=1,
                 aspect_ratio="9:16",
-                negative_prompt=(
-                    "text, letters, words, numbers, typography, watermark, label, "
-                    "caption, sign, banner, logo, writing, inscription, graffiti, "
-                    "subtitles, code, template placeholder, stock photo watermark, "
-                    "photorealistic human, portrait photography, realistic face"
-                ),
             ),
         )
         if response.generated_images:
@@ -65,14 +175,16 @@ def _imagen(prompt: str) -> bytes | None:
 
 
 # ---------------------------------------------------------------------------
-# Gemini Flash Image — free tier, returns 1024×1024 → center-crop to 9:16
+# 3. Gemini Flash Image — free tier, square → center-crop to 9:16
 # ---------------------------------------------------------------------------
+
+_GEMINI_IMAGE_FALLBACK = os.environ.get("GEMINI_IMAGE_MODEL_FALLBACK", "gemini-2.5-flash-image")
+
 
 def _gemini_flash_image(prompt: str) -> bytes | None:
     api_key = os.environ.get("GEMINI_API_KEY", "")
     if not api_key:
         return None
-    flash_model = "gemini-2.5-flash-image"
     try:
         from google import genai
         from google.genai import types
@@ -80,7 +192,7 @@ def _gemini_flash_image(prompt: str) -> bytes | None:
 
         client = genai.Client(api_key=api_key)
         response = client.models.generate_content(
-            model=flash_model,
+            model=_GEMINI_IMAGE_FALLBACK,
             contents=prompt,
             config=types.GenerateContentConfig(
                 response_modalities=["IMAGE", "TEXT"]
@@ -91,7 +203,6 @@ def _gemini_flash_image(prompt: str) -> bytes | None:
                 data = part.inline_data.data
                 if isinstance(data, str):
                     data = base64.b64decode(data)
-                # Square image → center-crop to 9:16
                 img = Image.open(io.BytesIO(data)).convert("RGB")
                 w, h = img.size
                 target_w = int(h * 9 / 16)
@@ -100,7 +211,7 @@ def _gemini_flash_image(prompt: str) -> bytes | None:
                     img = img.crop((left, 0, left + target_w, h))
                 buf = io.BytesIO()
                 img.save(buf, format="JPEG", quality=95)
-                logger.info(f"✓ {flash_model} image (center-cropped to 9:16)")
+                logger.info(f"✓ {_GEMINI_IMAGE_FALLBACK} image (center-cropped to 9:16)")
                 return buf.getvalue()
     except Exception as exc:
         logger.warning(f"Gemini Flash Image failed: {exc}")
@@ -108,7 +219,7 @@ def _gemini_flash_image(prompt: str) -> bytes | None:
 
 
 # ---------------------------------------------------------------------------
-# Pollinations.ai — free fallback
+# 4. Pollinations.ai — free, no key needed
 # ---------------------------------------------------------------------------
 
 def _pollinations(prompt: str, quote_text: str = "") -> bytes | None:
@@ -132,7 +243,41 @@ def _pollinations(prompt: str, quote_text: str = "") -> bytes | None:
 
 
 # ---------------------------------------------------------------------------
-# PIL gradient — zero-dependency final fallback
+# 5. Static pre-generated images — assets/static/{theme}.jpg
+# ---------------------------------------------------------------------------
+
+def _static_image(theme: str) -> bytes | None:
+    """
+    Return a pre-generated static background.
+    Tries theme-specific first (e.g. assets/static/latenight.jpg),
+    then any available generic image in the folder.
+    """
+    if not _STATIC_DIR.exists():
+        return None
+
+    candidates = []
+    for ext in (".jpg", ".jpeg", ".png"):
+        p = _STATIC_DIR / f"{theme}{ext}"
+        if p.exists():
+            candidates.append(p)
+
+    # Any other static image as last resort
+    for p in sorted(_STATIC_DIR.glob("*.jpg")) + sorted(_STATIC_DIR.glob("*.jpeg")):
+        if p not in candidates:
+            candidates.append(p)
+
+    for p in candidates:
+        try:
+            data = p.read_bytes()
+            logger.info(f"✓ Static fallback image: {p.name}")
+            return data
+        except Exception:
+            continue
+    return None
+
+
+# ---------------------------------------------------------------------------
+# 6. PIL gradient — absolute last resort, zero dependencies
 # ---------------------------------------------------------------------------
 
 _GRADIENT_PALETTES = {
@@ -170,48 +315,69 @@ def _gradient_fallback(theme: str) -> bytes:
 # ---------------------------------------------------------------------------
 
 def get_image(theme: str, image_prompt: str, quote_text: str = "") -> bytes:
-    """Return sharp 9:16 JPEG bytes for the background image."""
+    """Return sharp 9:16 JPEG bytes. Tries each source in priority order.
+
+    Order controlled by IMAGE_PROVIDER_ORDER env var (comma-separated):
+      leonardo, imagen, gemini, pollinations
+    Default: leonardo,imagen,gemini,pollinations
+    Example: IMAGE_PROVIDER_ORDER=imagen,gemini,pollinations  (skip Leonardo)
+    """
     import re as _re
-    # Strip the style tag like "[indian_vector_girl]" — it's metadata for us,
-    # not for the image model. Sending it causes Imagen to render it as text.
     clean_prompt = _re.sub(r'^\[[\w_]+\]\s*', '', image_prompt).strip()
 
-    no_text = (
-        " CRITICAL: absolutely no text, letters, numbers, words, labels, watermarks, "
-        "signs, banners, or typography of any kind anywhere in the image. "
-        "No photorealistic humans or portrait photography — use illustrations, paintings, "
-        "flat vector art, ink sketches, or abstract art instead. "
-        "Pure visual only — zero written characters."
-    )
     if len(clean_prompt) > 100:
-        prompt = clean_prompt.rstrip(" .") + "." + no_text
+        prompt = clean_prompt.rstrip(" .") + "." + _NO_TEXT
     else:
-        prompt = clean_prompt + no_text + " Illustrated or painterly style, 9:16 portrait."
+        prompt = clean_prompt + _NO_TEXT + " Illustrated or painterly style, 9:16 portrait."
 
-    # Route by model type
-    if "imagen" in GEMINI_IMAGE_MODEL:
-        logger.info(f"Image gen — {GEMINI_IMAGE_MODEL} (native 9:16)")
-        img = _imagen(prompt)
-        if img:
-            return _ensure_size(img)
-        # Fallback chain
-        logger.info("Imagen failed — trying Gemini Flash Image…")
-        img = _gemini_flash_image(prompt)
-        if img:
-            return _ensure_size(img)
-    else:
-        # gemini-2.5-flash-image or similar
-        logger.info(f"Image gen — {GEMINI_IMAGE_MODEL}")
-        img = _gemini_flash_image(prompt)
-        if img:
-            return _ensure_size(img)
+    order = [
+        p.strip().lower()
+        for p in os.environ.get("IMAGE_PROVIDER_ORDER", "leonardo,imagen,gemini,pollinations").split(",")
+        if p.strip()
+    ]
 
-    logger.info("Gemini image failed — trying Pollinations…")
-    img = _pollinations(prompt, quote_text)
+    for provider in order:
+        if provider == "leonardo" and os.environ.get("LEONARDO_API_KEY"):
+            logger.info(f"Image gen — Leonardo ({_LEONARDO_MODEL_ID})")
+            img = _leonardo(prompt)
+            if img:
+                return _ensure_size(img)
+            if _LEONARDO_MODEL_ID != _LEONARDO_FREE_MODEL_ID:
+                logger.info(f"Leonardo {_LEONARDO_MODEL_ID} failed — retrying with free Phoenix…")
+                img = _leonardo(prompt, model_id=_LEONARDO_FREE_MODEL_ID)
+                if img:
+                    return _ensure_size(img)
+            logger.info("Leonardo failed — next provider…")
+
+        elif provider == "imagen" and "imagen" in GEMINI_IMAGE_MODEL:
+            logger.info(f"Image gen — {GEMINI_IMAGE_MODEL}")
+            img = _imagen(prompt)
+            if img:
+                return _ensure_size(img)
+            logger.info(f"Imagen failed — next provider…")
+
+        elif provider == "gemini":
+            logger.info(f"Image gen — {_GEMINI_IMAGE_FALLBACK}")
+            img = _gemini_flash_image(prompt)
+            if img:
+                return _ensure_size(img)
+            logger.info("Gemini image failed — next provider…")
+
+        elif provider == "pollinations":
+            logger.info("Image gen — Pollinations")
+            img = _pollinations(prompt, quote_text)
+            if img:
+                return _ensure_size(img)
+            logger.info("Pollinations failed — next provider…")
+
+    # 5. Static pre-generated images
+    logger.info("Pollinations failed — trying static image bank…")
+    img = _static_image(theme)
     if img:
         return _ensure_size(img)
 
-    logger.info("Using gradient fallback")
+    # 6. PIL gradient (always works)
+    logger.info("All image sources failed — using PIL gradient")
     return _gradient_fallback(theme)
 
 

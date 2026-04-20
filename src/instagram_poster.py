@@ -164,7 +164,8 @@ Return ONLY valid JSON:
 
 def build_caption(quote: dict, theme_cfg: dict) -> str:
     text       = quote["text"].strip()
-    author     = quote.get("author", "Unknown").strip()
+    _raw_author = quote.get("author", "").strip()
+    author      = "" if _raw_author.lower() in ("unknown", "anonymous", "") else _raw_author
     theme_name = theme_cfg.get("name", "Daily Wisdom")
 
     api_key = os.environ.get("GEMINI_API_KEY", "")
@@ -181,7 +182,14 @@ def build_caption(quote: dict, theme_cfg: dict) -> str:
                 author=author,
                 theme=theme_name,
             )
-            raw = client.models.generate_content(model=GEMINI_TEXT_MODEL, contents=prompt).text
+            from google.genai import types as _types
+            raw = client.models.generate_content(
+                model=GEMINI_TEXT_MODEL,
+                contents=prompt,
+                config=_types.GenerateContentConfig(
+                    automatic_function_calling=_types.AutomaticFunctionCallingConfig(disable=True),
+                ),
+            ).text
             m = re.search(r"\{.*\}", raw, re.DOTALL)
             if m:
                 data = json.loads(m.group())

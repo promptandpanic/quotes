@@ -23,7 +23,7 @@ import yaml
 
 logger = logging.getLogger(__name__)
 
-MAX_ATTEMPTS       = 6
+MAX_ATTEMPTS       = 3
 IMAGE_JUDGE_MAX    = 3   # kept in image_judge.py — noted here for clarity
 MIN_QUALITY_SCORE  = 7
 MIN_UNIQUENESS     = 6   # hard floor — generic/overexposed quotes always rejected
@@ -62,8 +62,8 @@ _CLICHE_MAP = {
 def _build_real_prompt(category: str, max_words: int, topic_block: str) -> str:
     cliches = _CLICHE_MAP.get(category, '"overused clichés"')
     return f"""\
-You are finding real quotes for @_daily_dose_of_wisdom__, an Indian Instagram page \
-for emotionally intelligent youth aged 18-35.
+You are finding and evaluating a real quote for @_daily_dose_of_wisdom__, \
+an Indian Instagram page for emotionally intelligent youth aged 18-35.
 
 Find ONE real quote — actually written or spoken by a known person (author, philosopher, \
 filmmaker, poet, scientist, athlete, historical figure, or contemporary thinker). \
@@ -71,90 +71,64 @@ The quote must be genuinely attributed — you must be confident the person said
 
 {topic_block}
 
-Rules:
+Rules for the quote:
 - REAL quote by a REAL, named person — not "Unknown" or "Anonymous"
 - Maximum {max_words} words total. Hard limit.
 - Must resonate with an Indian aged 18-35 in 2025 — timeless but not cliché
 - Must feel RARE — not one of the top 1000 most quoted lines on the internet
-- Avoid massively overexposed lines people have seen a thousand times
 - No clichés: {cliches}
-- Return ONLY valid JSON — no markdown, no explanation:
-  {{"quote": "the exact quote text", "author": "Full Name"}}
+
+Then score it strictly on these 4 dimensions (1-10 each):
+1. virality     — Would people screenshot and share this?
+2. engagement   — Would an Indian aged 18-30 feel this in their chest?
+3. uniqueness   — Is this rare? Score 1-4 if widely circulated online.
+4. freshness    — Does it feel nothing like a generic motivational poster?
+
+Hard scoring rules:
+- uniqueness < 6 → accept must be false regardless of other scores
+- Generic self-help language → accept must be false
+
+Return ONLY valid JSON — no markdown, no explanation:
+{{"quote":"the exact quote text","author":"Full Name","score":<avg 1-10>,\
+"virality":<1-10>,"engagement":<1-10>,"uniqueness":<1-10>,"freshness":<1-10>,\
+"reason":"<one sentence>","accept":<true if score>=7 AND uniqueness>=6, else false>}}
 """
 
 
 def _build_llm_prompt(category: str, max_words: int, topic_block: str) -> str:
     cliches = _CLICHE_MAP.get(category, '"overused clichés"')
     return f"""\
-You are writing an original quote for @_daily_dose_of_wisdom__, an Indian Instagram page \
-for emotionally intelligent youth aged 18-35.
+You are writing and evaluating an original quote for @_daily_dose_of_wisdom__, \
+an Indian Instagram page for emotionally intelligent youth aged 18-35.
 
 Write ONE original quote — something that feels like it was written by a thoughtful, \
 specific human mind. It should feel surprising and earned, not like a motivational poster.
 
 {topic_block}
 
-Rules:
+Rules for the quote:
 - ORIGINAL — not attributed to any real person
 - Maximum {max_words} words total. Hard limit.
 - Specific and concrete — one precise feeling or truth, not a vague generality
 - Must resonate with an Indian aged 18-30 at an emotional gut level
 - Should feel like something you have NEVER seen on Instagram before
 - No clichés: {cliches}
-- Return ONLY valid JSON — no markdown, no explanation:
-  {{"quote": "the quote text", "author": "Original"}}
+
+Then score it strictly on these 4 dimensions (1-10 each):
+1. virality     — Would people screenshot and share this?
+2. engagement   — Would an Indian aged 18-30 feel this in their chest?
+3. uniqueness   — Does it feel genuinely fresh and unheard-of?
+4. freshness    — Does it feel nothing like a generic motivational poster?
+
+Hard scoring rules:
+- uniqueness < 6 → accept must be false
+- Generic self-help language → accept must be false
+
+Return ONLY valid JSON — no markdown, no explanation:
+{{"quote":"the quote text","author":"Original","score":<avg 1-10>,\
+"virality":<1-10>,"engagement":<1-10>,"uniqueness":<1-10>,"freshness":<1-10>,\
+"reason":"<one sentence>","accept":<true if score>=7 AND uniqueness>=6, else false>}}
 """
-
-
-# ---------------------------------------------------------------------------
-# Universal quality validation
-# ---------------------------------------------------------------------------
-
-_QUALITY_PROMPT = '''\
-You are a strict quality judge for @_daily_dose_of_wisdom__, \
-an Indian Instagram page for emotionally intelligent youth aged 18-35.
-
-Quote: "{quote}" — {author}
-Theme: {theme}
-Mode: {mode}
-
-Score 1-10 on each — be honest and strict:
-
-1. virality     — Would people screenshot and share this? Does it land like something \
-worth saving?
-2. engagement   — Would an Indian aged 18-30 feel this in their chest? \
-(18-30 is the primary target; 18-45 is acceptable)
-3. uniqueness   — Is this quote rare and hard to find? \
-Score 1-4 if it's widely circulated online. Score 7+ only if genuinely obscure or original.
-4. freshness    — Does it feel completely different from generic Instagram quotes? \
-No motivational-poster energy.
-
-Hard rules:
-- uniqueness < 6 → always reject regardless of other scores
-- Generic self-help language → always reject
-
-Respond ONLY with valid JSON (no markdown):
-{{"score":<integer average 1-10>,"virality":<1-10>,"engagement":<1-10>,\
-"uniqueness":<1-10>,"freshness":<1-10>,"reason":"<one sentence>",\
-"accept":<true if score>=7 AND uniqueness>=6, else false>}}
-'''
-
-
-def _validate_quote(client, text: str, author: str, theme: str, mode: str) -> dict:
-    import json
-    prompt = _QUALITY_PROMPT.format(
-        quote=text.replace('"', '\\"'),
-        author=author,
-        theme=theme,
-        mode=mode,
-    )
-    raw = _call(client, prompt)
-    m = re.search(r"\{.*\}", raw, re.DOTALL)
-    if not m:
-        raise ValueError(f"Bad JSON from validator: {raw[:150]}")
-    result = json.loads(m.group())
-    result["accept"] = bool(result.get("accept", False)) and int(result.get("uniqueness", 0)) >= MIN_UNIQUENESS
-    return result
 
 
 # ---------------------------------------------------------------------------
@@ -194,7 +168,14 @@ def _gemini_client():
 
 def _call(client, prompt: str) -> str:
     from src.config import GEMINI_TEXT_MODEL
-    resp = client.models.generate_content(model=GEMINI_TEXT_MODEL, contents=prompt)
+    from google.genai import types
+    resp = client.models.generate_content(
+        model=GEMINI_TEXT_MODEL,
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
+        ),
+    )
     return resp.text.strip()
 
 
@@ -274,13 +255,19 @@ def _generate_with_validation(
     for attempt in range(1, MAX_ATTEMPTS + 1):
         logger.info(f"  Quote attempt {attempt}/{MAX_ATTEMPTS}…")
         try:
-            raw    = _call(client, prompt)
-            parsed = _parse_quote_json(raw)
-            if not parsed:
+            import json as _json
+            raw = _call(client, prompt)
+            m = re.search(r"\{.*\}", raw, re.DOTALL)
+            if not m:
+                time.sleep(RETRY_DELAY)
+                continue
+            data = _json.loads(m.group())
+            text   = _clean_text(data.get("quote", ""))
+            author = data.get("author", "").strip()
+            if not text or not author:
                 time.sleep(RETRY_DELAY)
                 continue
 
-            text, author = parsed
             wc = len(text.split())
             if wc < 4 or wc > max_words + 5:
                 logger.info(f"    Skipped — word count {wc}")
@@ -291,15 +278,16 @@ def _generate_with_validation(
                 time.sleep(RETRY_DELAY)
                 continue
 
-            logger.info(f"    Retrieved: \"{text[:80]}\" — {author}")
-
-            scores = _validate_quote(client, text, author, theme, mode)
-            score      = int(scores.get("score", 0))
-            uniqueness = int(scores.get("uniqueness", 0))
+            score      = int(data.get("score", 0))
+            uniqueness = int(data.get("uniqueness", 0))
+            accept     = bool(data.get("accept", False)) and uniqueness >= MIN_UNIQUENESS
             logger.info(
-                f"    Quality: score={score}  virality={scores.get('virality')}  "
-                f"engagement={scores.get('engagement')}  uniqueness={uniqueness}  "
-                f"freshness={scores.get('freshness')} | {scores.get('reason', '')}"
+                f"    \"{text[:80]}\" — {author}"
+            )
+            logger.info(
+                f"    Quality: score={score}  virality={data.get('virality')}  "
+                f"engagement={data.get('engagement')}  uniqueness={uniqueness}  "
+                f"freshness={data.get('freshness')} | {data.get('reason', '')}"
             )
 
             candidate = {
@@ -311,7 +299,7 @@ def _generate_with_validation(
                 "source":     "gemini_real" if mode == "real_author" else "gemini_original",
             }
 
-            if scores.get("accept"):
+            if accept:
                 logger.info(f"  ✓ Accepted (score {score}, uniqueness {uniqueness})")
                 return candidate
 
@@ -319,6 +307,10 @@ def _generate_with_validation(
                 best = candidate
 
         except Exception as exc:
+            err = str(exc)
+            if "RESOURCE_EXHAUSTED" in err or "429" in err:
+                logger.warning(f"  429 / quota exhausted — skipping Gemini entirely")
+                return None
             logger.warning(f"  Attempt {attempt} error: {exc}")
         time.sleep(RETRY_DELAY)
 

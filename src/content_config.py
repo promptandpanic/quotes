@@ -22,9 +22,9 @@ _styles = _load("styles.yml")["styles"]
 # Image hints per wisdom tradition — passed to design director so it can
 # choose an illustration style that matches the cultural context
 _TRADITION_IMAGE_HINTS = {
-    "African proverb": (
-        "Rich illustrated African scene — bold tribal patterns, warm terracotta sunset, "
-        "baobab tree silhouette, or village elder. Vibrant flat illustration, NOT photorealistic."
+    "Indian wisdom": (
+        "Indian Madhubani or miniature painting style — lotus flowers, peacock, ancient temple, "
+        "or Vedic symbols. Vibrant illustrated folk art, NOT photorealistic."
     ),
     "Japanese wisdom": (
         "Japanese sumi-e ink painting — minimalist zen garden, bamboo grove, cherry blossoms, "
@@ -34,17 +34,13 @@ _TRADITION_IMAGE_HINTS = {
         "Traditional Chinese ink wash painting — misty mountain peaks, pine trees, flowing river, "
         "or dragon motif. Brushstroke illustrated style."
     ),
-    "Indian wisdom": (
-        "Indian Madhubani or miniature painting style — lotus flowers, peacock, ancient temple, "
-        "or Vedic symbols. Vibrant illustrated folk art, NOT photorealistic."
-    ),
-    "old man wisdom": (
+    "elder wisdom": (
         "Painterly portrait of an ancient wise elder — long white beard, deep wrinkles, "
         "warm candlelight glow. Oil-painting or pencil illustration style, NOT a photograph."
     ),
-    "animal kingdom": (
-        "Majestic wildlife digital illustration — the animal prominently in its natural habitat, "
-        "dramatic cinematic lighting, painterly brushwork. Illustrated art, NOT photorealistic."
+    "nature wisdom": (
+        "Serene nature illustration — lush forest, flowing river, quiet mountain, or patient animal "
+        "in its habitat. Soft painterly brushwork, warm natural light. Illustrated, NOT photorealistic."
     ),
 }
 
@@ -141,9 +137,9 @@ def get_topic_info(category: str) -> dict:
             random.shuffle(spiritual)
             lines = "\n".join(f"  - {t}" for t in spiritual[:5])
             topic_block = (
-                "TODAY: Find a real attributed quote from a meditation or spiritual teacher.\n"
-                f"Priority sources (pick one):\n{lines}\n\n"
-                "IMPORTANT: You MUST attribute the quote correctly to the real person."
+                "TODAY: Find a real verified quote from a well-known meditation or spiritual teacher.\n"
+                f"Focus on one of these themes:\n{lines}\n\n"
+                "IMPORTANT: Attribute the quote correctly to the real person who said it."
             )
             return {"topic_block": topic_block, "image_hint": image_hint}
 

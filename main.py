@@ -29,7 +29,7 @@ from src.notifier import notify_failure, notify_success
 from src.quote_generator import generate_quote
 from src.video_creator import create_reel
 
-MAX_DESIGN_ATTEMPTS = 4
+MAX_DESIGN_ATTEMPTS = 3
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -78,7 +78,7 @@ def _clean_output() -> None:
 
 
 def _save_locally(image_bytes: bytes, video_bytes: bytes | None,
-                  quote: dict, brief: dict, theme_key: str) -> None:
+                  quote: dict, brief: dict, theme_key: str, caption: str) -> None:
     out_dir = Path("output")
     out_dir.mkdir(exist_ok=True)
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -99,6 +99,13 @@ def _save_locally(image_bytes: bytes, video_bytes: bytes | None,
                 f"zone={brief.get('text_zone')}")
     logger.info(f"[DRY_RUN] Highlight: \"{brief.get('highlight')}\"")
     logger.info(f"[DRY_RUN] Mood note: {brief.get('mood_note', '')}")
+
+    # Print caption ready to copy-paste for manual upload
+    print("\n" + "─" * 60)
+    print("CAPTION (copy-paste for Instagram):")
+    print("─" * 60)
+    print(caption)
+    print("─" * 60 + "\n")
 
 
 # ---------------------------------------------------------------------------
@@ -123,10 +130,13 @@ def run() -> bool:
     posted_hashes = db.active_hashes()
     logger.info(f"Repeat window: {__import__('src.config', fromlist=['REPEAT_WINDOW_DAYS']).REPEAT_WINDOW_DAYS} days  ({len(posted_hashes)} active hashes)")
 
-    # 3. Pull 90-day topic hints to prevent Gemini repeating same themes
-    recent_hints = db.recent_topic_hints(days=90, max_hints=30)
+    # 3. Pull recent topic hints and styles to prevent repetition
+    recent_hints  = db.recent_topic_hints(days=90, max_hints=30)
+    recent_styles = db.recent_styles(max_entries=20)
     if recent_hints:
         logger.info(f"Passing {len(recent_hints)} recent topic hints to avoid repetition")
+    if recent_styles:
+        logger.info(f"Passing {len(recent_styles)} recent style names to design director")
 
     # 4. Generate quote (all themes now use Gemini)
     logger.info("Generating quote with Gemini…")
@@ -141,7 +151,7 @@ def run() -> bool:
     for attempt in range(1, MAX_DESIGN_ATTEMPTS + 1):
         logger.info(f"Design attempt {attempt}/{MAX_DESIGN_ATTEMPTS}…")
 
-        brief = generate_brief(quote, theme_key)
+        brief = generate_brief(quote, theme_key, recent_styles=recent_styles)
 
         logger.info("Generating background image…")
         image_bytes_raw = get_image(
@@ -201,7 +211,8 @@ def run() -> bool:
 
     # --- DRY_RUN: save locally and exit ---
     if DRY_RUN:
-        _save_locally(final_image, video_bytes, quote, brief, theme_key)
+        caption = build_caption(quote, theme_cfg)
+        _save_locally(final_image, video_bytes, quote, brief, theme_key, caption)
         logger.info("✅ Dry-run complete. Check output/ directory.")
         return True
 
@@ -240,8 +251,11 @@ def run() -> bool:
         notify_failure(theme_cfg["name"], quote, "Instagram API did not return a post ID")
         return False
 
-    # 12. Record and save
-    db.mark_posted(quote, theme_key)
+    # 12. Record and save — extract style name from image_prompt prefix e.g. "[ghibli_anime] ..."
+    import re as _re
+    _style_m = _re.match(r'\[(\w+)\]', brief.get("image_prompt", ""))
+    style_used = _style_m.group(1) if _style_m else ""
+    db.mark_posted(quote, theme_key, style=style_used)
     saved = db.save()
     if saved:
         logger.info("✓ Quote recorded in DB")
