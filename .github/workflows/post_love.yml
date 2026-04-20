@@ -2,7 +2,8 @@ name: Post Love & Relationships
 
 on:
   schedule:
-    - cron: "30 9 * * *"   # 09:30 UTC = 3:00 PM IST
+    - cron: "30 15 * * *"   # 03:30 PM IST
+      timezone: "Asia/Kolkata"
   workflow_dispatch:
 
 permissions:

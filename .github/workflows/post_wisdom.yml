@@ -2,7 +2,8 @@ name: Post Life Wisdom
 
 on:
   schedule:
-    - cron: "30 5 * * *"   # 05:30 UTC = 11:00 AM IST
+    - cron: "30 11 * * *"   # 11:30 AM IST
+      timezone: "Asia/Kolkata"
   workflow_dispatch:
 
 permissions:
