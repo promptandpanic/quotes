@@ -94,6 +94,10 @@ def post_reel(video_url: str, caption: str,
         data=payload,
         timeout=30,
     )
+    if resp.status_code != 200 and "location_id" in payload:
+        logger.warning(f"Reel container failed with location — retrying without: {resp.text[:200]}")
+        payload.pop("location_id")
+        resp = requests.post(f"{GRAPH_BASE}/{_user_id()}/media", data=payload, timeout=30)
     if resp.status_code != 200:
         logger.error(f"Reel container creation failed: {resp.status_code} {resp.text[:300]}")
         return None
@@ -118,16 +122,17 @@ def post_image(image_url: str, caption: str) -> str | None:
     Returns the post ID on success, None on failure.
     """
     logger.info("Creating image media container…")
-    resp = requests.post(
-        f"{GRAPH_BASE}/{_user_id()}/media",
-        data={
-            "image_url":   image_url,
-            "caption":     caption,
-            "location_id": _LOCATION_ID,
-            "access_token": _access_token(),
-        },
-        timeout=30,
-    )
+    img_payload = {
+        "image_url":   image_url,
+        "caption":     caption,
+        "location_id": _LOCATION_ID,
+        "access_token": _access_token(),
+    }
+    resp = requests.post(f"{GRAPH_BASE}/{_user_id()}/media", data=img_payload, timeout=30)
+    if resp.status_code != 200 and "location_id" in img_payload:
+        logger.warning(f"Image container failed with location — retrying without: {resp.text[:200]}")
+        img_payload.pop("location_id")
+        resp = requests.post(f"{GRAPH_BASE}/{_user_id()}/media", data=img_payload, timeout=30)
     if resp.status_code != 200:
         logger.error(f"Image container failed: {resp.status_code} {resp.text[:300]}")
         return None
