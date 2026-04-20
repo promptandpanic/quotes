@@ -19,43 +19,52 @@ def _load(filename: str) -> dict:
 _topics = _load("topics.yml")["categories"]
 _styles = _load("styles.yml")["styles"]
 
-# Portrait image hints for featured authors — painterly/illustrated style only
+# Evocative scene hints for featured authors — NO human figures, symbols and atmosphere only
 _AUTHOR_IMAGE_HINTS = {
     "Rumi": (
-        "Illustrated portrait of Rumi — warm golden candlelight, Persian manuscript textures, "
-        "flowing dark robes, soft bokeh background with calligraphy. Oil-painting style, NOT photorealistic."
+        "Persian manuscript unrolling in golden candlelight, intricate Islamic geometric patterns, "
+        "swirling whirling-dervish fabric trails without any figure, rose petals on dark stone floor, "
+        "warm amber and deep crimson palette. Painterly oil illustration, no people."
     ),
     "Swami Vivekananda": (
-        "Illustrated portrait of Swami Vivekananda — saffron robes, deep confident gaze, "
-        "soft temple or Himalayan backdrop. Painterly Indian portrait style, NOT photorealistic."
+        "Saffron robes draped over ancient stone temple steps, single flame oil lamp, lotus pond "
+        "at dawn with Himalayan peaks in mist, Om symbol carved in weathered stone. "
+        "Painterly Indian miniature style, no human figures."
     ),
     "Kabir Das": (
-        "Illustrated portrait of Kabir Das — simple weaver's loom setting, earthy tones, "
-        "humble expression, warm village light. Madhubani-inspired folk art portrait style."
+        "Handloom weaving threads catching morning light in a humble mud-walled workshop, "
+        "earthen oil lamp, marigold garland on a wooden loom, soft village dawn colours — "
+        "ochre, terracotta, warm gold. Madhubani folk art illustration, no people."
     ),
     "APJ Abdul Kalam": (
-        "Illustrated portrait of APJ Abdul Kalam — warm smile, windswept hair, starry sky or "
-        "rocket silhouette in background. Soft watercolor portrait style, NOT photorealistic."
+        "Rocket launching into a vast starry night sky over the Indian coast, books and technical "
+        "blueprints on a lit desk, crescent moon, warm amber desk lamp glow against deep navy. "
+        "Watercolour illustration style, no human figures."
     ),
     "Khalil Gibran": (
-        "Illustrated portrait of Khalil Gibran — moody oil-painting style, dark romantic background, "
-        "Lebanese cedar or night sky. Classic early-1900s portrait painterly aesthetic."
+        "Ancient Lebanese cedar tree alone on a cliff above the Mediterranean at dusk, open book "
+        "with ink quill, moody indigo and burnt sienna sky, distant lighthouse. "
+        "Romantic oil-painting illustration, no people."
     ),
     "Paulo Coelho": (
-        "Illustrated portrait of Paulo Coelho — warm desert dunes or open road in background, "
-        "thoughtful gaze, adventurous spirit. Soft painterly watercolor style, NOT photorealistic."
+        "Desert caravan trail winding toward a distant horizon at golden hour, single lantern on "
+        "cracked earth, open road, sparse stars appearing in a deep orange-to-indigo sky. "
+        "Warm watercolour travel illustration, no human figures."
     ),
     "Chanakya": (
-        "Illustrated portrait of ancient Chanakya — wise elder, sharp eyes, scrolls or ancient "
-        "Pataliputra palace backdrop. Indian ink-wash or miniature painting style."
+        "Ancient Pataliputra palace courtyard at night, clay oil lamps on stone steps, rolled "
+        "Sanskrit scrolls, iron chess pieces on a stone slab, moonlight through carved stone "
+        "lattice. Indian ink-wash illustration, no people."
     ),
     "Rabindranath Tagore": (
-        "Illustrated portrait of Rabindranath Tagore — long white beard, flowing robes, soft Bengal "
-        "light, nature backdrop. Painterly impressionist portrait style, NOT photorealistic."
+        "Lush Bengal riverbank at dawn — water hyacinth, mango grove, a wooden writing desk "
+        "with ink and parchment by an open window, soft golden light filtering through leaves. "
+        "Impressionist watercolour illustration, no human figures."
     ),
     "Osho": (
-        "Illustrated portrait of Osho — serene expression, layered robes, soft ethereal light and "
-        "abstract spiritual geometry in background. Dreamlike painterly style."
+        "Zen garden with raked sand patterns, single burning incense stick, abstract light "
+        "geometry dissolving into deep space, lotus floating on still dark water, soft purple "
+        "and white palette. Dreamlike abstract painterly illustration, no people."
     ),
 }
 
