@@ -51,9 +51,17 @@ _FONT_URLS = {
     "playfair_it":  ("playfair_it.ttf",      "https://fonts.gstatic.com/s/playfairdisplay/v40/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKeiukDQ.ttf"),
     "merriweather": ("merriweather_bold.ttf","https://fonts.gstatic.com/s/merriweather/v33/u-4D0qyriQwlOrhSvowK_l5UcA6zuSYEqOzpPe3HOZJ5eX1WtLaQwmYiScCmDxhtNOKl8yDrOSAqEw.ttf"),
     "cormorant":    ("cormorant_bold.ttf",   "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3smX5slCNuHLi8bLeY9MK7whWMhyjYrGFEsdtdc62E6zd5LDfOjw.ttf"),
+    # Geometric sans (Instagram-trendy)
+    "jost":         ("jost_bold.ttf",        "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7mxEIgVG.ttf"),
+    "worksans":     ("worksans_bold.ttf",    "https://fonts.gstatic.com/s/worksans/v24/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K67QNig.ttf"),
+    # Display serif (emotional / editorial)
+    "spectral":     ("spectral_bold.ttf",    "https://github.com/google/fonts/raw/main/ofl/spectral/Spectral-Bold.ttf"),
+    "vollkorn":     ("vollkorn_bold.ttf",    "https://fonts.gstatic.com/s/vollkorn/v30/0ybgGDoxxrvAnPhYGzMlQLzuMasz6Df213auGQ.ttf"),
     # Script
     "dancing":      ("dancing.ttf",          "https://fonts.gstatic.com/s/dancingscript/v29/If2cXTr6YS-zF4S-kcSWSVi_sxjsohD9F50Ruu7B1i0HTQ.ttf"),
     "satisfy":      ("satisfy.ttf",          "https://fonts.gstatic.com/s/satisfy/v22/rP2Hp2yn6lkG50LoOZQ.ttf"),
+    # Handwriting (casual / child-like, great for personal / relatable content)
+    "caveat":       ("caveat_bold.ttf",      "https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjRV6SII.ttf"),
     # Texture / character
     "specialelite": ("specialelite.ttf",     "https://github.com/google/fonts/raw/main/apache/specialelite/SpecialElite-Regular.ttf"),
     # Utility (always downloaded — fallback font)
