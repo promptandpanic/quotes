@@ -7,7 +7,7 @@ from datetime import timezone, timedelta
 # ---------------------------------------------------------------------------
 
 # Text models
-GEMINI_TEXT_MODEL          = os.environ.get("GEMINI_TEXT_MODEL",          "gemini-3-flash-preview")
+GEMINI_TEXT_MODEL          = os.environ.get("GEMINI_TEXT_MODEL",          "gemini-3.1-pro-preview")
 GEMINI_TEXT_MODEL_FALLBACK = os.environ.get("GEMINI_TEXT_MODEL_FALLBACK", "gemini-2.5-flash")
 
 # Image models — Leonardo is tried first (free), then Gemini
