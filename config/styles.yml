@@ -16,73 +16,86 @@ styles:
 
   anthropomorphic_vintage:
     description: >
-      Vintage illustrated animals living as humans — a fox in a tailored jacket reading a letter,
-      a rabbit at a café table deep in thought, a bear writing by warm lamplight. Style: 1930s–50s
-      children's book illustration for adults. Muted earth tones — warm ochre, forest green,
-      burgundy, cream. Aged paper texture, fine detailed linework, scenes with quiet emotional
-      subtext. Nobody else does this in quote content — it stops scrolling instantly.
+      Vintage illustrated animals living as humans — a fox in a burgundy tailored jacket reading a
+      letter by candlelight, a rabbit at a cobalt-blue café table deep in thought, a bear writing
+      by warm amber lamplight. Style: 1930s–50s children's book illustration for adults. CONTRAST
+      IS KEY: vivid jewel-tone accent (cobalt, crimson, forest green) against warm parchment
+      backgrounds — not muted, not washed-out. Aged paper texture, fine detailed linework, emotionally
+      rich scenes. The bold saturated character against the warm paper background stops scrolling
+      instantly — nobody else in the quote space does this.
     categories: [morning, wisdom, love, latenight]
     weight: high
 
   ghibli_anime:
     description: >
-      2D hand-drawn animation frame inspired by classic Japanese animated cinema — a small figure
-      in a vast landscape, glowing forest spirits in mist, rain-soaked streets with warm window
-      light, someone watching a starry sky. Soft flat colors, that unmistakable melancholy warmth.
-      1990s anime aesthetic — slightly painterly, perfectly composed, emotionally rich. Extremely
-      save-worthy. Attire and setting should match the quote's mood, not be specifically Indian.
+      2D hand-drawn animation frame inspired by classic Japanese animated cinema. VISUAL HOOK:
+      extreme contrast between a tiny warm-lit figure and a vast, dramatically colored landscape —
+      electric indigo sky meeting a glowing gold horizon, or a deep teal forest split by a single
+      shaft of white light. Soft flat colors but with one punchy element that dominates: a moon so
+      large it fills half the sky, cherry blossoms that are aggressively pink against a near-black
+      background. 1990s anime aesthetic — painterly, perfectly composed, emotionally overwhelming.
+      The contrast between intimate figure and epic scale is the scroll-stopper.
     categories: [morning, love, goodnight, mindfulness, wisdom]
     weight: high
 
   whimsical_sketch:
     description: >
-      Hand-drawn pencil sketch base on warm cream or parchment — loose expressive lines, slightly
-      imperfect. BUT with bold strategic color pops against the greyscale: flowers that burst in
-      cobalt blue and golden yellow while the rest stays graphite, a figure rendered in grey except
-      for a single red thread or vivid scarf, leaves exploding in emerald and amber. The selective
-      colorization creates extreme scroll-stopping contrast — dark pencil world with moments of
-      vivid saturated life. Never fully colored, never fully grey. Always vibrant where it matters.
+      Hand-drawn pencil sketch on warm cream — loose expressive lines. MAXIMUM CONTRAST RULE: the
+      selective color must be SHOCKING against the greyscale base. Think: flowers exploding in
+      electric cobalt and acid yellow while everything else is graphite, a figure entirely grey
+      except for one blood-red thread that snakes through the whole composition, leaves bursting in
+      neon emerald and burnt orange. The color pop should feel almost violent against the grey —
+      that extreme tonal jump is what freezes the thumb mid-scroll. Never fully colored, never
+      fully grey. The single vivid element must be the first thing the eye sees.
     categories: [wisdom, love, goodnight, latenight, morning]
     weight: high
 
   silhouette_landscape:
     description: >
-      A tiny dark human silhouette against a breathtaking landscape — perfect mirror reflection in
-      still water below, large glowing sun or moon on the horizon filling a third of the frame.
-      Expansive negative space creates visual breathing room. Muted pastel palette — lavender dusk,
-      rose gold, soft teal, blush pink. Perfectly symmetrical, meditative, compositionally stunning.
-      The kind of image that makes someone want to be there. Clean, beautiful, universally relatable.
+      A tiny sharp black silhouette against a landscape with HIGH CONTRAST sky — not just pastel,
+      but dramatically graduated: deep electric orange at the horizon bleeding into violet and then
+      near-black at the top, or a blindingly white moon against a midnight indigo sky. Perfect
+      mirror reflection doubles the visual impact. The silhouette must be pure black, the sky must
+      be vivid and saturated — the contrast between the two is the hook. Think: a single person
+      standing on a ridge, the sky behind them split between fire-orange and electric blue like a
+      split-toned photograph. Compositionally still, but visually electric.
     categories: [mindfulness, morning, wisdom, goodnight]
     weight: high
 
   nocturnal_aesthetic:
     description: >
-      Atmospheric glowing night scene — a large luminous moon, soft aurora ribbons, or warm lanterns
-      over rooftop silhouettes. Aesthetic digital painting: deep midnight blue and indigo sky, soft
-      luminous lighting, stylized flora glowing in rose and gold (cherry blossoms, firefly meadow,
-      lit windows in a quiet lane). Lo-fi anime background art energy — warm, dreamy, perfectly
-      composed. Makes late-night emotions feel beautiful rather than lonely.
+      Atmospheric night scene with BOLD color contrast — not just moody dark, but jewel-toned dark.
+      Deep midnight indigo sky against warm amber lantern glows that almost burn the eye. Cherry
+      blossoms rendered in vivid hot pink against near-black branches. Aurora ribbons in electric
+      cyan and violet slashing across the frame. The key is extreme warm-vs-cool contrast: deep cold
+      backgrounds (midnight blue, dark plum) against blazing warm light sources (gold, amber, coral).
+      Lo-fi anime background art energy — but with the saturation pushed further than feels safe.
+      Makes late-night emotions feel electric and alive, not just soft and dreamy.
     categories: [latenight, goodnight, love, mindfulness]
     weight: high
 
   minimalist_line_art:
     description: >
-      A single continuous flowing ink line drawing on off-white textured paper — a face, two figures
-      leaning toward each other, hands clasped, a figure curled in thought. One unbroken stroke that
-      implies the whole scene. Elegantly simple, emotionally precise. Sometimes one colour accent
-      fills a single section (a red heart shape, a blue wash of tears, a golden sun). Feels like
-      something from a poetry collection. Ultra-clean — stops scrolling because the simplicity
-      itself demands attention.
+      A single continuous flowing ink line on stark white — a face, two figures leaning close,
+      hands clasped. One unbroken stroke implies the whole scene. CONTRAST RULE: the color accent
+      must be pure and saturated against the white — not a pale wash but a single bold fill: a
+      solid crimson heart shape, a flat cobalt blue tear, a pure gold sun. The white space is vast,
+      the line is precise, the one color is a visual shout. Three elements in extreme contrast —
+      white void, black line, one saturated pop. Feels like premium editorial design. The restraint
+      itself is the scroll-stopper because every other quote image is busy.
     categories: [wisdom, love, mindfulness, latenight]
     weight: high
 
   metaphorical_digital:
     description: >
-      Dark cinematic digital painting where the image IS the concept — a person watering a wilting
-      plant in a rainstorm, hands holding broken glass that reflects stars, a figure walking toward
-      a lit doorway in total darkness, two people growing apart like diverging tree roots. Deep earthy
-      palette: charcoal, dusty amber, midnight blue, warm rust. Dramatic directional lighting. The
-      image should convey the quote's meaning BEFORE the words are read. Moody, rich, painterly.
+      Dark cinematic digital painting where the image IS the concept. CONTRAST HOOK: one blazing
+      light source against near-total darkness — a single lit doorway in a pitch-black corridor
+      that the viewer's eye cannot escape, a figure watering a plant while golden light pours only
+      onto the plant in an otherwise charcoal-grey scene, broken glass reflecting stars against a
+      black hand. The dark background should be very dark (near black), making the one lit element
+      pop with almost physical force. Palette: deep charcoal and near-black base, then one
+      electric accent — amber, rose gold, electric blue. Dramatic single-source lighting. The
+      image should punch you before the words even register.
     categories: [latenight, wisdom, love]
     weight: high
 
@@ -90,43 +103,50 @@ styles:
 
   vector_girl:
     description: >
-      Clean flat 2D vector illustration of a stylised girl figure — warm and expressive, not
-      specifically Indian unless the quote calls for it. Attire matches the quote's context: casual
-      modern (hoodie, denim jacket) for everyday themes, traditional (saree, kurti) only when
-      culturally resonant. Bold clear outlines, 4-5 colour palette, character set against a solid
-      or soft gradient background. Modern graphic novel energy — detailed but graphically simplified,
-      never realistic. Pose and expression carry the emotion of the quote.
+      Clean flat 2D vector illustration of a stylised girl figure — warm, expressive, graphic.
+      CONTRAST RULE: bold complementary color pairing, not safe analogous tones. Think: electric
+      teal outfit against a warm peach background, deep cobalt jacket against a vivid mustard
+      backdrop, burgundy against sage. The character's silhouette must read instantly at thumbnail
+      — bold outline, high contrast against background. Attire matches quote context: modern casual
+      for everyday themes, traditional only when culturally resonant. 4-5 color palette, punchy
+      and clean. Pose and expression carry the emotion — but the color contrast stops the scroll.
     categories: [love, goodnight]
     weight: high
 
   vector_couple:
     description: >
-      Same clean flat 2D vector style — two illustrated figures, body language conveying the quote's
-      emotion (leaning in close, walking together, a meaningful glance, holding hands). Attire is
-      context-driven: modern for contemporary themes, traditional only when the quote calls for it.
-      Warm complementary colour palette. Connection visible in every line — one frame that tells a
-      story. Background kept simple so the figures are the emotional focus.
+      Clean flat 2D vector — two illustrated figures in a composition with strong COLOR CONTRAST
+      between the pair and their background. The figures should be rendered in warm tones (terracotta,
+      blush, amber) against a cool high-contrast backdrop (deep teal, indigo, slate), or vice versa.
+      Body language conveys the quote's emotion — leaning in, a meaningful glance, hands almost
+      touching. The contrast between the warm figures and cool environment (or cool night sky and
+      warm figures in the foreground) creates visual depth without complexity. One frame, one story,
+      instantly legible at thumbnail size.
     categories: [love, goodnight]
     weight: high
 
   watercolour_ink:
     description: >
-      Hand-painted watercolour on cold-press paper texture — delicate bleeds and blooms, ink line
-      details, deeply organic and tactile. Subject echoes the quote's emotion directly: two hands
-      almost touching, a single candle flame against dark, rain on a window, a face in profile
-      looking away. Palette: blush, dusty rose, sage, warm ivory, soft indigo. Feels genuinely
-      handmade, which is why it gets saved — in a feed of clean AI, this feels like someone made it.
+      Hand-painted watercolour on cold-press paper texture — delicate bleeds, ink line details,
+      deeply organic. CONTRAST HOOK: one vivid color bleeds dramatically against a near-white
+      background or complementary wash — deep indigo hands against a warm rose blush wash, a single
+      crimson candle flame against cool grey-blue darkness, rain rendered in electric cobalt on ivory
+      paper. The watercolour bloom should look almost accidental in its beauty. Palette is otherwise
+      restrained — blush, ivory, sage — so the ONE saturated element hits like a signal flare.
+      Feels genuinely handmade, which is the hook in a feed of clean AI imagery.
     categories: [love, mindfulness, goodnight, wisdom]
     weight: high
 
   cozy_aesthetic:
     description: >
-      A single perfectly composed scene that makes you want to be inside it — but shot with hook
-      energy, not just prettiness. One sharp vivid element in the foreground (a steaming cup, an
-      open journal, a candle flame, a hand holding a book) while everything behind it dissolves into
-      warm bokeh blur. Amber-gold and honey tones. Fairy lights as soft orbs. The "I want this
-      feeling" scroll-stopper — compositionally tight, not wide-angle room shots. Emotionally
-      magnetic because it feels like safety and rest at the same time.
+      A perfectly composed scene with EXTREME FOREGROUND CONTRAST — one sharp, vivid element in
+      the foreground (a steaming cup with clearly visible wisps of steam, a candle flame that is
+      actually bright, an open journal with visible ink) against everything behind it dissolved to
+      near-abstract warm bokeh. The foreground element should be nearly hyper-real in its clarity,
+      the background should be nearly formless warmth. Amber-gold and honey tones — but the bokeh
+      balls of fairy lights should be bright white-gold, not just yellow, popping against the warm
+      blur. Compositionally tight, not a wide room shot. The sharpness-vs-blur contrast creates
+      magnetic depth.
     categories: [goodnight, latenight, love, mindfulness]
     weight: high
 
@@ -134,44 +154,49 @@ styles:
 
   minimalist_vector:
     description: >
-      Bold flat 2D poster illustration with no human figures — clean geometric shapes, abstract
-      symbolic imagery: a compass, a lone doorway, a winding staircase, a lighthouse beam, a path
-      splitting in two. 3-4 strong contrasting colours, modern graphic design sensibility. No
-      cultural markers unless the quote is explicitly cultural. Feels like a premium book cover or
-      editorial print — powerful, universally relatable, clean enough to read at thumbnail size.
+      Bold flat 2D poster illustration — no human figures, clean geometric symbolic imagery:
+      a compass, a lone doorway, a lighthouse beam, a path splitting in two. CONTRAST IS THE STYLE:
+      maximum 3 colors, and they must be high-contrast — deep navy against electric yellow, pure
+      black against vivid coral, forest green against bright cream. The image should look like a
+      premium risograph poster: flat, bold, graphically powerful. No gradients. No textures. Just
+      shape, silhouette, and brutal color contrast. Reads in under one second at thumbnail size —
+      that speed of comprehension is the scroll-stopper.
     categories: [morning, wisdom, mindfulness]
     weight: medium
 
   minimalist_nature:
     description: >
       One powerful natural element in extreme negative space — a single bare branch with one blossom,
-      a rain-caught spider web at dawn, crescent moon over perfectly still dark water, a lone tree
-      on a ridge at dusk. Nearly monochrome palette — charcoal, slate, soft sage, ivory. The image
-      holds its breath. Quiet and meditative — pairs with introspective quotes to create emotional
-      amplification through restraint.
+      a rain-caught spider web at dawn, a lone tree on a ridge at dusk. CONTRAST RULE: the subject
+      must be darker than feels comfortable against the background, or lighter than feels possible.
+      A near-black branch against blinding white sky, a pale silver crescent moon against a deep
+      charcoal-black background with zero graduation. No soft middle tones — pure dark subject,
+      pure light background or vice versa. The image holds its breath. The extreme tonal contrast
+      creates tension that quiet quotes need to land.
     categories: [mindfulness, wisdom, goodnight, latenight]
     weight: medium
 
   wholesome_doodle:
     description: >
-      Simple charming doodle illustration — figures with just enough detail to read the emotion
-      clearly: a hug, two people sharing an umbrella, someone journaling at a window, a small figure
-      cheering at a mountain peak. Thick confident outlines, flat pastel colour fills, no complex
-      shading. Feels like a beloved webcomic panel — instantly readable, warm, extremely shareable.
-      Clean cream or white background. Approachable energy that makes the quote feel like a friend
-      talking to you.
+      Simple charming doodle — figures with just enough detail to read emotion: a hug, two people
+      sharing an umbrella, someone journaling at a window. CONTRAST RULE: thick bold black outlines
+      on pure white background, with flat color fills that are VIVID and complementary — not pastel,
+      but the actual bold version of those colors. Cobalt blue and warm coral, forest green and
+      golden yellow, deep purple and peach. Feels like a premium webcomic panel, not a child's
+      coloring book. The bold line + vivid flat fill + white background creates maximum graphic
+      clarity — instantly readable and shareable at any size.
     categories: [morning, love, latenight]
     weight: medium
 
   risograph_print:
     description: >
-      Duotone risograph print effect — the entire image rendered in just two overlapping ink colours
-      with visible halftone grain and slight misregistration between layers for that authentic analog
-      feel. Colour pairings: indigo + mustard, deep teal + warm coral, forest green + cream, navy +
-      rose. Subject can be a figure, a landscape, or abstract forms — but the printing aesthetic
-      itself is the differentiator. Looks hand-printed and indie in a way that smooth digital AI
-      images never do. Unique in the quote content space — immediately recognizable as something
-      different.
+      Duotone risograph print effect — the entire image in just two overlapping ink colours with
+      visible halftone grain and slight misregistration. CONTRAST RULE: the two ink colours must
+      be high-contrast complementaries, not harmonious — indigo + acid yellow, deep teal + vivid
+      coral, near-black navy + bright warm cream. The halftone grain should be visible and coarse,
+      the misregistration deliberate and slightly vertiginous. Subject can be a figure, landscape,
+      or abstract form — the printing aesthetic IS the differentiator. In a feed of smooth clean AI
+      imagery, the visible grain and bold color contrast look hand-printed and completely unique.
     categories: [wisdom, latenight, mindfulness]
     weight: medium
 
@@ -179,20 +204,25 @@ styles:
 
   double_exposure:
     description: >
-      Silhouette of a person (or hands, or a figure seen from behind) filled with layered landscape
+      Silhouette of a person (or hands, or a figure from behind) filled with layered landscape
       texture — a dense forest growing inside a face, a starry sky inside a silhouette, clouds
-      moving through outstretched hands. Dreamlike double-exposure blend. Cinematic and conceptually
-      rich. Used sparingly — save for quotes with strong metaphorical depth where the technique
-      genuinely amplifies the meaning.
+      through outstretched hands. CONTRAST HOOK: the silhouette boundary must be crisp and
+      high-contrast against the background — the edge where the person ends and the world begins
+      should be sharp. Inside the silhouette: rich, detailed texture. Outside: a dramatically
+      different single tone (near-white, deep charcoal, or a solid bold color). The contrast
+      between the intricate interior and the stark exterior is what makes this work. Used sparingly —
+      only for quotes with genuine metaphorical depth.
     categories: [latenight, love, wisdom]
     weight: low
 
   dark_surreal:
     description: >
-      Impossible dream-logic scene — a figure walking calmly on a ceiling while the room below
-      continues normally, a door standing alone in open ocean, a city built upside-down reflected
-      in a lake that shouldn't reflect it. Dark and slightly disorienting. Used rarely — best for
-      late-night existential content where the image should feel as unmoored as the thought itself.
-      When it fits, the impact is high. When it doesn't, skip it.
+      Impossible dream-logic scene — a figure walking on a ceiling, a door standing alone in open
+      ocean, a city built upside-down. CONTRAST RULE: the impossible element must be rendered with
+      photorealistic detail while the surrounding scene is dark and atmospheric — the contrast
+      between the hyper-real surreal object and the dark dreamlike setting creates the vertigo.
+      Deep dark backgrounds (near-black, deep charcoal) with one element that is almost too
+      detailed, too real, too brightly lit to belong. Used rarely — best for late-night existential
+      content where the image should feel as unmoored and vivid as the thought itself.
     categories: [latenight, wisdom]
     weight: low
