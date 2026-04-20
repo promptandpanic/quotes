@@ -2,18 +2,12 @@ name: Post Daily Quotes
 
 on:
   schedule:
-    - cron: "0 7 * * *"
-      timezone: "Asia/Kolkata"   # 07:00 AM IST  →  Morning Motivation
-    - cron: "0 12 * * *"
-      timezone: "Asia/Kolkata"   # 12:00 PM IST  →  Wisdom & Philosophy
-    - cron: "0 15 * * *"
-      timezone: "Asia/Kolkata"   # 03:00 PM IST  →  Love & Relationships
-    - cron: "0 18 * * *"
-      timezone: "Asia/Kolkata"   # 06:00 PM IST  →  Mindfulness & Peace
-    - cron: "0 21 * * *"
-      timezone: "Asia/Kolkata"   # 09:00 PM IST  →  Goodnight Inspiration
-    - cron: "30 1 * * *"
-      timezone: "Asia/Kolkata"   # 01:30 AM IST  →  Late Night Feels
+    - cron: "30 1 * * *"    # 01:30 UTC  →  Morning Motivation
+    - cron: "30 5 * * *"    # 05:30 UTC  →  Wisdom & Philosophy
+    - cron: "30 9 * * *"    # 09:30 UTC  →  Love & Relationships
+    - cron: "30 12 * * *"   # 12:30 UTC  →  Mindfulness & Peace
+    - cron: "30 16 * * *"   # 16:30 UTC  →  Goodnight Inspiration
+    - cron: "30 19 * * *"   # 19:30 UTC  →  Late Night Feels
 
   # Manual trigger (for testing)
   workflow_dispatch:
@@ -55,24 +49,20 @@ jobs:
         run: sudo apt-get install -y ffmpeg
 
       # ── 5. Determine theme ───────────────────────────────────────────────
-      # Read current IST hour directly — no UTC offset math needed.
       - name: Set THEME environment variable
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "THEME=${{ github.event.inputs.theme }}" >> $GITHUB_ENV
           else
-            HOUR=$(TZ="Asia/Kolkata" date +%H)
-            HOUR_INT=$((10#$HOUR))
-            if   [ "$HOUR_INT" -eq 7 ];  then echo "THEME=morning"      >> $GITHUB_ENV
-            elif [ "$HOUR_INT" -eq 12 ]; then echo "THEME=wisdom"       >> $GITHUB_ENV
-            elif [ "$HOUR_INT" -eq 15 ]; then echo "THEME=love"         >> $GITHUB_ENV
-            elif [ "$HOUR_INT" -eq 18 ]; then echo "THEME=mindfulness"  >> $GITHUB_ENV
-            elif [ "$HOUR_INT" -eq 21 ]; then echo "THEME=goodnight"    >> $GITHUB_ENV
-            elif [ "$HOUR_INT" -eq 1 ];  then echo "THEME=latenight"    >> $GITHUB_ENV
-            else
-              echo "THEME=morning" >> $GITHUB_ENV
-              echo "::warning::Unexpected IST hour $HOUR_INT — defaulting to morning"
-            fi
+            case "${{ github.event.schedule }}" in
+              "30 1 * * *")  echo "THEME=morning"      >> $GITHUB_ENV ;;
+              "30 5 * * *")  echo "THEME=wisdom"       >> $GITHUB_ENV ;;
+              "30 9 * * *")  echo "THEME=love"         >> $GITHUB_ENV ;;
+              "30 12 * * *") echo "THEME=mindfulness"  >> $GITHUB_ENV ;;
+              "30 16 * * *") echo "THEME=goodnight"    >> $GITHUB_ENV ;;
+              "30 19 * * *") echo "THEME=latenight"    >> $GITHUB_ENV ;;
+              *) echo "THEME=wisdom" >> $GITHUB_ENV ;;
+            esac
           fi
 
       # ── 6. Run the bot ───────────────────────────────────────────────────
