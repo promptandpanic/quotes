@@ -175,8 +175,10 @@ Return ONLY valid JSON:
 def build_caption(quote: dict, theme_cfg: dict) -> str:
     text       = quote["text"].strip()
     _raw_author = quote.get("author", "").strip()
-    author      = "" if _raw_author.lower() in ("unknown", "anonymous", "") else _raw_author
-    theme_name = theme_cfg.get("name", "Daily Wisdom")
+    _SKIP_AUTHOR = {"unknown", "anonymous", "original", "original thought", ""}
+    author      = "" if _raw_author.lower() in _SKIP_AUTHOR else _raw_author
+    author_line = f"— {author}\n\n" if author else ""
+    theme_name  = theme_cfg.get("name", "Daily Wisdom")
 
     api_key = os.environ.get("GEMINI_API_KEY", "")
     if api_key:
@@ -208,7 +210,7 @@ def build_caption(quote: dict, theme_cfg: dict) -> str:
                 hashtag_str = " ".join(f"#{t.lstrip('#')}" for t in tags[:25])
                 caption = (
                     f'"{text}"\n'
-                    f"— {author}\n\n"
+                    f"{author_line}"
                     f"{hook}\n\n"
                     f"@_daily_dose_of_wisdom__\n\n"
                     f"{hashtag_str}"
@@ -221,7 +223,7 @@ def build_caption(quote: dict, theme_cfg: dict) -> str:
     hashtags = " ".join(theme_cfg.get("hashtags", []))
     return (
         f'"{text}"\n'
-        f"— {author}\n\n"
+        f"{author_line}"
         f"✨ {theme_name} | @_daily_dose_of_wisdom__\n\n"
         f"{hashtags}"
     )[:2200]
