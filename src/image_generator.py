@@ -178,7 +178,7 @@ def _imagen(prompt: str) -> bytes | None:
 # 3. Gemini Flash Image — free tier, square → center-crop to 9:16
 # ---------------------------------------------------------------------------
 
-_GEMINI_IMAGE_FALLBACK = os.environ.get("GEMINI_IMAGE_MODEL_FALLBACK", "gemini-2.5-flash-image")
+_GEMINI_IMAGE_FALLBACK = os.environ.get("GEMINI_IMAGE_MODEL_FALLBACK", "gemini-3.1-flash-image-preview")
 
 
 def _gemini_flash_image(prompt: str) -> bytes | None:
