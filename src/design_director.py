@@ -215,7 +215,7 @@ def generate_brief(quote: dict, theme: str, recent_styles: list[str] | None = No
     if api_key:
         try:
             from google import genai
-            from src.config import GEMINI_TEXT_MODEL
+            from src.config import GEMINI_TEXT_MODEL, GEMINI_TEXT_MODEL_FALLBACK
             from src.content_config import build_style_prompt_block
 
             client = genai.Client(api_key=api_key)
@@ -240,14 +240,21 @@ def generate_brief(quote: dict, theme: str, recent_styles: list[str] | None = No
             )
 
             from google.genai import types as _types
-            response = client.models.generate_content(
-                model=GEMINI_TEXT_MODEL,
-                contents=prompt,
-                config=_types.GenerateContentConfig(
-                    automatic_function_calling=_types.AutomaticFunctionCallingConfig(disable=True),
-                ),
+            _cfg = _types.GenerateContentConfig(
+                automatic_function_calling=_types.AutomaticFunctionCallingConfig(disable=True),
             )
-            raw = response.text.strip()
+            raw = None
+            for _model in [GEMINI_TEXT_MODEL, GEMINI_TEXT_MODEL_FALLBACK]:
+                try:
+                    response = client.models.generate_content(
+                        model=_model, contents=prompt, config=_cfg,
+                    )
+                    raw = response.text.strip()
+                    break
+                except Exception as _exc:
+                    if _model == GEMINI_TEXT_MODEL_FALLBACK:
+                        raise
+                    logger.warning(f"Creative director primary model failed: {_exc} — retrying with {GEMINI_TEXT_MODEL_FALLBACK}")
             m = re.search(r"\{.*\}", raw, re.DOTALL)
             if m:
                 brief = json.loads(m.group())

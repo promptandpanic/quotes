@@ -167,16 +167,20 @@ def _gemini_client():
 
 
 def _call(client, prompt: str) -> str:
-    from src.config import GEMINI_TEXT_MODEL
+    from src.config import GEMINI_TEXT_MODEL, GEMINI_TEXT_MODEL_FALLBACK
     from google.genai import types
-    resp = client.models.generate_content(
-        model=GEMINI_TEXT_MODEL,
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
-        ),
+    cfg = types.GenerateContentConfig(
+        automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
     )
-    return resp.text.strip()
+    for model in [GEMINI_TEXT_MODEL, GEMINI_TEXT_MODEL_FALLBACK]:
+        try:
+            resp = client.models.generate_content(model=model, contents=prompt, config=cfg)
+            return resp.text.strip()
+        except Exception as exc:
+            if model == GEMINI_TEXT_MODEL_FALLBACK:
+                raise
+            logger.warning(f"Primary text model failed: {exc} — retrying with {GEMINI_TEXT_MODEL_FALLBACK}")
+    raise RuntimeError("unreachable")
 
 
 def _append_avoid_hint(prompt: str, recent_hints: list[str]) -> str:

@@ -97,24 +97,33 @@ def judge_image(image_bytes: bytes, quote: dict) -> dict:
     try:
         from google import genai
         from google.genai import types
-        from src.config import GEMINI_TEXT_MODEL
+        from src.config import GEMINI_TEXT_MODEL, GEMINI_TEXT_MODEL_FALLBACK
 
         client = genai.Client(api_key=api_key)
         text   = quote.get("text", "")[:200].replace('"', "'")
         author = quote.get("author", "Unknown")
         prompt = _JUDGE_PROMPT.format(text=text, author=author)
-
-        response = client.models.generate_content(
-            model=GEMINI_TEXT_MODEL,
-            contents=[
-                types.Part.from_bytes(data=image_bytes, mime_type="image/jpeg"),
-                types.Part(text=prompt),
-            ],
-            config=types.GenerateContentConfig(
-                automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
-            ),
+        contents = [
+            types.Part.from_bytes(data=image_bytes, mime_type="image/jpeg"),
+            types.Part(text=prompt),
+        ]
+        cfg = types.GenerateContentConfig(
+            automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
         )
-        raw = response.text.strip()
+
+        raw = None
+        for model in [GEMINI_TEXT_MODEL, GEMINI_TEXT_MODEL_FALLBACK]:
+            try:
+                response = client.models.generate_content(
+                    model=model, contents=contents, config=cfg,
+                )
+                raw = response.text.strip()
+                break
+            except Exception as exc:
+                if model == GEMINI_TEXT_MODEL_FALLBACK:
+                    raise
+                logger.warning(f"Judge primary model failed: {exc} — retrying with {GEMINI_TEXT_MODEL_FALLBACK}")
+
         m = re.search(r"\{.*\}", raw, re.DOTALL)
         if m:
             result = json.loads(m.group())
