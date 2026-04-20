@@ -1,7 +1,7 @@
 # Daily Dose of Wisdom — Instagram Bot
 
 Fully automated Instagram Reels bot for **@_daily_dose_of_wisdom__**  
-Posts **6 quote Reels per day** (IST-timed) with AI-generated visuals — zero manual effort.
+Posts **6 quote Reels per day** with AI-generated visuals — zero manual effort.
 
 ---
 
@@ -9,16 +9,16 @@ Posts **6 quote Reels per day** (IST-timed) with AI-generated visuals — zero m
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         GitHub Actions (6x/day, IST)                        │
+│                         GitHub Actions (6x/day, UTC cron)                   │
 │                                                                             │
-│  cron fires (Asia/Kolkata timezone) → sets THEME → python main.py          │
+│  cron fires (UTC) → maps schedule → THEME → python main.py                 │
 └──────────────────────────────┬──────────────────────────────────────────────┘
                                │
                                ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │  main.py  —  Pipeline Orchestrator                                          │
 │                                                                             │
-│  1.  Select theme (THEME env var or closest IST hour)                       │
+│  1.  Select theme (THEME env var or matched cron schedule)                  │
 │  2.  Load DB → active posted hashes (repeat window)                         │
 │  3.  Pull 90-day topic hints + recent styles → avoid repetition             │
 │  4.  Generate quote (Gemini: real author or original, scored in 1 call)     │
@@ -103,16 +103,16 @@ src/notifier.py ─────────── Gmail success/failure email
 
 ## Posting schedule
 
-Cron uses `timezone: "Asia/Kolkata"` — times written directly in IST, no UTC math.
+GitHub Actions cron always runs in UTC. Each trigger maps to a theme via `github.event.schedule`.
 
-| IST time | Theme |
-|---|---|
-| 07:00 AM | Morning Motivation |
-| 12:00 PM | Life Wisdom |
-| 03:00 PM | Love & Relationships |
-| 06:00 PM | Mindfulness & Inner Peace |
-| 09:00 PM | Goodnight & Gratitude |
-| 01:30 AM | Late Night Feels |
+| IST | UTC | EDT | EST | Theme | Parameter |
+|---|---|---|---|---|---|
+| 7:00 AM | 1:30 AM | 9:30 PM (prev day) | 8:30 PM (prev day) | Morning Motivation | `morning` |
+| 11:00 AM | 5:30 AM | 1:30 AM | 12:30 AM | Life Wisdom | `wisdom` |
+| 3:00 PM | 9:30 AM | 5:30 AM | 4:30 AM | Love & Relationships | `love` |
+| 6:00 PM | 12:30 PM | 8:30 AM | 7:30 AM | Mindfulness & Inner Peace | `mindfulness` |
+| 10:00 PM | 4:30 PM | 12:30 PM | 11:30 AM | Goodnight & Gratitude | `goodnight` |
+| 1:00 AM (next day) | 7:30 PM | 3:30 PM | 2:30 PM | Late Night Feels | `latenight` |
 
 ---
 
@@ -298,15 +298,16 @@ Unknown or anonymous authors are silently skipped on-screen — no "— Unknown"
 
 ### Change post timing → `.github/workflows/post_quotes.yml`
 
-Times are written directly in IST — no UTC conversion needed:
+All times are in UTC. Add a new cron line and a matching case in the theme-detection step:
 
 ```yaml
 schedule:
-  - cron: "0 8 * * *"
-    timezone: "Asia/Kolkata"   # 08:00 AM IST
+  - cron: "30 9 * * *"   # 09:30 UTC = 3:00 PM IST
 ```
 
-Also update the matching `utc_hour` in `src/config.py` so local dry-runs auto-detect the right theme.
+```bash
+"30 9 * * *") echo "THEME=love" >> $GITHUB_ENV ;;
+```
 
 ---
 
@@ -476,7 +477,7 @@ ffmpeg -i downloaded.mp3 -t 20 -c:a libmp3lame -q:a 2 assets/audio/morning.mp3
 │   └── static/                      # Pre-generated fallback images (one per theme)
 │
 └── .github/workflows/
-    └── post_quotes.yml              # IST-native cron + secrets wiring
+    └── post_quotes.yml              # UTC cron + theme mapping + secrets wiring
 ```
 
 ---
