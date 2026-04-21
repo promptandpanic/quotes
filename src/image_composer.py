@@ -400,7 +400,10 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
     Layout is computed with pixel-accurate font metrics — no heuristics.
     n_lines: show only the first n wrapped lines (for reveal animation).
     """
-    text       = _sanitize(quote["text"])
+    # Strip all quotation mark variants — decorative quotes are added via the
+    # quote_mark decoration, never embedded in the text itself
+    _QC = '"\'“”‘’«»„‟'
+    text       = _sanitize(quote["text"]).strip(_QC).strip()
     author     = quote.get("author", "")
     font_key   = brief.get("font", "oswald")
     if font_key == "playfair_it":

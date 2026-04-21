@@ -92,7 +92,12 @@ AVAILABLE OVERLAYS (ensure text is readable — opacity 140-220):
 DECORATIONS:
   rule       — thin accent-colour horizontal line above the text block
   quote_mark — large decorative " faintly behind text
-  none       — clean, let the image breathe
+               ★ USE THIS for any quote attributed to a real person — it signals
+               "someone said this" visually without embedding quotes in the text
+  none       — clean, let the image breathe (good for original/anonymous quotes)
+
+  NOTE: Quote text is rendered WITHOUT quotation marks — the quote_mark decoration
+  IS the quotation signal. Never add " " to the image_prompt or quote text.
 
 HIGHLIGHT STYLE — how the key phrase is visually distinguished from the rest of the quote:
   color       — key phrase in highlight_color only (clean, safe default)

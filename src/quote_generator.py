@@ -86,7 +86,9 @@ Score each on 4 dimensions (1-10): virality, engagement, uniqueness (1-4 if wide
 Hard rule: uniqueness < 6 → reject. Generic self-help → reject.
 
 Then pick the single best-scoring quote and return ONLY that one as JSON — no markdown, no explanation:
-{{"quote":"the exact quote text","author":"Full Name","score":<avg 1-10>,\
+{{"quote":"PLAIN TEXT ONLY — the exact words, nothing else. No quotation marks (\", ", "), \
+no attribution suffix (no '- Author', '— Author'), no leading/trailing punctuation added by you. \
+Just the raw words as spoken/written.","author":"Full Name","score":<avg 1-10>,\
 "virality":<1-10>,"engagement":<1-10>,"uniqueness":<1-10>,"freshness":<1-10>,\
 "reason":"<one sentence>","accept":<true if score>=7 AND uniqueness>=6, else false>}}
 """
@@ -122,7 +124,7 @@ Score each on 4 dimensions (1-10): virality, engagement, uniqueness, freshness.
 Hard rule: uniqueness < 6 → reject. Generic self-help → reject.
 
 Then pick the single best-scoring quote and return ONLY that one as JSON — no markdown, no explanation:
-{{"quote":"the quote text","author":"Original","score":<avg 1-10>,\
+{{"quote":"PLAIN TEXT ONLY — no quotation marks, no attribution, just the words.","author":"Original","score":<avg 1-10>,\
 "virality":<1-10>,"engagement":<1-10>,"uniqueness":<1-10>,"freshness":<1-10>,\
 "reason":"<one sentence>","accept":<true if score>=7 AND uniqueness>=6, else false>}}
 """
@@ -154,7 +156,7 @@ Score each on 4 dimensions (1-10): virality, engagement, uniqueness, freshness.
 Hard rule: uniqueness < 6 → reject. Generic self-help → reject.
 
 Then pick the single best-scoring quote and return ONLY that one as JSON — no markdown, no explanation:
-{{"quote":"the quote text","author":"Original","score":<avg 1-10>,\
+{{"quote":"PLAIN TEXT ONLY — no quotation marks, no attribution, just the words.","author":"Original","score":<avg 1-10>,\
 "virality":<1-10>,"engagement":<1-10>,"uniqueness":<1-10>,"freshness":<1-10>,\
 "reason":"<one sentence>","accept":<true if score>=7 AND uniqueness>=6, else false>}}
 """
@@ -168,8 +170,21 @@ def _hash(text: str) -> str:
     return hashlib.md5(text.lower().strip().encode()).hexdigest()[:16]
 
 
+_QUOTE_CHARS = '\u201c\u201d\u2018\u2019\"\'\u00ab\u00bb\u201e\u201f'
+
 def _clean_text(text: str) -> str:
-    return text.strip().strip('"\'').strip("\u201c\u201d\u2018\u2019").strip()
+    """Strip quotation marks and author attributions from quote text.
+
+    Dashes INSIDE the quote (e.g. "self-doubt", "day — night") are preserved
+    because the pattern only matches a trailing separator followed by a
+    Capitalised Name with no further separators.
+    """
+    text = text.strip().strip(_QUOTE_CHARS).strip()
+    # Strip trailing author attribution: separator + space + Capitalised Name
+    # e.g. " - Krishnamurti", " — Rumi", " ~ Unknown", " – Osho"
+    text = re.sub(r'\s*[-\u2014\u2013~]\s*[A-Z][^-\u2014\u2013~\n]{1,60}$', '', text).strip()
+    text = text.strip(_QUOTE_CHARS).strip()
+    return text
 
 
 def _extract_highlight(text: str) -> str:
