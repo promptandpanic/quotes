@@ -67,6 +67,21 @@ DECORATIONS:
   quote_mark — large decorative " faintly behind text
   none       — clean, let the image breathe
 
+HIGHLIGHT STYLE — how the key phrase is visually distinguished from the rest of the quote:
+  color       — key phrase in highlight_color only (clean, safe default)
+  italic      — key phrase switches to elegant italic serif (Playfair Italic) — beautiful contrast on bold sans fonts like oswald/montserrat
+  underline   — key phrase gets a solid underline bar in highlight_color — editorial, modern
+  caps        — key phrase rendered in ALL CAPS — power, emphasis, punchy
+  caps_italic — ALL CAPS + italic serif — dramatic editorial feel
+  script      — key phrase switches to flowing script font (Dancing Script) — warm, emotional, great for love/goodnight
+
+  Pairing guide:
+  - bebas / anton / oswald + italic     → striking serif-on-sans contrast
+  - playfair / cormorant + underline    → editorial elegance
+  - montserrat / josefin + caps         → clean graphic emphasis
+  - any font + script                   → emotional warmth (love, goodnight, latenight)
+  - specialelite / lato + color         → keep it simple, texture does the work
+
 IMAGE RULES (always apply):
   - Illustrations, paintings, flat vector art, ink sketches, or abstract art ONLY
   - NEVER photorealistic humans or faces — no portrait photography, no stock-photo style people
@@ -132,6 +147,7 @@ Only rendered when a real author exists — skip for Unknown/anonymous.",
   "layout": "big_center|sentence_reveal|full_card",
   "highlight": "3-6 most emotionally powerful CONSECUTIVE words from the quote — \
 the line someone screenshots",
+  "highlight_style": "color|italic|underline|caps|caps_italic|script",
   "mood_note": "one sentence — the visual feeling that stops someone mid-scroll"
 }}
 '''

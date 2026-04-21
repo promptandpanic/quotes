@@ -204,6 +204,57 @@ def _shadow_text(draw, xy, text, font, fill, shadow=(0, 0, 0), depth=3):
     draw.text((x, y), text, font=font, fill=fill)
 
 
+def _highlight_font(base_key: str, hi_style: str, size: int) -> ImageFont.FreeTypeFont:
+    """Return the font to use for highlighted words based on the requested style."""
+    if hi_style in ("italic", "caps_italic"):
+        return _font("playfair_it", size)
+    if hi_style == "script":
+        return _font("dancing", size)
+    return _font(base_key, size)
+
+
+def _split_at_phrase(line: str, phrase: str) -> tuple[str, str, str] | None:
+    """Split line into (before, match, after) for case-insensitive phrase match."""
+    idx = line.lower().find(phrase.lower())
+    if idx == -1:
+        return None
+    return line[:idx], line[idx:idx + len(phrase)], line[idx + len(phrase):]
+
+
+def _render_line(draw, img_width: int, y: int, line: str,
+                 font: ImageFont.FreeTypeFont, fill: tuple,
+                 hi_font: ImageFont.FreeTypeFont, hi_fill: tuple,
+                 hi_phrase: str, hi_style: str) -> None:
+    """Render one line with per-word highlight styling, centered."""
+    segs = _split_at_phrase(line, hi_phrase) if hi_phrase else None
+
+    if segs is None:
+        bb = font.getbbox(line)
+        x = (img_width - (bb[2] - bb[0])) // 2
+        _stroke_text(draw, (x, y), line, font, fill=fill)
+        return
+
+    before, match, after = segs
+    hi_disp = match.upper() if hi_style == "caps" else match
+
+    bw = (font.getbbox(before)[2] - font.getbbox(before)[0]) if before else 0
+    hw = (hi_font.getbbox(hi_disp)[2] - hi_font.getbbox(hi_disp)[0]) if hi_disp else 0
+    aw = (font.getbbox(after)[2] - font.getbbox(after)[0]) if after else 0
+    x = (img_width - bw - hw - aw) // 2
+
+    if before:
+        _stroke_text(draw, (x, y), before, font, fill=fill)
+        x += bw
+    if hi_disp:
+        _stroke_text(draw, (x, y), hi_disp, hi_font, fill=hi_fill)
+        if hi_style == "underline":
+            uy = y + hi_font.getbbox(hi_disp)[3] + 2
+            draw.rectangle([(x, uy), (x + hw, uy + 3)], fill=(*hi_fill, 255))
+        x += hw
+    if after:
+        _stroke_text(draw, (x, y), after, font, fill=fill)
+
+
 def _gradient_rect(img: Image.Image, y0: int, y1: int,
                    color: tuple = (0, 0, 0), max_alpha: int = 180) -> Image.Image:
     """Gradient from transparent → opaque, top-to-bottom between y0 and y1."""
@@ -352,6 +403,7 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
     text_zone  = brief.get("text_zone", "bottom")
     decoration = brief.get("decoration", "none")
     layout     = brief.get("layout", "full_card")
+    hi_style   = brief.get("highlight_style", "color")
     hi_phrase  = _sanitize(brief.get("highlight") or "").lower()
 
     upper     = font_key == "bebas"
@@ -363,6 +415,7 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
 
     font_size = max(88, int(brief.get("font_size", 88)))
     all_lines, f, font_size = _fit_text(disp_text, font_key, font_size, layout, text_zone)
+    hi_f = _highlight_font(font_key, hi_style, font_size)
 
     lines  = all_lines[:n_lines] if n_lines is not None else all_lines
     line_h = int(font_size * 1.28)
@@ -386,14 +439,16 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
         dq_font = _font("playfair", 260)
         draw.text((28, y - 40), "\u201c", font=dq_font, fill=(*hi_color, 30))
 
-    # Text lines — highlight any line that contains the highlight phrase
+    # Text lines — word-level highlight styling
     for line in lines:
-        bb  = f.getbbox(line)
-        lw  = bb[2] - bb[0]
-        x   = (IMAGE_WIDTH - lw) // 2
-        is_hi = hi_phrase and hi_phrase in line.lower()
-        fill  = hi_color if is_hi else txt_color
-        _stroke_text(draw, (x, y), line, f, fill=fill, stroke_color=(0, 0, 0), stroke=2)
+        has_hi = bool(hi_phrase and hi_phrase in line.lower())
+        _render_line(
+            draw, IMAGE_WIDTH, y, line,
+            font=f, fill=txt_color,
+            hi_font=hi_f, hi_fill=hi_color,
+            hi_phrase=hi_phrase if has_hi else "",
+            hi_style=hi_style,
+        )
         y += line_h
 
     # Author attribution — show when all lines are visible (full image or last reveal step)
