@@ -201,7 +201,7 @@ categories:
 
     topic_groups:
       - name: "relationships_loss"
-        weight: 24
+        weight: 21
         topics:
           - "missing someone you should be over"
           - "loving who they were, not who they became"
@@ -211,7 +211,7 @@ categories:
           - "being left with memories but no answers"
 
       - name: "ambition_parental_pressure"
-        weight: 28
+        weight: 25
         topics:
           - "the distance between who you are and who you promised to become"
           - "comparing your beginning to someone else's highlight reel"
@@ -222,7 +222,7 @@ categories:
           - "feeling behind while everyone else looks settled"
 
       - name: "identity_belonging"
-        weight: 20
+        weight: 17
         topics:
           - "feeling like a stranger in your own life"
           - "being surrounded but not understood"
@@ -231,7 +231,7 @@ categories:
           - "not knowing which version of yourself is real"
 
       - name: "nostalgia_change"
-        weight: 16
+        weight: 13
         topics:
           - "missing simpler versions of life"
           - "realising carefree days ended quietly"
@@ -240,30 +240,85 @@ categories:
           - "growing apart without meaning to"
 
       - name: "existential_overthinking"
-        weight: 12
+        weight: 10
         topics:
           - "small worries becoming huge at night"
           - "wondering if you are building the right life"
           - "waiting so long that waiting became normal"
           - "questioning everything when the world goes quiet"
 
+      - name: "emotional_reveal"
+        weight: 9
+        topics:
+          - "when your silence starts sounding like self-protection"
+          - "the distance arrived before the goodbye did"
+          - "missing what you thought it was, not what it became"
+          - "when being understanding becomes the loneliest role"
+          - "the moment your effort turns into observation"
+          - "being present in places you already outgrew"
+          - "when your body notices the truth before your mind admits it"
+          - "the kind of sadness that feels more like clarity"
+          - "when warmth leaves a room before the person does"
+          - "being understood only after you've gone quiet"
+
+      - name: "microstory_quotes"
+        weight: 5
+        format_hint: "Write ONE sentence only — a tiny scene fragment, not a statement or a quote. Third-person or object point of view. It should read like a memory fragment someone recognises. No moralising, no insight, just the scene."
+        topics:
+          - "a small action that reveals something that was never said"
+          - "an object or habit that carries the weight of someone leaving"
+          - "the moment before or after something changed"
+          - "a detail that stayed long after the person didn't"
+          - "a routine disrupted by an absence"
+          - "the gap between what someone did and what they meant"
+          - "a gesture that was both tender and final"
+
   womenpower:
     name: "She Feels"
     max_words: 28
-
     topics:
-      - "the quiet power of saying nothing when you know everything"
-      - "noticing how someone treats you when they think it doesn't matter"
-      - "the moment you stop explaining yourself to people who were never listening"
-      - "choosing peace over proving a point"
-      - "the strength in walking away without looking back"
-      - "loving yourself loudly when no one else will"
-      - "knowing the difference between being needed and being valued"
-      - "the woman who still shows up for herself on the worst days"
-      - "trusting your gut even when everyone calls it overthinking"
-      - "being soft and still being untouchable"
-      - "the version of yourself you become when you stop shrinking"
-      - "saying no without a reason and meaning it completely"
-      - "the peace that comes when you stop chasing what doesn't choose you"
-      - "looking in the mirror and finally being on your own side"
-      - "small acts of self-respect that slowly change everything"
+      - "the quiet power of saying nothing when you finally see clearly"
+      - "noticing how someone treats you when they think your feelings are safe to overlook"
+      - "the moment you stop explaining yourself to people committed to misunderstanding you"
+      - "choosing peace when you could have proved your point perfectly"
+      - "the strength in leaving without needing to be chased"
+      - "loving yourself in ways no one taught you to expect"
+      - "knowing the difference between being included and being cherished"
+      - "the woman who still shows up for herself after a disappointing day"
+      - "trusting your gut when your mind keeps trying to be polite"
+      - "being soft without becoming easy to mishandle"
+      - "the version of yourself that appears when you stop shrinking for comfort"
+      - "saying no before resentment has a chance to grow"
+      - "the peace that comes when you stop pursuing what stays unsure about you"
+      - "looking in the mirror and no longer negotiating your worth"
+      - "small acts of self-respect that quietly change your standards"
+      - "when your silence is not distance but discernment"
+      - "recognizing when your kindness is being mistaken for availability"
+      - "the sadness of realizing you were easy to hear and still not listened to"
+      - "when you stop asking for honesty and start noticing what avoidance already said"
+      - "being understanding for too long and calling it patience"
+      - "the moment disappointment turns into detachment"
+      - "when your body feels the truth before your heart accepts it"
+      - "seeing how little effort someone gives once they feel secure in your care"
+      - "the kind of self-respect that makes overexplaining feel unnatural"
+      - "when peace becomes more attractive than potential"
+      - "learning that being chosen is not the same as being valued"
+      - "the shift that happens when you stop romanticizing inconsistency"
+      - "being called difficult the moment you become clear"
+      - "when you no longer want clarity from people who create confusion"
+      - "the grace in letting your absence say what your words no longer need to"
+      - "realizing you were loyal to a version of someone that only existed in hope"
+      - "when your standards rise and your circle becomes quieter"
+      - "the kind of heartbreak that comes from finally seeing things accurately"
+      - "protecting your softness instead of offering it to prove who you are"
+      - "when delayed replies start sounding like self-respect"
+      - "the loneliness of always understanding others while feeling rarely understood"
+      - "when you stop making excuses for energy that keeps changing"
+      - "the calm that comes from no longer needing to be reassured by inconsistency"
+      - "recognizing when your effort has been treated like something ordinary"
+      - "the moment you stop confusing emotional access with emotional safety"
+      - "when your intuition gets tired of being edited into politeness"
+      - "being present without making yourself permanently available"
+      - "the quiet dignity of no longer repeating your needs"
+      - "when you accept that confusion was the answer"
+      - "the woman you become after choosing self-respect over one more chance"

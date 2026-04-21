@@ -17,85 +17,500 @@ styles:
 
   ghibli_anime:
     description: >
-      2D hand-drawn animation frame inspired by classic Japanese animated cinema. VISUAL HOOK:
-      extreme contrast between a tiny warm-lit figure and a vast, dramatically colored landscape.
-      Choose the setting and scene to match the quote — examples: a small figure on a cliff edge
-      watching electric indigo clouds, someone cycling through a glowing autumn tunnel, a child
-      reaching toward oversized glowing spirits in a mist-filled forest, a lone traveller on a
-      mountain pass as stars emerge, a figure on a rooftop watching lanterns rise, someone at a
-      rain-soaked station with one warm window illuminated. Sky palette is always punchy — electric
-      indigo, blazing gold horizon, deep teal with white star scatter. The contrast between the
-      intimate figure and epic scale is the scroll-stopper. 1990s anime aesthetic — painterly,
-      perfectly composed.
+      A breathtaking 2D hand-painted animation frame inspired by classic 1990s Japanese animated cinema,
+      designed to feel instantly transportive, nostalgic, and emotionally unforgettable. The image must create
+      an immediate scroll-stopping hook through one powerful contrast: a tiny human figure carrying a warm,
+      intimate emotional moment inside an enormous, dreamlike world.
+  
+      The subject should feel small, tender, and personal against a vast, cinematic landscape that feels alive
+      with atmosphere. The emotional magic comes from scale: the world is huge, luminous, and full of wonder,
+      while the figure feels quiet, solitary, and deeply human.
+  
+      Choose a scene that matches the quote’s emotional tone, such as:
+      a lone figure standing at the edge of a cliff beneath electric indigo storm clouds,
+      someone cycling through a glowing autumn tree tunnel at dusk,
+      a child reaching toward oversized luminous spirits in a misty forest,
+      a quiet traveler on a mountain path as the first stars appear,
+      a figure on a tiled rooftop watching lanterns drift into the night sky,
+      someone waiting at a rain-soaked countryside station with one warm amber window glowing,
+      a person crossing a meadow while wind bends the grass in silver waves,
+      or a solitary figure near a lakeshore reflecting a surreal sky.
+  
+      Composition must feel cinematic and emotionally precise:
+      use a wide shot with deep environmental storytelling,
+      place the figure small within the frame to emphasize awe, longing, peace, or loneliness,
+      and let the landscape act like a character of its own.
+      Use strong foreground, midground, and background depth when possible.
+      The viewer should feel they have stepped into a remembered dream.
+  
+      Build the image around a striking sky and atmosphere:
+      electric indigo clouds,
+      blazing gold horizon light,
+      deep teal twilight,
+      violet dusk haze,
+      luminous moon glow,
+      white star scatter,
+      drifting mist,
+      glowing lanterns,
+      reflected water light,
+      or soft rain illuminated by a hidden warm source.
+      The sky should not just sit in the background — it should carry emotional weight.
+  
+      Add irresistible visual hooks that make the frame feel alive:
+      a single warm window in the distance,
+      birds crossing the sky,
+      floating lanterns,
+      drifting leaves,
+      glowing spirits,
+      telephone wires cutting across sunset light,
+      wind through clothing and grass,
+      ripples in puddles,
+      a bicycle light,
+      or a path disappearing into luminous fog.
+      These details should create curiosity and wonder without clutter.
+  
+      Color palette should be rich, painterly, and nostalgic:
+      saturated but elegant indigo, teal, moss green, golden amber, rust orange, moonlit cream,
+      soft charcoal, dusty pink sunset, storm blue, and warm lantern gold.
+      Use warm-cool contrast aggressively to create emotional pull:
+      warm light for the figure or a tiny point of human life,
+      cool vastness for the surrounding world.
+  
+      The overall feeling should be wistful, magical, cinematic, tender, nostalgic,
+      slightly melancholic, and deeply comforting.
+      It should feel like a still frame from a beloved animated film that people want to pause on,
+      save, and stare at for a few extra seconds.
+  
+      The image should make the viewer feel there is a story just before or just after this frame.
+      It should feel like a private emotional universe: quiet, expansive, luminous, and unforgettable.
+
+      Composition must protect quote space.
+      Place the tiny figure and the scene's main focal point in the LOWER THIRD or to one side of the frame.
+      Preserve a large, visually calm area of sky, open atmosphere, soft gradient, misty horizon,
+      or gently glowing negative space across the upper two-thirds or a broad central region for the quote.
+      The sky carries both emotional weight and the text — these two jobs must not compete.
+      No busy cloud texture, no dense tree canopies, no lantern clusters, and no visual complexity
+      should intrude into the zone where the quote will sit.
+      The open area should feel breathable, luminous, and poetic — spacious by design, not empty by accident.
+
+      Style must remain hand-drawn, painterly, and animation-cel inspired — never photorealistic,
+      never 3D, never glossy digital fantasy art.
+
+      NO busy skylines crowding the whole frame, NO dense foreground AND background simultaneously,
+      NO multiple focal points competing at every edge, NO heavy detail in the quote zone,
+      NO photorealism, NO generic fantasy art aesthetics, NO clutter masking the emotional scale contrast.
     categories: [morning, love, goodnight, mindfulness, wisdom]
     weight: high
 
   whimsical_sketch:
     description: >
-      Hand-drawn pencil sketch on warm cream — loose expressive lines. Choose the subject to
-      match the quote's emotion — examples: a figure standing in wind with hair flying, two hands
-      almost touching, someone looking out of a rain-streaked window, a person at a crossroads,
-      a lone tree in a wide field, birds lifting from a branch, a figure reading in a beam of
-      light. MAXIMUM CONTRAST RULE: the selective color must be SHOCKING against the greyscale
-      base. The chosen element bursts in electric cobalt, acid yellow, blood red, or neon emerald
-      while everything else stays graphite. The color pop should feel almost violent against the
-      grey — that extreme tonal jump freezes the thumb mid-scroll. Never fully colored, never
-      fully grey. The single vivid element must be the first thing the eye lands on.
+      A hand-drawn pencil sketch on a warm cream paper background, designed to feel intimate,
+      emotionally charged, and instantly arresting in the feed. The image should look like a private
+      thought caught in a sketchbook — loose, expressive, imperfect, and full of feeling — but with one
+      unforgettable visual hook that makes the viewer stop.
+
+      The core concept is contrast:
+      a soft greyscale graphite world interrupted by ONE vivid, electrifying accent color that lands
+      immediately in the eye. The sketch should feel poetic and human, while the color accent feels
+      unexpected, sharp, and impossible to ignore.
+
+      Choose the subject and scene to match the quote’s emotion, such as:
+      a figure standing in wind with hair flying,
+      two hands almost touching but not quite,
+      someone looking out of a rain-streaked window,
+      a person standing at a crossroads,
+      a lone tree in a wide empty field,
+      birds lifting suddenly from a branch,
+      a figure reading in a beam of light,
+      a girl sitting on the floor beside a bed,
+      a person under a streetlamp at dusk,
+      or a solitary figure walking away through open space.
+
+      The style should remain hand-sketched and expressive:
+      visible pencil lines,
+      soft graphite smudges,
+      raw line variation,
+      gentle imperfection,
+      and elegant incompleteness.
+      It should feel artistic and emotional, not polished or over-finished.
+
+      The visual hook must come from one selective-color focal element only.
+      Everything else stays in graphite, charcoal, soft grey, and cream paper tones.
+      The chosen accent should burst forward in a way that freezes the thumb mid-scroll.
+      Use one striking color only, such as:
+      electric cobalt,
+      acid yellow,
+      blood red,
+      neon emerald,
+      hot orange,
+      or vivid magenta.
+      The accent color should appear in just one emotionally meaningful area:
+      a ribbon,
+      a flower,
+      the sun or moon,
+      a tear,
+      a window glow,
+      a bird,
+      a heart-like mark,
+      an umbrella,
+      a single sleeve,
+      a beam of light,
+      or a line of thread connecting two elements.
+
+      The accent must feel symbolic, not decorative.
+      It should carry the emotional charge of the quote:
+      blood red for ache, desire, heartbreak, or truth;
+      electric cobalt for longing, distance, intuition, or nighttime thought;
+      acid yellow for realization, memory, hope, or sudden clarity;
+      neon emerald for inner unrest, transformation, or strange emotional electricity;
+      vivid magenta or orange for intensity, tenderness, or emotional heat.
+
+      Composition must be designed around quote space.
+      Place the sketch mostly in the UPPER THIRD or upper-left / upper-right area of the frame,
+      keeping the subject compact and visually controlled.
+      The lower two-thirds, or at minimum a large central-lower block, must remain empty warm cream space
+      for the quote. This blank space is intentional and essential to the aesthetic.
+      No sketch lines, no color splashes, no texture buildup, and no important details should intrude
+      into the quote area.
+
+      Make the image feel alive through emotional motion:
+      hair blown by wind,
+      a sleeve pulling back,
+      birds mid-lift,
+      rain lines on glass,
+      a page turning,
+      a hand hesitating,
+      branches bending,
+      or a colored thread drifting across the air.
+      These subtle movements should create narrative tension and make the frame feel like a story paused
+      one second before or after something meaningful.
+
+      Use negative space intelligently.
+      The emptiness should create breathing room, emotional pause, and elegance rather than looking unfinished.
+      The final image should feel like a premium editorial sketch, a poetic journal page, or an artful saved
+      Instagram post that is both visually striking and quote-friendly.
+
+      NO fully colored illustrations, NO busy backgrounds, NO dense shading across the page,
+      NO multiple accent colors, NO clutter, NO realistic rendering, NO cartoon look,
+      NO decorative patterns, NO color floods bleeding into the quote space.
+
+      The final result should feel delicate yet intense:
+      soft graphite, one shocking emotional color, strong storytelling, and enough negative space
+      to let the quote land beautifully.
+
     categories: [wisdom, love, goodnight, latenight, morning]
     weight: high
 
   silhouette_landscape:
     description: >
-      A tiny sharp black silhouette against a HIGH CONTRAST sky — choose the silhouette and
-      setting to suit the quote. Examples: a single figure on a hilltop, a person standing on
-      a dock over still water, someone at a window ledge watching the horizon, a figure in a
-      rowboat on a glassy lake, two people on a beach facing the ocean, a person sitting on a
-      rooftop at dusk, a lone tree and small figure on a vast plain. Sky must be dramatically
-      graduated — deep electric orange at the horizon bleeding into violet then near-black, or
-      a blindingly white moon against midnight indigo. Perfect mirror reflection doubles visual
-      impact. The silhouette must be pure black, the sky vivid and saturated — the contrast
-      between the two IS the hook.
+      A striking, cinematic landscape built around one unforgettable contrast:
+      a tiny pure-black silhouette against a vivid, emotionally charged sky.
+      The image should feel instantly scroll-stopping, mysterious, and emotionally spacious —
+      like a poster frame that makes someone pause before they even read the quote.
+  
+      The silhouette must be extremely simple and graphic:
+      a single figure on a hilltop,
+      a person standing on a dock over still water,
+      someone at a window ledge watching the horizon,
+      a figure in a rowboat on a glassy lake,
+      two people on a beach facing the ocean,
+      a person sitting on a rooftop at dusk,
+      a lone tree with a small figure beneath it,
+      or a solitary person on an empty plain, ridge, or shoreline.
+      The silhouette should be pure black with crisp edges and no visible detail.
+      It must feel small against the world, so the scale creates emotion.
+  
+      The sky is the main hook.
+      Make it dramatic, saturated, and luminous:
+      deep electric orange melting into violet and then near-black,
+      a blinding white moon against midnight indigo,
+      ember-red dusk fading into bruised purple,
+      teal-blue twilight with silver clouds,
+      or a glowing horizon line under a dark vast sky.
+      The sky should feel alive with atmosphere and emotional meaning, not just pretty color.
+  
+      Add subtle storytelling elements that make the frame feel like a moment suspended in time:
+      birds crossing the distance,
+      one faint star appearing,
+      a moon reflection trembling in water,
+      low mist over a field,
+      a soft path leading nowhere,
+      a single glowing horizon band,
+      distant city lights,
+      or wind moving tall grass.
+      These details should create narrative pull without breaking the minimal silhouette style.
+  
+      Use composition to create both visual hook and quote space.
+      Keep the silhouette compact and positioned in the upper third, far left, far right,
+      or along a low horizon line so the scene feels expansive.
+      Preserve a large clean area of open sky, water, or softly graded atmosphere for the quote.
+      At least the lower or central two-thirds should remain visually calm and uncluttered,
+      with no busy objects, no dense cloud textures, and no detail-heavy scenery interfering with text.
+  
+      If water is present, use a mirror-like reflection to double the emotional impact.
+      Reflections should be clean, symmetrical, and serene — never noisy.
+      They should intensify the feeling of stillness, distance, and wonder.
+  
+      The emotional tone should feel contemplative, cinematic, and universally relatable:
+      solitude, peace, longing, closure, awe, tenderness, or quiet healing.
+      The viewer should be able to project themselves into the silhouette.
+  
+      Use very strong contrast:
+      the silhouette must be the darkest possible black,
+      the sky must be vivid and radiant,
+      and the boundary between them should feel sharp and memorable.
+      This light-dark contrast is the primary thumb-stopping device.
+  
+      The final image should feel like a premium minimalist film poster or poetic visual quote card:
+      dramatic but clean, emotional but spacious, beautiful but highly readable.
+  
+      NO facial detail, NO textured black shadows, NO cluttered foregrounds, NO extra props,
+      NO busy tree lines across the quote area, NO heavy cloud chaos where text should sit,
+      NO photorealistic rendering, NO dull muted skies, NO visual noise.
+  
+      The image should feel like there is a story behind the silhouette,
+      but enough silence around it for the quote to breathe.
+  
     categories: [mindfulness, morning, wisdom, goodnight]
     weight: high
 
   nocturnal_aesthetic:
     description: >
-      Atmospheric night scene with BOLD warm-vs-cool color contrast. Choose the scene to match
-      the quote's emotion — examples: a moonlit lane with lit windows and glowing cherry blossoms,
-      a rooftop under aurora ribbons in electric cyan and violet, fireflies over a dark meadow,
-      a figure at a lamppost in a quiet rain-slicked street, lanterns floating over dark water,
-      a small illuminated café in an otherwise dark alley, a lit window in a sleeping village,
-      warm lights strung across a dark terrace. KEY: extreme contrast between deep cold backgrounds
-      (midnight blue, dark plum) and blazing warm light sources (gold, amber, coral). Push the
-      saturation further than feels safe — makes late-night emotions feel electric, not just soft.
+      An atmospheric night scene designed to feel cinematic, intimate, and instantly magnetic in the feed.
+      The image should create a powerful scroll-stopping hook through bold warm-vs-cool contrast:
+      deep nocturnal darkness surrounding one or more glowing warm light sources that feel emotional,
+      not just decorative.
+  
+      Choose a scene that matches the quote’s feeling, such as:
+      a moonlit lane with lit windows and glowing cherry blossoms,
+      a rooftop under aurora ribbons in electric cyan and violet,
+      fireflies drifting above a dark meadow,
+      a solitary figure under a lamppost on a quiet rain-slicked street,
+      lanterns floating over still dark water,
+      a tiny illuminated café in an otherwise dark alley,
+      a single lit window in a sleeping village,
+      warm string lights across a shadowy terrace,
+      a person standing by a train platform under a night sky,
+      or a balcony glowing softly against a nearly black city silhouette.
+  
+      The emotional hook must come from color temperature contrast.
+      Push the cold background into rich midnight blue, dark plum, charcoal violet, indigo-black,
+      storm teal, or deep forest night.
+      Then place blazing pockets of warm light in gold, amber, honey, coral, candle orange,
+      peach-glow, or lantern yellow.
+      The warmth should feel like human emotion inside the night:
+      longing, comfort, memory, intimacy, hope, or quiet ache.
+  
+      Make the contrast bold and unapologetic.
+      The warm light should feel almost unreal against the dark atmosphere —
+      like something glowing from the inside of the scene.
+      Push saturation enough to feel electric and emotionally heightened, but still tasteful and cinematic.
+      The image should feel more alive and charged than a typical soft night aesthetic.
+  
+      Build in subtle visual hooks that make people pause:
+      reflections in rain puddles,
+      steam rising from a window,
+      drifting petals or fireflies,
+      glowing lantern trails,
+      a half-open café door,
+      one lit window in a sea of darkness,
+      a bicycle left under a streetlamp,
+      wet pavement catching amber light,
+      or a figure’s silhouette just barely touched by warmth.
+      These details should create curiosity and make the viewer feel a story is unfolding quietly.
+  
+      Composition must protect quote space.
+      Keep the main subject and brightest lights concentrated in the upper third, one side of the frame,
+      or around a compact focal zone.
+      Preserve a large clean region of dark sky, softly graded wall, open water, or low-detail night air
+      for the quote. At least the lower or central two-thirds should remain visually calm enough for text
+      to sit clearly without fighting bright highlights or busy detail.
+  
+      Use negative space intentionally.
+      Darkness should feel luxurious, deep, and breathable — not empty, muddy, or unfinished.
+      The quote area should be smooth, legible, and elegant, with minimal texture noise.
+  
+      The mood should feel like late-night emotion at its most beautiful:
+      intimate, electric, lonely, romantic, reflective, tender, and slightly melancholic.
+      The image should feel save-worthy — something people want to linger on because it feels like
+      a night they remember.
+  
+      Style can be painterly digital illustration, cinematic semi-flat art, or atmospheric editorial scene,
+      but never photorealistic, never cluttered, and never over-rendered.
+      Keep forms readable, light sources intentional, and the emotional contrast between warmth and darkness
+      as the main storytelling device.
+  
+      NO busy city crowds, NO too many light sources, NO flat dull darkness, NO muddy color,
+      NO harsh neon overload, NO clutter in the text area, NO detailed architecture taking over the frame,
+      NO decorative stars everywhere, NO visual noise.
+  
+      The final image should feel like a beautiful secret:
+      dark, glowing, emotionally charged, and spacious enough for the quote to land with impact.
+  
     categories: [latenight, goodnight, love, mindfulness]
     weight: high
 
   minimalist_line_art:
     description: >
-      Precise, detailed ink illustration — fine confident linework on warm cream or white.
-      Choose the subject to match the quote — examples: a face in profile with expressive detail,
-      two figures leaning toward each other, hands almost touching, a figure curled in thought,
-      someone writing at a desk by lamplight, a person at a window watching rain, a figure
-      releasing birds. NOT a single abstract stroke — the drawing must be clearly readable and
-      finely rendered, like a high-quality editorial illustration. CONTRAST RULE: one saturated
-      color accent used deliberately — crimson red, cobalt blue, pure gold, or electric teal —
-      on a specific element (a scarf, a light source, a detail). Clean white ground, detailed
-      black linework, one vivid accent. Clarity and precision is the aesthetic.
+      A refined editorial ink illustration on warm cream or clean white, designed to feel elegant,
+      emotionally intelligent, and instantly engaging without visual noise. The image should stop the scroll
+      through clarity, precision, and one unforgettable accent — not through clutter or over-decoration.
+  
+      Create a finely rendered black ink line drawing with confident, deliberate linework.
+      The subject should be clearly readable, emotionally expressive, and beautifully composed.
+      This is not a loose abstract scribble and not a single continuous line gimmick.
+      It should feel like a premium magazine illustration or literary editorial artwork:
+      minimal, precise, thoughtful, and rich with quiet emotional tension.
+  
+      Choose a subject that matches the quote’s feeling, such as:
+      a face in profile with subtle expression,
+      two figures leaning slightly toward each other,
+      hands almost touching,
+      a figure curled inward in thought,
+      someone writing at a desk by lamplight,
+      a person at a window watching rain,
+      a figure releasing birds,
+      a woman holding a letter,
+      a person sitting at the edge of a bed,
+      or a solitary figure beneath a hanging light.
+      The scene should feel intimate and symbolic, but visually clean.
+  
+      The drawing style should use:
+      fine confident black lines,
+      elegant contour work,
+      selective interior detail,
+      restrained shadow only if necessary,
+      and strong shape clarity.
+      Every line should feel intentional.
+      The illustration must be detailed enough to feel premium and emotionally specific,
+      but still minimal enough to preserve openness and calm.
+  
+      The main visual hook must come from ONE deliberate saturated color accent only.
+      Use a single vivid color on one meaningful element:
+      crimson red,
+      cobalt blue,
+      pure gold,
+      or electric teal.
+      The accent can appear on a scarf, lamp glow, letter edge, ribbon, bird, rain detail,
+      sleeve, thread, window light, flower, or another emotionally symbolic focal point.
+      The accent should guide the eye immediately and create a strong emotional anchor.
+  
+      Match the accent color to the quote’s emotional tone:
+      crimson red for longing, ache, devotion, honesty, or heartbreak;
+      cobalt blue for distance, thoughtfulness, night emotion, or introspection;
+      pure gold for wisdom, hope, memory, tenderness, or quiet revelation;
+      electric teal for emotional freshness, release, clarity, or an unexpected inner shift.
+  
+      Composition must strongly protect quote space.
+      Place the illustrated subject in the upper third, upper corner, or one compact side of the frame.
+      Keep the lower two-thirds, or a large central-lower area, completely open and calm for the quote.
+      The empty area should remain mostly untouched white or cream paper with no dense linework,
+      no important details, and no color accents interfering with readability.
+  
+      Use negative space as part of the design language.
+      The emptiness should feel intentional, premium, and restful — like editorial layout space,
+      not unfinished blankness. The quote area should breathe.
+  
+      Add subtle narrative tension through posture and detail:
+      a hand pausing before contact,
+      a gaze turned away,
+      rain gathering at the window,
+      birds just beginning to lift,
+      a letter half-folded,
+      a lamp glowing in stillness,
+      or fabric shifting slightly as if something has just been felt.
+      The image should feel like a quiet emotional moment caught precisely in time.
+  
+      The final effect should feel clean, literary, artistic, and save-worthy:
+      black ink precision, one vivid emotional accent, and enough white space
+      for the quote to land beautifully.
+  
+      NO messy sketch lines, NO multiple accent colors, NO fully colored illustration,
+      NO decorative background textures, NO cluttered scenes, NO cartoon style,
+      NO photorealism, NO heavy shading, NO visual noise in the text area.
+  
+      The image should feel thoughtful at first glance and emotionally deeper on the second look.
+  
     categories: [wisdom, love, mindfulness, latenight]
     weight: high
 
   metaphorical_digital:
     description: >
-      Dark cinematic digital painting where the image IS the concept. Choose the metaphor to
-      match the quote — examples: a person watering a wilting plant in a rainstorm, hands holding
-      broken glass that reflects stars, a figure walking toward a lit doorway in total darkness,
-      two people growing apart like diverging tree roots, someone building a ladder in a dark
-      pit toward a circle of light, a figure standing still while the world blurs around them,
-      a hand releasing birds made of paper, a person sitting in a room where one wall is open
-      sky. CONTRAST HOOK: near-total darkness with one blazing light source — the lit element
-      should pop with almost physical force against a near-black base. Palette: deep charcoal
-      base, then one electric accent — amber, rose gold, electric blue.
+      A dark cinematic digital painting where the image itself is the meaning.
+      The scene should feel like a visual metaphor made visible — emotionally sharp, instantly intriguing,
+      and powerful enough to stop someone mid-scroll before they even read the quote.
+
+      Build the composition around one clear symbolic concept that matches the quote’s emotion, such as:
+      a person watering a wilting plant in a rainstorm,
+      hands holding broken glass that reflects stars,
+      a figure walking toward a lit doorway in total darkness,
+      two people growing apart like diverging tree roots,
+      someone building a ladder inside a dark pit toward a circle of light,
+      a figure standing still while the world blurs around them,
+      a hand releasing birds made of paper,
+      a person sitting in a room where one wall opens into sky,
+      a heart-shaped crack glowing through stone,
+      or a staircase dissolving into light above a shadowed figure.
+      The metaphor should be immediately graspable but emotionally layered.
+
+      The main hook must come from dramatic light in near-total darkness.
+      Use a deep charcoal, black-blue, or near-black base for most of the image,
+      then introduce ONE blazing light source or illuminated symbolic element that hits with almost physical force.
+      The glow should feel concentrated, meaningful, and impossible to ignore:
+      a doorway of amber light,
+      electric blue stars in shattered glass,
+      rose-gold light spilling from a crack,
+      a ladder lit from above,
+      birds turning luminous as they leave the hand,
+      or a circle of light suspended in darkness.
+
+      The image should feel cinematic, emotional, and concept-driven — not fantasy clutter, not horror,
+      not generic surrealism. Every element must serve the metaphor.
+      Keep the scene simple enough to be understood in one glance, but rich enough to feel worth staring at longer.
+
+      Use a restrained palette:
+      deep charcoal, blackened navy, soft smoke, muted shadow tones,
+      plus one electric accent only — amber, rose gold, or electric blue.
+      Let that accent color become the emotional pulse of the scene.
+      Match the accent to the quote’s tone:
+      amber for hope, memory, warmth, guidance, or rescue;
+      rose gold for tenderness, heartbreak, longing, or fragile beauty;
+      electric blue for distance, clarity, awakening, loneliness, or inner truth.
+
+      Create a strong focal path for the eye.
+      The viewer should land first on the glowing symbolic element,
+      then move outward into the surrounding darkness and metaphorical context.
+      Use light falloff, shadow, and composition to control that journey.
+      Darkness should not feel empty; it should feel heavy with meaning.
+
+      Protect quote space intentionally.
+      Keep the metaphorical focal action compact and placed in the upper third, upper side,
+      or one contained region of the frame.
+      Preserve a large calm area of dark negative space — smooth shadow, empty wall, open night air,
+      or softly graded darkness — for the quote.
+      At least the lower or central two-thirds should remain visually quiet enough for text overlay,
+      with no busy textures, no detail clutter, and no bright interruptions.
+
+      Add subtle cinematic atmosphere if it supports the concept:
+      dust in a beam of light,
+      faint mist,
+      particles floating from the glowing area,
+      long soft shadows,
+      smoke trailing upward,
+      or a dim sense of depth behind the subject.
+      These details should enhance mystery and emotion without reducing clarity.
+
+      The final image should feel profound, intimate, and slightly haunting —
+      like a thought turned into a dream-symbol.
+      It should invite the viewer to feel something first and understand it fully a second later.
+
+      NO multiple metaphors fighting each other, NO crowded surreal objects, NO bright full-scene lighting,
+      NO photorealism, NO over-detailed fantasy environments, NO muddy shadows, NO visual noise in the quote area,
+      NO more than one main accent color.
+
+      The result should feel like a premium conceptual poster:
+      dark, elegant, emotionally symbolic, and spacious enough for the quote to land with force.
+
     categories: [latenight, wisdom, love]
     weight: high
 
@@ -103,56 +518,387 @@ styles:
 
   vector_girl:
     description: >
-      Clean flat 2D vector illustration of a stylised girl figure — warm, expressive, graphic.
-      Choose the pose and setting to match the quote's mood — examples: sitting cross-legged
-      reading a book, standing in wind with eyes closed, looking out a window in thought,
-      writing in a journal, walking alone in evening light, arms stretched wide, sitting on
-      steps with a cup, dancing alone in a room, lying in grass looking up, standing in rain
-      with eyes open. CONTRAST RULE: bold complementary color pairing — electric teal outfit
-      against warm peach, cobalt jacket against vivid mustard, burgundy against sage. Attire
-      is modern casual for everyday themes, traditional only when culturally resonant. 4-5
-      color palette, punchy and clean. Color contrast stops the scroll, pose carries emotion.
+      A clean flat 2D vector illustration of a stylized girl figure, designed to feel warm,
+      emotionally expressive, modern, and instantly eye-catching in the feed. The image should
+      stop the scroll through bold color contrast, a relatable human pose, and a composition
+      that feels graphic, polished, and highly shareable.
+
+      Choose a pose and setting that match the quote’s mood, such as:
+      sitting cross-legged reading a book,
+      standing in wind with eyes closed,
+      looking out a window in thought,
+      writing in a journal,
+      walking alone in evening light,
+      arms stretched wide in release,
+      sitting on steps with a cup,
+      dancing alone in a room,
+      lying in grass looking upward,
+      standing in rain with eyes open,
+      leaning against a balcony rail at dusk,
+      or sitting on the floor beside a softly lit bed.
+      The pose should feel emotionally readable at a glance.
+
+      The girl should be stylized but expressive:
+      graceful silhouette,
+      clear posture,
+      simple modern features,
+      soft but confident body language,
+      and a sense of lived emotion rather than fashion posing.
+      She should feel relatable, feminine, contemporary, and visually elegant.
+
+      Use a flat vector style with clean shapes, crisp edges, minimal texture, and strong graphic clarity.
+      Keep the illustration modern and premium — not childish, not overly cartoonish, not overly corporate.
+      It should feel like an editorial social post or a beautifully art-directed lifestyle illustration.
+
+      The visual hook must come from bold color contrast.
+      Use a 4 to 5 color palette only, with one strong complementary or near-complementary pairing
+      that creates immediate visual pull. Examples include:
+      electric teal outfit against warm peach,
+      cobalt jacket against vivid mustard,
+      burgundy against sage,
+      coral against deep turquoise,
+      golden yellow against muted violet,
+      or rust red against blue-green.
+      Let one color dominate and the contrasting color support, so the palette feels punchy but controlled.
+      Use contrast to make the subject stand out instantly without becoming chaotic. Complementary color pairings
+      are preferred because they create high contrast and strong visual engagement.
+
+      Clothing should feel modern and emotionally appropriate:
+      soft knits, oversized shirts, simple dresses, relaxed trousers, scarves, jackets, casual homewear,
+      or light traditional attire only when culturally resonant and relevant to the quote.
+      Avoid overly trendy fashion styling that steals attention from the emotion.
+
+      Build a strong visual focal point through the pose and one color-led area:
+      a bright coat in wind,
+      a vivid book against a muted scene,
+      glowing socks on a windowsill,
+      a bold umbrella in rain,
+      a contrasting chair,
+      a journal on the lap,
+      or a scarf creating shape and movement.
+      The first thing the eye lands on should feel emotionally connected to the quote.
+
+      Composition must protect quote space.
+      Place the girl and any main environmental elements in the upper third, one side of the frame,
+      or a compact upper-center composition.
+      Keep the lower two-thirds, or a large central-lower region, open and visually calm for the quote.
+      Use clean background color fields, simple interior walls, window light, sky gradients, floor planes,
+      or empty room space as elegant negative space.
+      No clutter, no busy props, and no complex scenery should interfere with text readability.
+
+      Add a touch of life through small supporting details:
+      curtain movement,
+      a loose page corner,
+      wind through hair,
+      rain lines on glass,
+      long evening shadows,
+      grass bending,
+      steam rising from a cup,
+      or fabric stretching with the pose.
+      These details should create emotional atmosphere without crowding the composition.
+
+      The emotional tone should feel human and save-worthy:
+      tender, reflective, quietly lonely, hopeful, peaceful, romantic, or softly empowered.
+      The image should feel like a moment someone recognizes from their own life.
+
+      NO photorealism, NO gradient-heavy 3D shading, NO crowded rooms, NO too many props,
+      NO more than 5 main colors, NO muddy palette, NO childish cartoon proportions,
+      NO fashion-ad glamour posing, NO visual noise in the quote area.
+
+      The final image should feel like a premium contemporary quote illustration:
+      bold, warm, clean, relatable, and spacious enough for the words to land beautifully.
+
     categories: [love, goodnight]
     weight: high
 
   vector_couple:
     description: >
-      Clean flat 2D vector — two illustrated figures. Choose the moment to match the quote —
-      examples: leaning toward each other not quite touching, walking side by side in silence,
-      one resting head on the other's shoulder, sitting back to back reading, sharing an
-      umbrella, one reaching toward the other across a gap, sitting on a bench watching
-      something together, slow dancing in a small room, one figure walking away while the
-      other watches. CONTRAST: figures in warm tones (terracotta, blush, amber) against a cool
-      high-contrast backdrop (deep teal, indigo, slate), or warm-lit figures against a cool
-      dark environment. Instantly legible at thumbnail size — the color contrast creates depth.
+      A clean flat 2D vector illustration of two figures, designed to feel emotionally immediate,
+      visually polished, and instantly legible even at thumbnail size. The image should create a
+      strong scroll-stopping hook through relational body language, warm-vs-cool color contrast,
+      and a composition that leaves elegant negative space for the quote.
+  
+      Choose a moment that matches the quote’s emotion, such as:
+      leaning toward each other without quite touching,
+      walking side by side in silence,
+      one resting their head on the other’s shoulder,
+      sitting back to back reading,
+      sharing an umbrella,
+      one reaching toward the other across a small gap,
+      sitting on a bench watching something together,
+      slow dancing in a small room,
+      one figure walking away while the other watches,
+      standing at a window side by side,
+      sitting on steps with knees nearly touching,
+      or lying beneath the same night sky with space between them.
+      The pose should communicate the feeling instantly, even before the quote is read.
+  
+      The figures should be stylized but expressive:
+      clear silhouettes,
+      graceful posture,
+      emotionally readable spacing,
+      natural hand placement,
+      and strong body language that suggests tenderness, distance, comfort, longing, or quiet connection.
+      Keep facial features minimal if needed — the emotion should come mostly from shape, pose, and distance.
+  
+      Use a flat vector style with crisp edges, clean shapes, minimal texture, and high graphic clarity.
+      The image should feel modern and premium — not childish, not overly cartoonish, and not like a generic stock couple graphic.
+      It should look like an art-directed editorial social post.
+  
+      The main visual hook must come from warm-vs-cool contrast.
+      Render the figures in warm tones such as terracotta, blush, amber, muted coral, cinnamon, or soft rose,
+      and place them against a cool high-contrast backdrop such as deep teal, indigo, slate, storm blue, or muted night green.
+      Alternatively, place warm-lit figures inside a cool dark room or evening setting.
+      The warm figures should feel emotionally alive against the cooler environment.
+      This color separation should create instant depth, clarity, and scroll-stopping impact.
+  
+      Use a restrained 4 to 5 color palette only.
+      Let one warm tone dominate the figures, one cool tone dominate the background,
+      and use one supporting neutral or soft highlight color to keep the image balanced.
+      Avoid muddy palettes or too many equal-intensity colors.
+  
+      Build the focal point around the emotional gap or connection between the figures:
+      almost-touching hands,
+      shoulder contact,
+      shared gaze direction,
+      the small space between bodies,
+      one leaning in while the other remains still,
+      or a warm light source falling across both of them.
+      The eye should land first on the relationship between them.
+  
+      Composition must protect quote space.
+      Place the couple in the upper third, upper corner, or one side of the frame.
+      Keep the lower two-thirds, or a large central-lower region, open and visually calm for the quote.
+      Use clean wall space, soft sky gradients, simple night backgrounds, window light, empty floor planes,
+      or quiet abstract environment shapes as negative space.
+      No busy furniture, no crowded scenery, and no detail-heavy backgrounds should interfere with readability.
+  
+      Add a few subtle supporting details if they strengthen the emotion:
+      a curtain moving,
+      rain outside the window,
+      one lamp glow,
+      a bench shadow,
+      a shared umbrella shape,
+      drifting leaves,
+      a moon outside,
+      or the edge of a room fading into calm color.
+      These elements should support the mood without stealing focus from the figures.
+  
+      The final mood should feel intimate, romantic, bittersweet, comforting, or quietly heartbreaking,
+      depending on the quote. It should feel like a moment people recognize emotionally from their own lives.
+  
+      NO photorealism, NO crowd scenes, NO complex backgrounds, NO exaggerated cartoon proportions,
+      NO more than 5 main colors, NO clutter in the quote area, NO fashion-catalog posing,
+      NO over-rendered facial detail, NO noisy patterns.
+  
+      The final image should feel like a premium modern relationship poster:
+      simple, warm, emotionally clear, visually bold, and spacious enough for the quote to land beautifully.
+  
     categories: [love, goodnight]
     weight: high
 
   watercolour_ink:
     description: >
-      Hand-painted watercolour on cold-press paper texture — delicate bleeds, ink line details,
-      deeply organic. Choose the subject to match the quote — examples: two hands almost
-      touching, a single candle flame against dark, rain on a window pane, a face in profile
-      looking away, a flower opening, a bird mid-flight, a figure in a doorway, a teacup with
-      rising steam, a letter half-written, a tree reflected in still water. CONTRAST HOOK: one
-      vivid color bleeds dramatically against a near-white or complementary wash — deep indigo
-      hands against warm rose blush, a single crimson candle flame against cool grey-blue,
-      cobalt rain on ivory paper. Palette is otherwise restrained so the ONE saturated element
-      hits like a signal flare. Feels genuinely handmade.
+      A hand-painted watercolor-and-ink illustration on textured cold-press paper, designed to feel
+      intimate, tactile, and emotionally arresting at first glance. The image should look genuinely handmade —
+      soft pigment blooms, delicate ink details, organic edges, subtle paper grain, and the kind of visual
+      imperfection that makes it feel personal and save-worthy.
+
+      Choose a subject that matches the quote’s emotional tone, such as:
+      two hands almost touching,
+      a single candle flame against dark,
+      rain on a window pane,
+      a face in profile looking away,
+      a flower opening,
+      a bird mid-flight,
+      a figure standing in a doorway,
+      a teacup with rising steam,
+      a letter half-written,
+      a tree reflected in still water,
+      a woman holding a folded note,
+      a moon behind thin clouds,
+      or a pair of shoes left by a threshold.
+      The subject should feel symbolic, tender, and emotionally readable in one glance.
+
+      The style must feel authentically watercolor and ink:
+      translucent washes,
+      soft edges,
+      pigment pooling,
+      gentle backruns,
+      expressive ink contours,
+      subtle dry-brush texture,
+      and visible paper breathing through the paint.
+      It should never feel like flat vector art, glossy digital painting, or overly polished studio illustration.
+
+      The main visual hook must come from ONE vivid saturated watercolor element bleeding dramatically
+      against a restrained surrounding palette.
+      Everything else should stay soft, airy, and understated.
+      The saturated element should feel like an emotional signal flare —
+      the first thing the eye lands on and the part that carries the feeling of the quote.
+
+      Use one striking accent color only, such as:
+      deep indigo,
+      crimson,
+      cobalt,
+      burnt coral,
+      amber gold,
+      or rose carmine.
+      Let it bloom naturally into the paper with beautiful watercolor diffusion.
+      Use that vivid color on one meaningful focal element only:
+      the hands,
+      the candle flame,
+      the rain streak,
+      the letter edge,
+      the flower center,
+      the doorway light,
+      the steam glow,
+      the bird,
+      or a reflection in water.
+
+      Match the vivid color to the emotional mood:
+      deep indigo for longing, night thought, quiet sadness, or depth;
+      crimson for ache, intimacy, heartbreak, or truth;
+      cobalt for clarity, rain, memory, or emotional distance;
+      amber gold for warmth, comfort, wisdom, or hope;
+      rose carmine or burnt coral for tenderness, softness, and emotional warmth.
+
+      Keep the rest of the palette restrained:
+      warm ivory paper,
+      pale blush wash,
+      misty grey-blue,
+      diluted sepia ink,
+      soft taupe,
+      or barely-there neutral shadows.
+      The vivid element should feel rare and luminous because the rest of the painting gives it room.
+
+      Composition must strongly protect quote space.
+      Place the painted subject and strongest color concentration in the upper third,
+      upper corner, or one compact side of the frame.
+      Preserve a large clean region of pale paper, soft wash, or nearly blank textured space
+      for the quote. The lower two-thirds, or at minimum a large central-lower block,
+      should remain open, calm, and low-detail.
+      No heavy ink marks, no dense splatter, and no important visual elements should invade the quote area.
+
+      Use negative space as part of the emotional effect.
+      The blank paper should feel intentional, poetic, and luxurious —
+      like silence around a feeling.
+      The emptiness should help the quote breathe and make the image feel more elegant, not unfinished.
+
+      Add subtle handmade motion if it strengthens the scene:
+      pigment feathering outward,
+      steam dissolving upward,
+      rain dragging softly down glass,
+      a petal drifting,
+      candlelight trembling,
+      ink lines fading at the edge,
+      or reflection ripples softening into paper.
+      These details should create life without clutter.
+
+      The final mood should feel delicate yet unforgettable:
+      tender, wistful, reflective, romantic, or quietly profound.
+      It should feel like a page from an artist’s journal that someone would stop to read and save.
+
+      NO fully saturated full-frame painting, NO multiple vivid focal colors, NO busy floral borders,
+      NO decorative splatter everywhere, NO photorealism, NO hard digital gradients,
+      NO clutter in the quote area, NO overly cute greeting-card style.
+
+      The final image should feel premium, handmade, emotionally honest, and spacious enough
+      for the quote to land beautifully.
+
     categories: [love, mindfulness, goodnight, wisdom]
     weight: high
 
   cozy_aesthetic:
     description: >
-      A perfectly composed scene with EXTREME FOREGROUND CONTRAST. Choose the foreground
-      element to match the quote's energy — examples: a steaming mug with rising wisps, a
-      candle flame that is genuinely bright, an open journal with visible ink on a wooden
-      surface, a held book spine-up, a hand wrapped around a warm glass, a half-eaten piece
-      of toast on a plate, a phone face-down next to a flower, fairy lights tangled in a
-      jar. The chosen element should be hyper-real and sharp while everything behind it
-      dissolves to near-abstract warm bokeh. Bokeh balls should be bright white-gold, not
-      just yellow. Amber-gold and honey tones throughout. Compositionally tight — never a
-      wide room shot. Sharpness-vs-blur contrast creates magnetic depth.
+      A tightly composed cozy still-life or intimate close-up scene designed to feel instantly warm,
+      tactile, and irresistibly comforting in the feed. The image should stop the scroll through one
+      powerful visual contrast: a hyper-sharp foreground object that feels touchable and real, set against
+      a dreamy background dissolved into glowing warm bokeh and soft blur.
+
+      Choose the foreground element to match the quote’s emotional energy, such as:
+      a steaming mug with rising wisps,
+      a candle flame burning brightly,
+      an open journal with visible ink on a wooden surface,
+      a held book spine-up,
+      a hand wrapped around a warm glass,
+      a half-eaten piece of toast on a plate,
+      a phone face-down beside a flower,
+      fairy lights tangled in a jar,
+      folded knit fabric beside tea,
+      reading glasses on an open page,
+      a match just blown out,
+      a letter beside a cup,
+      or fingertips resting on a blanket.
+      The chosen object should feel personal, familiar, and emotionally suggestive.
+
+      The main hook must come from sharpness-vs-blur contrast.
+      The foreground subject should be highly detailed, crisp, and tactile —
+      visible steam, paper grain, wax texture, glass reflections, toast crumbs, fabric weave, ink lines,
+      or fingertips against ceramic.
+      Everything behind it should fall away into soft near-abstract blur.
+      The background should not compete; it should melt into luminous atmosphere.
+
+      Use warm tonal storytelling throughout:
+      amber-gold,
+      honey,
+      soft caramel,
+      candle cream,
+      warm chestnut,
+      toasted beige,
+      and glowing white-gold highlights.
+      Bokeh should feel bright and alive — white-gold, warm ivory, pale amber —
+      not flat yellow or muddy orange.
+      The warmth should feel emotional, like safety, memory, tenderness, late-night calm, or a quiet kind of love.
+
+      Build the background as rich atmospheric blur:
+      soft fairy lights,
+      a lamp out of focus,
+      window glow,
+      blurred shelves,
+      evening reflections,
+      or abstract warm interior shapes.
+      Let the bokeh feel creamy, luminous, and immersive.
+      The blur should create depth and mood while making the foreground object even more magnetic.
+
+      Composition must protect quote space.
+      Keep the main subject large enough to be emotionally engaging, but positioned to one side,
+      in the upper third, or close to a corner so a clean area remains for the quote.
+      Preserve a significant region of softly blurred background, dark tabletop, wall gradient,
+      blanket surface, or warm empty atmosphere where text can sit clearly.
+      At least the lower or central two-thirds should remain visually calm enough for quote placement,
+      with no hard edges, no cluttered props, and no high-contrast distractions.
+
+      Use negative space intentionally.
+      In this style, negative space can be soft blur, dark wood, shadowed linen, warm wall tone,
+      or creamy out-of-focus background — not just blank white emptiness.
+      The quote area should feel calm, breathable, and luxurious.
+
+      Add subtle sensory details that deepen the hook:
+      steam curling upward,
+      candle glow reflecting in glass,
+      condensation on a warm mug,
+      a thumb tucked around ceramic,
+      blanket folds falling out of focus,
+      fairy lights turning into round pearls of light,
+      or a handwritten sentence fading into blur.
+      These details should make the viewer almost feel the warmth physically.
+
+      The emotional tone should feel deeply cozy, intimate, reflective, romantic, or soothing —
+      the kind of late-night or quiet-morning moment people want to crawl into.
+      The image should feel save-worthy because it captures a mood, not just an object.
+
+      Style can be cinematic still-life photography, hyper-real cozy illustration, or soft realistic visual art,
+      but it must always feel intimate, warm, and compositionally tight.
+      Never use a wide room shot.
+      This should feel close, personal, and immersive.
+
+      NO full-room interiors, NO cluttered tabletops, NO too many foreground objects,
+      NO cold flat lighting, NO muddy yellows, NO harsh clutter behind the subject,
+      NO multiple competing focal points, NO busy text area.
+
+      The final image should feel like a pocket of warmth held in focus:
+      tactile, glowing, deeply comforting, and spacious enough for the quote to land beautifully.
+
     categories: [goodnight, latenight, love, mindfulness]
     weight: high
 
@@ -160,74 +906,420 @@ styles:
 
   minimalist_vector:
     description: >
-      Bold flat 2D poster illustration — clean, graphic, and immediately readable. No human
-      figures. Choose a clear concrete symbol to match the quote — examples: a lighthouse beam
-      cutting through dark water, a path forking through a forest, a window with warm light
-      spilling out, a bridge over still water at dusk, a candle casting a long shadow on a table,
-      a mountain peak with a clear sky, a compass on a map, a hot air balloon over a landscape,
-      a staircase lit from above, a lone tree against a vivid sky. Every element should be
-      purposeful and clearly recognizable. CONTRAST IS THE STYLE: maximum 3 bold colors —
-      deep navy against electric yellow, pure black against vivid coral, forest green against
-      bright cream. Flat fills, crisp edges, no gradients, no textures. Reads in under one
-      second at thumbnail size.
+      A bold flat 2D poster illustration with no human figures, designed to be instantly readable,
+      visually striking, and highly memorable at thumbnail size. The image should stop the scroll
+      through one iconic concrete symbol, fearless color contrast, and a composition that feels clean,
+      intelligent, and effortlessly modern.
+
+      Choose one clear symbolic subject that matches the quote’s message, such as:
+      a lighthouse beam cutting through dark water,
+      a path forking through a forest,
+      a window with warm light spilling out,
+      a bridge over still water at dusk,
+      a candle casting a long shadow on a table,
+      a mountain peak beneath a clear sky,
+      a compass resting on a map,
+      a hot air balloon over a minimal landscape,
+      a staircase lit from above,
+      a lone tree against a vivid sky,
+      a key beside an open door,
+      a moon reflected in a still lake,
+      or a boat facing open horizon.
+      The subject should be concrete, recognizable, and emotionally suggestive in one glance.
+
+      Use a bold minimalist poster style:
+      flat fills only,
+      crisp edges,
+      simple geometric forms,
+      strong silhouette clarity,
+      and no unnecessary detail.
+      Every shape must feel deliberate.
+      The image should read in under one second, but still feel clever and beautifully composed on a second look.
+
+      The visual hook must come from high-contrast color pairing.
+      Use no more than 3 bold colors total.
+      Strong combinations include:
+      deep navy against electric yellow,
+      pure black against vivid coral,
+      forest green against bright cream,
+      indigo against warm ivory,
+      rust orange against midnight blue,
+      or charcoal against pale gold.
+      Let one dark or dominant tone define the structure, one bright contrasting color create the focal punch,
+      and one supporting neutral or light color provide breathing room.
+
+      Composition must center around one focal symbol.
+      The eye should land immediately on the most meaningful shape:
+      the beam of the lighthouse,
+      the split in the road,
+      the glowing window,
+      the staircase opening upward,
+      the candle flame and shadow,
+      or the balloon against open sky.
+      Keep the metaphor simple and visually clean enough to grasp instantly.
+
+      Protect quote space intentionally.
+      Place the main symbol in the upper third, far side, or one compact region of the frame.
+      Preserve a large calm area of flat color, open sky, still water, or empty poster background
+      for the quote. The lower two-thirds, or a large central-lower block, should remain free of
+      complex shapes and visual interruptions so the text sits clearly and elegantly.
+
+      Use negative space as an active design tool.
+      The emptiness should create sophistication, readability, and visual tension —
+      not just unused space. In some cases, the negative space can subtly help define the symbol itself,
+      adding a smart poster-design feel that rewards a second glance.
+
+      The mood should feel clear, thoughtful, and emotionally resonant:
+      reflective, directional, hopeful, grounded, or quietly profound.
+      The design should look like a premium modern poster someone would save because it feels both
+      simple and meaningful.
+
+      NO gradients, NO textures, NO patterns, NO photorealism, NO decorative clutter,
+      NO more than 3 colors, NO multiple symbols competing for attention,
+      NO tiny details that disappear at thumbnail size, NO visual noise in the quote area.
+
+      The final image should feel like a bold minimalist statement:
+      one symbol, one strong contrast, one clean idea, and enough space for the quote to land with force.
+
     categories: [morning, wisdom, mindfulness]
     weight: medium
 
   minimalist_nature:
     description: >
-      One powerful natural element in extreme negative space. Choose the subject to match the
-      quote's mood — examples: a single bare branch with one blossom, a rain-caught spider web
-      at dawn, a crescent moon over dark water, a lone tree on a ridge at dusk, a single
-      falling leaf, a stone in rippling water, one bird on a wire, a fern uncurling, a reed
-      in still water, a single blade of grass with a drop. CONTRAST RULE: the subject must
-      be near-black against a near-white background or near-white against a deep charcoal
-      background — no soft middle tones. Pure dark subject, pure light ground, or vice versa.
-      The image holds its breath. Extreme tonal contrast creates the tension introspective
-      quotes need to land.
+      A premium minimalist nature composition built around one single natural element suspended in vast,
+      intentional negative space. The image should feel still, elegant, and emotionally arresting —
+      like a visual breath held for a second too long. It should stop the scroll not through spectacle,
+      but through silence, clarity, and the strange power of one isolated form.
+  
+      Choose one natural subject that matches the quote’s emotional mood, such as:
+      a single bare branch with one blossom,
+      a rain-caught spider web at dawn,
+      a crescent moon over dark water,
+      a lone tree on a ridge at dusk,
+      a single falling leaf,
+      a stone in faint rippling water,
+      one bird on a wire,
+      a fern slowly uncurling,
+      a reed in still water,
+      a single blade of grass holding one drop,
+      a drifting feather,
+      one shell on empty sand,
+      a small wave line beneath a vast sky,
+      one petal resting on still water,
+      or a single star-like point above a dark horizon.
+      The subject must feel singular, delicate, unmistakable, and chosen on purpose.
+  
+      The emotional hook is tension through absence.
+      Most of the frame should remain empty, open, and visually quiet.
+      The image should feel like it is holding its breath.
+      The emptiness must feel meaningful — not blank, not unfinished, not accidental.
+      It should create introspection, spaciousness, and emotional projection.
+  
+      Use extreme tonal contrast as the main visual language.
+      Build the image as either:
+      a near-black subject against a near-white, misty, pale, or softly luminous background,
+      or a near-white subject against a deep charcoal, black-blue, or almost-black field.
+      Avoid muddy midtones, weak contrast, soft greys-on-greys, or overly atmospheric blur.
+      The subject must separate cleanly from the background in under one second.
+      This stark visual separation is the core scroll-stopping device.
+  
+      Make the subject small and beautifully placed.
+      Use asymmetry intentionally:
+      upper third,
+      far edge,
+      low horizon,
+      top corner,
+      or a quiet off-center placement that leaves abundant breathing room.
+      The subject should never dominate the frame.
+      Its smallness should amplify solitude, fragility, stillness, wonder, or quiet ache.
+  
+      Shape matters more than detail.
+      Prioritize elegant silhouette and pure form:
+      the curve of a branch,
+      the geometry of a web,
+      the arc of a moon,
+      the tilt of a bird,
+      the vertical tension of a reed,
+      the suspended drift of a leaf,
+      or the circle-and-ripple relationship of a stone in water.
+      In this style, shape is what carries the emotion.
+  
+      If environmental detail is present, it must be minimal and nearly invisible:
+      one faint horizon line,
+      a soft fog gradient,
+      a subtle reflection,
+      a delicate ripple,
+      a whisper of rain,
+      a barely-there cloud fade,
+      or one smooth shadow.
+      These details should deepen the stillness, never interrupt it.
+  
+      Composition must strongly preserve quote space.
+      Use the empty field itself as a design asset:
+      sky, fog, water, paper-white atmosphere, pale dawn haze, or deep empty night.
+      The lower two-thirds or a broad central area should remain calm, smooth, and low-detail
+      so the quote can sit naturally without crowding the subject.
+      The quote space should feel luxurious, meditative, and effortless.
+  
+      The overall feeling should be poetic, contemplative, restrained, and unforgettable.
+      It should feel like a premium editorial art print or gallery poster for introspective writing —
+      something quiet enough to calm the viewer, but strong enough to make them stop.
+  
+      NO busy landscapes, NO multiple natural subjects, NO decorative color palettes,
+      NO textured forests, NO dramatic sunsets, NO clutter, NO heavy detail, NO visual noise,
+      NO obvious symbolism beyond the single natural element, NO low-contrast softness that weakens the form.
+  
+      The final image should feel like silence made visible:
+      one natural shape, one field of emptiness, one moment of contrast,
+      and enough stillness for the quote to land with real emotional force.
     categories: [mindfulness, wisdom, goodnight, latenight]
     weight: medium
 
   wholesome_doodle:
     description: >
-      Simple charming doodle — choose figures and a moment that match the quote's emotion.
-      Examples: two friends sharing an umbrella in rain, someone journaling at a night window,
-      a small figure cheering at a mountain peak, a hug from behind, two people lying in grass
-      looking up, someone releasing a balloon, a figure building a snowman alone, two figures
-      pinky-promising, someone sleeping under a blanket of stars, a hand waving from a
-      departing train window. CONTRAST RULE: thick bold black outlines on pure white, flat
-      fills in vivid complementary pairs — cobalt blue and warm coral, forest green and
-      golden yellow, deep purple and peach. Bold line + vivid flat fill + white background =
-      maximum graphic clarity at any size.
+      A simple, charming, emotionally expressive doodle illustration designed to feel instantly lovable,
+      highly readable, and irresistibly shareable. The image should stop the scroll through pure graphic clarity,
+      heartfelt body language, and one small wholesome moment that feels human, comforting, and memorable.
+
+      Choose figures and a scene that match the quote’s emotion, such as:
+      two friends sharing an umbrella in rain,
+      someone journaling at a night window,
+      a small figure cheering on a mountain peak,
+      a hug from behind,
+      two people lying in grass looking up,
+      someone releasing a balloon,
+      a figure building a snowman alone,
+      two figures pinky-promising,
+      someone sleeping under a blanket of stars,
+      a hand waving from a departing train window,
+      two people sharing tea,
+      a tiny figure sitting on a moon,
+      someone reading with a pet nearby,
+      or one person leaving a note for another.
+      The moment should feel clear, sweet, and emotionally legible at a glance.
+
+      Style should be playful but clean:
+      thick bold black outlines,
+      simplified shapes,
+      rounded forms,
+      flat color fills,
+      expressive pose language,
+      and minimal but meaningful detail.
+      It should feel hand-drawn in spirit, but graphically polished enough to read clearly at any size.
+      Think warmth, sincerity, and visual friendliness — not messy sketchbook chaos.
+
+      The main hook must come from bold black linework on a pure white background,
+      combined with vivid complementary or high-contrast flat color pairs.
+      Use strong combinations such as:
+      cobalt blue and warm coral,
+      forest green and golden yellow,
+      deep purple and peach,
+      teal and tangerine,
+      berry red and pale mint,
+      or navy and butter yellow.
+      Keep the palette bright, clean, and emotionally uplifting.
+      The black outline should create instant structure,
+      while the color pair should create immediate stop-power.
+
+      Use only a small controlled palette:
+      black outlines,
+      white background,
+      and 2 to 3 vivid flat fill colors maximum.
+      Avoid muddy shades, gradients, textures, and too many competing hues.
+      The simplicity is what makes the illustration punchy and memorable.
+
+      Make the emotional action the focal point:
+      the umbrella covering both figures,
+      the pinky promise,
+      the tiny gap between two people,
+      a balloon drifting upward,
+      a shared blanket,
+      a notebook under warm light,
+      or a wave from a train.
+      The first thing the eye lands on should be the gesture that carries the feeling.
+
+      Composition must protect quote space.
+      Keep the doodle compact and placed in the upper third, upper corner, or one side of the frame.
+      Preserve a large clean area of pure white background for the quote.
+      The lower two-thirds, or a large central-lower block, should remain visually open,
+      with no scattered doodles, no extra symbols, and no clutter breaking up the text area.
+
+      Use negative space intentionally.
+      The white space should feel bright, happy, breathable, and premium —
+      not empty or unfinished.
+      The quote should feel like part of the poster design, not squeezed into leftover space.
+
+      Add tiny supportive details only if they strengthen the scene:
+      a few raindrops,
+      one little star,
+      steam above a cup,
+      two motion lines,
+      a tiny flower,
+      a moon curve,
+      a blanket edge,
+      or one floating heart if emotionally appropriate.
+      Keep these accents sparse and controlled so they do not reduce clarity.
+
+      The overall mood should feel wholesome, affectionate, gentle, and deeply relatable.
+      It should make people smile, soften, or feel quietly seen.
+      The image should feel save-worthy because it turns a simple emotional moment into something visually sweet and instantly clear.
+
+      NO busy backgrounds, NO textures, NO gradients, NO dense doodle clutter, NO too many tiny icons,
+      NO muddy palette, NO overly childish chaos, NO detailed scenery, NO visual noise in the quote area.
+
+      The final image should feel like a tiny piece of happiness:
+      bold, clean, warm, graphic, and spacious enough for the quote to land beautifully.
+
     categories: [morning, love, latenight]
     weight: medium
 
   risograph_print:
     description: >
-      Duotone risograph print — a clearly composed scene with bold graphic character. Choose a
-      specific, readable subject: a figure on a rooftop watching the city, two people walking
-      under a large moon, a person cycling past illuminated shop fronts, someone reading under
-      a large window, a forest path with dappled light, a coastal cliff at dusk, a couple on a
-      bench by water. Subject must be specific and clearly legible — not vague shapes.
-      The entire image rendered in two high-contrast overlapping inks with slight misregistration
-      giving a hand-printed feel. CONTRAST RULE: the two inks must be bold complementaries —
-      indigo + warm cream, deep teal + vivid coral, dark navy + acid yellow, forest green + peach.
-      The grain and misregistration add texture but must not obscure the scene's clarity.
+      A bold duotone risograph-style print with a clearly composed, emotionally readable scene and
+      a tactile hand-printed feel. The image should feel like an artful editorial poster pulled from
+      an indie print studio — graphic, nostalgic, slightly imperfect, and instantly eye-catching in the feed.
+
+      Choose a specific, legible subject that matches the quote’s mood, such as:
+      a figure on a rooftop watching the city,
+      two people walking under a large moon,
+      a person cycling past illuminated shop fronts,
+      someone reading beneath a large window,
+      a forest path with dappled light,
+      a coastal cliff at dusk,
+      a couple on a bench by water,
+      a lit stairwell between buildings,
+      a small café front at night,
+      a lone figure beneath telephone wires,
+      or a quiet road curving toward a distant glow.
+      The scene must be specific and recognizable at a glance — never vague shapes or abstract atmosphere only.
+
+      Render the entire image using only two overlapping risograph inks.
+      The palette should feel bold, graphic, and unmistakably printed.
+      Strong combinations include:
+      indigo + warm cream,
+      deep teal + vivid coral,
+      dark navy + acid yellow,
+      forest green + peach,
+      plum + pale orange,
+      or charcoal blue + soft pink.
+      The two inks should create immediate contrast and a memorable poster-like identity.
+
+      The main visual hook must come from graphic duotone separation and print character.
+      Use flat or lightly tonal ink areas, visible halftone grain, soft paper influence,
+      and slight misregistration between the two ink layers.
+      The misregistration should feel charming, tactile, and handmade —
+      just enough to create warmth and authenticity, never enough to blur the scene or reduce legibility.
+
+      Prioritize clarity over texture.
+      The subject, silhouettes, windows, moon, bench, bicycle, path, or rooftop edge must remain clearly readable.
+      Grain and overlap should add personality, but the composition must still read in under a second.
+
+      Use composition to create both hook and quote space.
+      Keep the main scene compact and strongly framed in the upper third, upper side, or one contained area.
+      Preserve a large calm region of paper tone, sky, water, wall, or softly halftoned background
+      for the quote. The lower two-thirds, or a broad central-lower block, should remain visually quiet
+      enough for text overlay, with no busy cluster of halftone detail or dense scene elements.
+
+      Use negative space intentionally.
+      In this style, negative space may be paper-colored emptiness, flat ink background, calm sky,
+      still water, or a lightly textured wall of halftone.
+      It should create breathing room, improve readability, and make the composition feel like a real poster
+      rather than a crowded print.
+
+      Build a strong focal structure:
+      one moon,
+      one lit window,
+      one rooftop figure,
+      one bicycle rider,
+      one bench scene,
+      or one path leading inward.
+      Let the eye land immediately on the clearest narrative element, then notice the print texture second.
+
+      The emotional tone should feel thoughtful, intimate, slightly nostalgic, and artistically grounded.
+      It should work especially well for wisdom, late-night thought, and mindful reflection —
+      something that feels handmade, save-worthy, and visually different from glossy digital styles.
+
+      Keep the risograph aesthetic authentic:
+      slight ink overlap,
+      visible grain,
+      occasional imperfect edges,
+      subtle registration shift,
+      and the sense that the paper itself matters.
+      But never let the effect become so rough that the scene loses elegance.
+
+      NO more than two inks, NO rainbow palette, NO photorealism, NO glossy gradients,
+      NO excessive misregistration, NO muddy overlap, NO vague unreadable forms,
+      NO heavy texture over the quote area, NO cluttered scene composition.
+
+      The final image should feel like a collectible printed poster:
+      bold, tactile, graphic, emotionally clear, and spacious enough for the quote to land beautifully.
+
     categories: [wisdom, latenight, mindfulness]
     weight: medium
 
   simple_text_card:
     description: >
-      Clean minimal illustration on a pure white or warm cream background — the text IS the
-      hero, the image supports it quietly. Choose ONE simple element that complements the quote:
-      a precise single-line-art figure (runner, reader, someone sitting, a person stretching),
-      a single botanical (flower, leaf, lone branch), a minimal geometric shape, or a small
-      decorative motif. NO overlay — the white/cream background provides contrast for dark text.
-      Subject MUST sit in the upper half of the frame; the lower third is completely clean and
-      empty. Palette is extremely restrained: linework in deep charcoal or black, background
-      pure white or warm cream (#FAFAFA or #FDF6EC), at most one small accent color on a
-      detail. Text color MUST be dark (#111111 or #1a1a1a). Works best for short punchy quotes
-      that are powerful on their own. Feels premium, editorial, like a high-quality print card.
+      A premium text-first editorial quote card on a pure white or warm cream background,
+      designed to feel elegant, modern, and instantly readable. The text is the unquestioned hero.
+      The image exists only to support the mood quietly, never to compete with the words.
+      The final result should feel like a beautifully printed art card or high-end editorial poster:
+      minimal, intentional, spacious, and emotionally confident.
+
+      Use a pure white or warm cream background such as #FAFAFA or #FDF6EC.
+      Keep the palette extremely restrained:
+      dark text in #111111 or #1A1A1A,
+      linework in deep charcoal or black,
+      and at most one tiny accent color on a small illustrative detail only.
+      The overall look should feel clean, premium, and calm.
+
+      Choose ONE simple supporting visual element that complements the quote without distracting from it.
+      Good options include:
+      a precise minimal line-art figure such as a runner, reader, someone sitting, or a person stretching,
+      a single botanical such as a flower, leaf, stem, or lone branch,
+      one quiet geometric shape,
+      or a tiny decorative motif.
+      The visual should be small, refined, and emotionally aligned to the quote.
+      It must feel intentional, not generic filler.
+
+      The supporting illustration must sit only in the upper half of the frame,
+      ideally in the top third or upper corner.
+      Keep it compact and visually light.
+      It should never dominate the composition.
+      The lower third must remain completely clean and empty,
+      and the central text area must feel calm and unobstructed.
+
+      The core hook should come from typographic clarity and compositional confidence.
+      This card should stop the scroll through elegance, stillness, and a feeling of “this must be worth reading.”
+      The quote should feel like the first thing the eye lands on.
+      The supporting visual should act like a whisper, not a headline.
+
+      Use negative space generously and intentionally.
+      The empty background is not blankness — it is part of the aesthetic.
+      It should create focus, pace, and luxury.
+      The spacing around the quote should feel deliberate and spacious,
+      making the design feel breathable, premium, and highly shareable.
+
+      Keep the typography visually dominant and easy to read on small screens.
+      Favor clean, readable, modern typography with strong contrast against the background.
+      Avoid decorative type treatments that reduce legibility.
+      This format works best for short, punchy, emotionally strong quotes that can land in one glance.
+
+      The illustration and layout should feel editorial rather than decorative:
+      quiet linework,
+      careful placement,
+      strong margins,
+      and a disciplined use of space.
+      The overall design should feel like something that could be printed as a luxury card,
+      framed as a minimalist poster, or saved as an elegant Instagram quote graphic.
+
+      NO overlay, NO busy textures, NO large illustration, NO multiple motifs, NO visual clutter,
+      NO pastel color explosion, NO complex scene, NO decorative border, NO competing focal point,
+      NO low-contrast text, NO crowded typography.
+
       Set overlay type to "none" and skip_kenburns to true.
+      The final image should feel refined, quiet, and powerful:
+      a beautiful field of space, one subtle visual gesture, and a quote that lands with full attention.
+
     categories: [morning, wisdom, mindfulness, love]
     weight: medium
 
@@ -235,68 +1327,553 @@ styles:
 
   cinematic_portrait:
     description: >
-      A richly detailed cinematic scene — painterly, dramatic, deeply composed. NOT a photo,
-      NOT a portrait of a real person — a painted or digitally illustrated scene with a strong
-      sense of story and atmosphere. Choose the scene to match the quote — examples: a figure
-      in a dimly lit room reading a letter by window light, a person standing in a rain-lit
-      street at night, two figures silhouetted in a glowing doorway, someone sitting alone in
-      a warmly lit café corner, a figure at the edge of a platform watching a departing train,
-      a person on a fire escape watching the city at night, someone slow-dancing alone in a
-      kitchen. Lighting is the mood: warm amber vs cool shadows, single practical light source,
-      cinematic colour grading. Painted or illustrated aesthetic — fine details, textured surfaces,
-      emotional depth. Every element should contribute to the story of the quote.
+      A richly detailed cinematic painted or digitally illustrated scene with strong atmosphere,
+      emotional storytelling, and the visual gravity of a film still. This is NOT a photo and NOT
+      a portrait of a real person. It should feel like a beautifully art-directed narrative illustration:
+      painterly, moody, deeply composed, and instantly compelling enough to stop the scroll.
+
+      Choose a scene that matches the quote’s emotion, such as:
+      a figure in a dimly lit room reading a letter by window light,
+      a person standing in a rain-lit street at night,
+      two figures silhouetted in a glowing doorway,
+      someone sitting alone in a warmly lit café corner,
+      a figure at the edge of a platform watching a departing train,
+      a person on a fire escape watching the city at night,
+      someone slow-dancing alone in a kitchen,
+      a woman sitting on the floor beside a bed with one lamp on,
+      a figure framed by curtains and moonlight,
+      or a person pausing in a hallway where one door spills warm light.
+      Every scene should suggest that something meaningful has just happened, or is about to.
+
+      The main hook must come from cinematic lighting and emotional composition.
+      Use one believable practical or single-source light as the heart of the scene:
+      window light,
+      a lamp,
+      a café glow,
+      a doorway,
+      a streetlight,
+      train light,
+      refrigerator light,
+      or moonlight mixed with one warm interior source.
+      The light should feel like an active emotional presence, not just illumination.
+
+      Build strong warm-vs-cool contrast into the color grading.
+      Use warm amber, honey, candle gold, or muted orange where emotion lives,
+      and cool blue, slate, charcoal, indigo, or rainy grey in the surrounding shadows.
+      The warmth should feel intimate and human.
+      The cool tones should create loneliness, night, mystery, or distance.
+      This contrast should create immediate visual pull and cinematic depth.
+
+      Composition must create both story and quote space.
+      Keep the main figure or central action compact and placed to one side, in the upper third,
+      or framed within a contained area such as a doorway, window, corner table, platform edge,
+      or section of room. Preserve a large calm area of wall, darkness, rain haze, soft shadow,
+      empty window space, sky, or floor for the quote.
+      The lower two-thirds, or a broad central-lower area, should remain visually quiet enough for text
+      without breaking the cinematic mood.
+
+      Use negative space intentionally as part of the narrative.
+      Empty darkness, blank wall, rain-softened air, hallway distance, or quiet floor space should
+      help express solitude, tension, longing, or reflection.
+      The emptiness around the figure should feel meaningful and cinematic, not unfinished.
+
+      Add subtle environmental details that deepen the story without cluttering the frame:
+      steam from a cup,
+      rain on glass,
+      a half-open letter,
+      train light fading away,
+      curtain movement,
+      reflections on wet pavement,
+      dust in a beam of light,
+      a chair slightly pulled back,
+      a soft table shadow,
+      or city lights beyond a window.
+      Every detail should support the emotional reading of the quote.
+
+      The painted or illustrated style should feel premium and textured:
+      soft brushwork,
+      nuanced surfaces,
+      controlled detail,
+      cinematic color grading,
+      and believable atmosphere.
+      It should feel more like concept art or editorial illustration than fantasy art or character art.
+      Story and mood matter more than facial detail.
+
+      The scene should feel intimate, melancholic, romantic, reflective, or quietly profound,
+      depending on the quote. It should invite the viewer to imagine the story around the moment,
+      while still being clean enough for a quote overlay to remain elegant and readable.
+
+      NO photorealism, NO celebrity likeness, NO over-busy backgrounds, NO cluttered rooms,
+      NO multiple competing light sources, NO fantasy overload, NO glossy poster effects,
+      NO detail-heavy quote area, NO random props without narrative purpose.
+
+      The final image should feel like a still from a beautiful unseen film:
+      emotionally charged, compositionally balanced, visually rich, and spacious enough
+      for the quote to land with full cinematic impact.
+
     categories: [latenight, love, wisdom, goodnight]
     weight: medium
 
   dark_surreal:
     description: >
-      A surreal scene rendered with hyperreal painterly detail — dreamlike premise, but everything
-      in the frame is finely rendered and clearly visible. Choose a specific scene: a lit doorway
-      standing in the middle of a dark ocean, a figure walking calmly up a staircase into open
-      sky, a person sitting at a dining table in the middle of a forest at night, a bed floating
-      in a vast dark lake with warm lamplight overhead, a figure watching rain fall upward in a
-      quiet room. The surreal element must feel inevitable — not chaotic. CONTRAST: near-black
-      atmospheric setting with one or two brilliantly lit focal elements. Painterly texture,
-      fine detail in every surface. The image should feel like a dream remembered vividly.
+      A dark surreal scene rendered with hyperreal painterly detail, designed to feel haunting,
+      elegant, and unforgettable at first glance. The image should stop the scroll through one
+      dreamlike but inevitable visual idea — strange enough to intrigue, clear enough to understand,
+      and emotionally charged enough to linger in the mind.
+
+      Choose one specific surreal scene that matches the quote, such as:
+      a lit doorway standing in the middle of a dark ocean,
+      a figure walking calmly up a staircase into open sky,
+      a person sitting at a dining table in the middle of a forest at night,
+      a bed floating in a vast dark lake with warm lamplight overhead,
+      a figure watching rain fall upward in a quiet room,
+      a window glowing inside a cliff face,
+      a chair placed alone under a moonlit beam in open water,
+      a room with one wall dissolved into stars,
+      or a table set for one at the edge of a void.
+      The surreal element must feel poetic and inevitable, not random, cluttered, or chaotic.
+
+      The main hook must come from one unforgettable contradiction:
+      something intimate placed inside something vast,
+      something domestic placed inside something impossible,
+      or something ordinary lit inside something overwhelmingly dark.
+      The viewer should feel that the image contains a meaning they almost understand immediately.
+
+      Use a near-black atmospheric environment as the dominant field:
+      charcoal, midnight blue, black-green, smoke violet, deep rain grey, or abyssal shadow.
+      Then introduce one or two brilliantly lit focal elements only:
+      a doorway,
+      lamp,
+      moonlit edge,
+      staircase opening,
+      glowing table surface,
+      illuminated window,
+      or light falling across water.
+      The lit areas should hit with force against the darkness and become the emotional center of the image.
+
+      Keep the surrealism controlled and legible.
+      Every object, surface, reflection, and shadow should be finely rendered and clearly visible.
+      The dreamlike premise should feel vivid and believable inside the painting’s logic.
+      This is not chaos, collage, or fantasy overload.
+      It should feel like a dream remembered with impossible clarity.
+
+      Composition must create both visual hook and quote space.
+      Place the central surreal action in the upper third, one side of the frame, or a strongly contained focal region.
+      Preserve a large quiet area of darkness, mist, open water, empty wall, sky, or shadowed atmosphere
+      for the quote. The lower two-thirds, or a broad central-lower area, should remain calm enough for text overlay
+      without losing the scene’s mood.
+
+      Use negative space intentionally.
+      The darkness should breathe.
+      Empty areas should heighten mystery, isolation, emotional depth, and story tension.
+      The surrounding void should make the lit surreal element feel even more intimate and important.
+
+      Painterly style should be rich and premium:
+      fine surface detail,
+      nuanced reflections,
+      believable shadows,
+      controlled brush texture,
+      cinematic tonal depth,
+      and subtle atmosphere.
+      Let water, wood, fabric, air, glass, rain, and light all feel tangible.
+      The realism of texture should make the surreal concept hit harder.
+
+      Add supporting details only if they deepen the feeling:
+      slight ripples around the floating bed,
+      mist gathering around a staircase,
+      rain catching light as it rises,
+      a chair shadow stretching too far,
+      soft reflection of a doorway in black water,
+      or tiny particles drifting through a beam.
+      These details should reinforce the dream logic without crowding the image.
+
+      The mood should feel contemplative, lonely, profound, and slightly uncanny —
+      not horror, not chaos, not visual noise.
+      It should feel like a symbolic late-night thought turned into a cinematic painting.
+
+      NO multiple surreal concepts competing in one frame, NO cluttered symbolic objects,
+      NO over-bright full-scene lighting, NO fantasy spectacle, NO muddy shadows,
+      NO photobashing look, NO messy abstraction, NO detailed clutter in the quote area.
+
+      The final image should feel like a vivid remembered dream:
+      dark, precise, emotionally symbolic, and spacious enough for the quote to land with real weight.
+
     categories: [latenight, wisdom]
     weight: low
+
+  paper_cut_shadowbox:
+    description: >
+      A layered paper-cut shadowbox illustration designed to feel handcrafted, atmospheric,
+      and instantly mesmerizing. The image should look like an intricate cut-paper scene built
+      from stacked layers of paper, where depth, shadow, and light create the emotional hook.
+      It should feel premium, tactile, and almost magical — like a framed illuminated paper artwork
+      someone would stop scrolling to admire.
+
+      Build the image from multiple precisely cut paper layers with visible depth separation between them.
+      Each layer should feel intentional and cleanly shaped, creating a sense of dimensional storytelling
+      through overlapping silhouettes, soft cast shadows, and glowing depth. The scene should feel delicate,
+      immersive, and beautifully composed rather than busy or craft-like.
+
+      Choose a poetic, readable scene that matches the quote’s emotion, such as:
+      a lone tree on a hill beneath a moon,
+      layered forest silhouettes with a glowing path,
+      a window glowing through paper-cut walls,
+      birds flying across a twilight sky,
+      a small boat on still layered water,
+      a staircase rising toward a circle of light,
+      a figure beneath hanging stars,
+      reeds and moon reflected in water,
+      a paper moon above layered clouds,
+      a tiny house with warm light in a dark valley,
+      a bench beneath branches,
+      or a doorway framed by layered leaves and shadow.
+
+      The main visual hook must come from depth and light.
+      The layers should create a strong sense of foreground, midground, and background,
+      with soft realistic shadows falling from one paper layer onto the next.
+      Use one hidden or diffused light source to create glow within the scene:
+      moonlight through cut layers,
+      a warm light in a window,
+      a circular opening of light,
+      a glowing horizon,
+      or a softly illuminated sky behind the paper forms.
+      The viewer should immediately feel depth, stillness, and wonder.
+
+      The color palette should remain restrained and elegant.
+      Use layered tones such as ivory, warm cream, charcoal, muted indigo, dusty blue, soft sage,
+      pale grey, or deep night blue.
+      If a warm accent is needed, use it sparingly in one focal area only:
+      window light, moon glow, lantern glow, or horizon warmth.
+      Avoid rainbow palettes or bright decorative craft colors.
+      The style should feel gallery-worthy and sophisticated.
+
+      Composition must protect quote space.
+      Keep the main layered paper scene concentrated in the upper third, one side of the frame,
+      or a contained central-top composition.
+      Preserve a large calm area of softly lit background, open sky layer, empty paper field,
+      or low-detail lower section for the quote.
+      The lower two-thirds, or at minimum a broad central-lower block, should remain smooth and quiet
+      enough for text overlay without breaking the illusion of the paper artwork.
+
+      Use negative space as part of the shadowbox effect.
+      The empty areas should feel like breathing room inside the composition,
+      making the paper layers feel more dramatic and the quote more elegant.
+      The design should never feel crowded with too many cut elements.
+
+      Prioritize strong silhouette shapes in every layer:
+      clean tree lines,
+      graceful branches,
+      smooth hills,
+      elegant moon arcs,
+      still water contours,
+      soft cloud bands,
+      or architectural openings.
+      Each layer should read clearly on its own while contributing to the whole scene.
+
+      Add subtle emotional storytelling through depth and spacing:
+      a tiny figure in the distance,
+      one path leading inward,
+      one bird suspended in open space,
+      a single lit window among dark layers,
+      or a staircase disappearing toward light.
+      The scene should feel contemplative, symbolic, and softly cinematic.
+
+      NO messy handmade scraps, NO rough collage look, NO excessive decoration,
+      NO bright children's craft colors, NO too many tiny cut details, NO cluttered quote area,
+      NO flat single-layer look, NO photorealism, NO harsh textures that overpower the design.
+
+      The final image should feel like an illuminated paper poem:
+      layered, quiet, dimensional, emotionally rich, and spacious enough for the quote to land beautifully.
+
+    categories: [mindfulness, wisdom, goodnight, latenight]
+    weight: high
+
+  editorial_collage:
+    description: >
+      A premium editorial collage illustration designed to feel intelligent, emotionally layered,
+      and instantly distinctive. The image should look like a refined mixed-media magazine artwork —
+      combining cut paper, photographic fragments, painted textures, typography remnants, ink marks,
+      and carefully arranged visual elements into one cohesive emotional statement. It should feel
+      art-directed, story-rich, and sophisticated enough to stop the scroll through curiosity alone.
+
+      Build the image as a conceptual collage with one clear emotional idea at its center.
+      The scene or composition should not feel random or scrapbook-like.
+      Every element must contribute to one unified feeling, tension, or insight.
+      The collage should feel editorial — like it belongs in a thoughtful literary magazine,
+      cultural journal, or design-forward print feature.
+
+      Choose a scene or symbolic arrangement that matches the quote’s meaning, such as:
+      a woman’s silhouette filled with sky and torn paper textures,
+      a figure seated in a room made of layered cut pages,
+      two hands nearly touching across ripped color fields,
+      a face partially obscured by flowers, letters, or shadows,
+      a moon over a staircase made of torn newspaper strips,
+      a window cut into a field of painted darkness,
+      a person walking through overlapping fragments of maps, clouds, and old paper,
+      a chair, lamp, and empty coat arranged like memory,
+      or a figure whose shadow is made of collage fragments instead of darkness.
+      The final image should feel symbolic and emotionally readable, not literally descriptive.
+
+      Use a mixed-media editorial visual language:
+      torn paper edges,
+      cut photographic fragments,
+      vintage paper textures,
+      painted brushstrokes,
+      ink marks,
+      soft grain,
+      layered shapes,
+      selective typography fragments,
+      and occasional hand-drawn details.
+      These materials should feel curated and refined, never messy or overloaded.
+
+      The main hook must come from conceptual layering and contrast.
+      Create one striking visual relationship that makes the viewer pause:
+      face versus shadow,
+      body versus sky,
+      memory versus room,
+      softness versus torn edges,
+      light versus paper darkness,
+      or stillness versus fragmented texture.
+      The image should feel like it reveals meaning in layers rather than all at once.
+
+      Keep the palette disciplined and editorial.
+      Use muted, sophisticated tones such as charcoal, cream, faded navy, dusty blush,
+      muted rust, sepia, pale sage, soft black, paper white, or washed indigo.
+      If a stronger accent is needed, use one selectively:
+      crimson, cobalt, ochre, deep coral, or antique gold.
+      Avoid loud rainbow collage or chaotic magazine-color overload.
+      It should feel premium, not crafty.
+
+      Composition must protect quote space.
+      Keep the primary collage cluster in the upper third, upper side, or a contained compositional block.
+      Preserve a large calm area of paper background, soft painted field, muted texture wash,
+      or low-detail collage space where the quote can sit clearly.
+      The lower two-thirds, or a broad central-lower area, should remain breathable and visually controlled.
+
+      Use negative space intentionally as part of the editorial design.
+      Blank paper, quiet painted areas, and controlled low-detail surfaces should give the composition
+      sophistication and allow the quote to breathe.
+      The image should feel curated and spacious, not dense from edge to edge.
+
+      Let texture support emotion without overpowering clarity.
+      Torn edges can suggest fracture,
+      layered paper can suggest memory,
+      obscured faces can suggest distance,
+      type fragments can suggest inner thoughts,
+      and paint marks can suggest movement or feeling.
+      But the collage should still read clearly in one glance and deepen on a second look.
+
+      The emotional tone should feel introspective, stylish, slightly melancholic, and intellectually engaging.
+      It should work for themes like longing, identity, hidden emotion, memory, overthinking, emotional distance,
+      late-night reflection, or quiet realization.
+      The result should feel more like visual essay art than social-media filler.
+
+      NO random scrapbook clutter, NO too many tiny objects, NO childish cut-and-paste feel,
+      NO bright craft-store palette, NO dense full-frame noise, NO overly vintage sepia wash over everything,
+      NO photorealistic montage, NO decorative chaos in the quote area.
+
+      The final image should feel like a page from a beautifully designed emotional magazine:
+      layered, meaningful, textural, intelligent, and spacious enough for the quote to land with depth.
+
+    categories: [wisdom, latenight, love, mindfulness]
+    weight: high
+
+  flip_reveal_poster:
+    description: >
+      A visually arresting poster-style illustration built around a dual-state reveal:
+      one image, two emotional readings. The artwork should feel like a static design that hints at motion,
+      change, or hidden truth — as if the image could flip, shift, or reveal something different if seen from
+      another angle. The result should be instantly intriguing, conceptually sharp, and powerful enough to stop
+      the scroll through curiosity alone.
+
+      Build the composition around one clear visual contrast between outer reality and inner truth,
+      before and after, presence and absence, calm and ache, or what is shown versus what is felt.
+      The two states should coexist elegantly within one frame.
+      The viewer should understand the basic image immediately, then notice a second layer of meaning
+      a moment later.
+
+      Choose a scene or subject with dual emotional logic, such as:
+      a seated figure whose reflection is already walking away,
+      a calm room whose shadow reveals emotional collapse,
+      a woman standing at a window while her silhouette faces the opposite direction,
+      a tree in winter whose reflection appears in bloom,
+      a staircase rising upward while its shadow descends,
+      a door standing closed while light beneath it forms an open path,
+      two people sitting together while their shadows drift apart,
+      a face divided between light and darkness with different emotional expressions,
+      a moonlit lake reflecting a different sky than the one above,
+      or a figure whose body remains still while paper fragments of them move away.
+      The contrast should feel poetic, not gimmicky.
+
+      The main hook must come from the reveal structure.
+      Use one of these visual devices:
+      reflection mismatch,
+      shadow contradiction,
+      split composition,
+      double exposure logic,
+      mirrored emotional contrast,
+      layered silhouette reveal,
+      or hidden secondary image embedded within the main form.
+      The reveal should feel intelligent and emotionally meaningful, not like a cheap trick.
+
+      The style should feel like a premium conceptual poster:
+      clean composition,
+      strong visual hierarchy,
+      graphic clarity,
+      emotionally charged symbolism,
+      and enough realism or painterly depth to make the scene feel immersive.
+      It can be illustrated, painterly, or mixed-media inspired,
+      but must remain visually elegant and clearly readable.
+
+      Keep the palette controlled and cinematic.
+      Use two emotional tonal worlds in one frame:
+      for example warm amber versus cool indigo,
+      pale cream versus charcoal,
+      muted dusk blue versus soft rust,
+      or moonlit silver versus deep shadow.
+      Color should help define the two emotional states.
+      One side or layer may feel warm and human,
+      while the other feels distant, hidden, broken, or remembered.
+
+      Composition must preserve quote space.
+      Keep the main reveal structure concentrated in the upper third, upper half, or one side of the frame.
+      Preserve a large clean area of background, shadow field, sky, wall, water, or empty poster space
+      for the quote. The lower two-thirds, or at minimum a broad central-lower region, should remain visually calm
+      enough for text overlay without disrupting the reveal effect.
+
+      Use negative space deliberately.
+      Empty space should heighten the reveal by making the main contradiction easier to notice.
+      Blank areas, dark atmosphere, open sky, still water, or soft wall surfaces should give the image
+      elegance, clarity, and breathing room.
+      The design should feel intentional and poster-like, not crowded with clues.
+
+      Add subtle supporting details only when they strengthen the dual reading:
+      a reflection line,
+      a sharp beam of light,
+      one dividing shadow,
+      paper fragments drifting,
+      a mirrored doorway,
+      one cracked edge,
+      or a slight misalignment between two visual states.
+      These details should deepen the concept without overwhelming it.
+
+      The emotional tone should feel intimate, thought-provoking, and quietly devastating or illuminating.
+      It should work especially well for themes like hidden hurt, emotional distance, clarity after confusion,
+      internal versus external self, memory, detachment, grief, or realization.
+      The image should feel like it knows something the viewer also knows but has not said out loud.
+
+      NO chaotic surreal overload, NO multiple unrelated reveal tricks, NO cluttered backgrounds,
+      NO visual confusion that hides the concept, NO gimmicky glitch effects, NO neon overload,
+      NO decorative complexity in the quote area.
+
+      The final image should feel like a beautiful emotional contradiction:
+      one frame, two truths, and a reveal that makes the quote land harder on the second look.
+
+    categories: [latenight, wisdom, love, mindfulness]
+    weight: high
 
   # ── WOMENPOWER — exclusive aesthetic ────────────────────────────────────
 
   women_line_art:
     description: >
-      Pure white or warm cream (#FAFAFA) background. A small, delicate minimal ink line-art
-      illustration of a woman sits in the UPPER THIRD of the frame — choose ONE of these:
-      a woman's face in profile with eyes closed and hair in a bun, a woman sitting with knees
-      drawn to her chest, a woman's silhouette with flowing hair from behind, a close-up of
-      a woman's hand holding a single flower, a woman looking out a window from the side,
-      a woman with head tilted back and eyes shut. The illustration is pure fine black ink
-      lines only — no fill, no shading, no colour. It must be small and centered, occupying
-      at most the top 30% of the frame. The ENTIRE lower two-thirds is completely empty white
-      space — this emptiness IS the aesthetic. NO background elements, NO textures, NO patterns,
-      NO colour. The image must feel exactly like a premium minimal journal page or editorial
-      aesthetic Pinterest illustration. Text color MUST be dark (#111111). Set overlay type
-      to "none" and skip_kenburns to true.
+      Pure white or warm cream (#FAFAFA) background. A small, delicate, premium editorial
+      line-art illustration of a woman sits in the UPPER THIRD of the frame. Choose ONE pose
+      that matches the quote’s emotional tone: a woman's face in profile with eyes closed and hair
+      in a bun, a woman sitting with knees drawn to her chest, a woman's silhouette with flowing hair
+      from behind, a close-up of a woman's hand holding a single flower, a woman looking out a window
+      from the side, a woman with head tilted back and eyes shut.
+  
+      The illustration should remain primarily fine black ink line work — elegant, thin, refined,
+      and minimal. No heavy fill, no dense shading, no clutter.
+  
+      To increase emotional engagement, add ONE subtle storytelling accent that reflects the quote.
+      This can be a softly colored lip, a single flower with muted color, a faint tear line,
+      a delicate blush stroke, slightly tinted eyelids, colored fingertips, a loose ribbon,
+      or one abstract curved brushstroke suggesting movement, release, tension, distance, or softness.
+      The accent should feel intentional and cinematic, not decorative.
+  
+      Allow one restrained accent color palette chosen by mood:
+      deep red or oxblood for self-respect, intensity, or restraint;
+      dusty rose or mauve for tenderness, softness, or healing;
+      muted terracotta for grounded strength or emotional warmth;
+      smoky blue or sage for silence, intuition, distance, or calm;
+      muted gold or beige for dignity, reflection, or quiet confidence.
+  
+      The color accent must stay minimal — only one or two tiny focal areas, never more than
+      10% of the image’s visual weight. The black line art must remain dominant.
+  
+      Add a slight feeling of life in the pose: a few loose hair strands, a softly tilted chin,
+      fingers gently curled, a flower petal falling, a ribbon trailing, or a brushstroke drifting.
+      These tiny details should create emotional movement while preserving the minimal aesthetic.
+  
+      The illustration must remain small and centered, occupying at most the top 30% of the frame.
+      The ENTIRE lower two-thirds must stay completely empty white space — this emptiness is essential
+      to the luxury editorial aesthetic.
+  
+      NO background scenery, NO room details, NO patterns, NO textures, NO extra objects,
+      NO saturated color, NO playful doodles. The final image should feel like a premium
+      minimal journal page, a fashion editorial sketch, or a saved Pinterest luxury feminine quote post.
+  
+      Text color MUST be dark (#111111). Set overlay type to "none" and skip_kenburns to true.
     categories: [womenpower]
     weight: high
 
   women_vivid_art:
     description: >
-      Clean white or soft cream background with a vivid feminine illustration of a woman's
-      face or bust portrait — choose one variant that matches the quote's mood:
-      (a) FLORAL HAIR — a woman with eyes closed and dramatic flowers woven through her hair,
-      blooms in deep crimson, blush pink, marigold gold, or cobalt blue — choose 2-3 bold
-      flower colours that contrast beautifully; (b) BOLD LIP — a woman in profile or
-      three-quarter view with one dramatic colour element — a striking lip in berry, coral,
-      deep red, or fuchsia, the rest of the face in soft neutral tones; (c) FLORAL FRAME —
-      a minimal woman silhouette or face surrounded by a loose wreath of illustrated flowers
-      and leaves, vibrant botanical colours. The illustration style is FLAT VECTOR or clean
-      watercolour — not photorealistic. Palette is always clean: white/cream background, the
-      woman illustration in soft neutral skin tones, with ONE to THREE vivid accent colours
-      only in the flowers, lips, or botanicals. Subject sits in the UPPER THIRD of the frame.
-      The lower two-thirds is completely empty and white — generous white space for the quote.
-      No busy backgrounds, no patterns, no clutter. Feels like a premium feminine editorial
-      illustration. Text color MUST be dark (#111111). Set overlay type to "none" and
-      skip_kenburns to true.
+      Clean white or soft cream background with a vivid feminine editorial illustration placed
+      ONLY in the UPPER TOP section of the frame. The portrait must remain compact, airy, and visually
+      contained, occupying no more than the top 25% to 30% of the full composition. The entire lower
+      70% of the image must remain completely empty, clean, and unobstructed for quote placement.
+      This negative space is essential — it is not unused space, it is part of the design.
+  
+      Create a visually striking but refined woman’s face or bust portrait that feels emotionally rich
+      and instantly engaging, while never overpowering the quote area. The image should function like
+      the opening note of a story — enough to stop the scroll, but restrained enough to leave room for words.
+  
+      Choose ONE portrait concept that best matches the quote’s mood:
+  
+      (a) FLORAL HAIR —
+      a woman with eyes closed or lowered, with flowers woven delicately through her hair or gathered
+      around the top of her head. The florals should feel expressive and symbolic, but stay compact and
+      controlled near the portrait only. No sprawling flowers extending downward into the quote space.
+  
+      (b) BOLD LIP —
+      a woman in profile or three-quarter view with one strong focal accent, such as a bold lip in berry,
+      oxblood, coral, rose red, or fuchsia. The rest of the portrait remains soft, neutral, and clean.
+      This option should feel elegant and magnetic, not glamorous or beauty-ad-like.
+  
+      (c) FLORAL FRAME —
+      a minimal feminine face or silhouette loosely framed by illustrated flowers and leaves, but only
+      around the upper portrait area. Keep the framing light and breathable, never dense, symmetrical,
+      or wreath-heavy. It must not intrude into the lower text area.
+  
+      Style should be flat vector, clean editorial illustration, or soft modern watercolor — never photorealistic.
+      The woman should look graceful, modern, feminine, and emotionally expressive. Keep features slightly stylized
+      and elegant rather than detailed or overly realistic.
+  
+      Use a premium restrained palette:
+      white or cream background,
+      soft neutral skin tones or monochrome treatment for the woman,
+      and ONE to THREE vivid accent colors only in the flowers, lips, or small expressive details.
+      Keep colors rich but controlled: deep red, berry, dusty rose, mauve, marigold, muted gold, cobalt,
+      smoky blue, sage, terracotta. Avoid neon, rainbow palettes, overly bright pinks, or too many competing hues.
+  
+      Add emotional hook through subtle expression and shape:
+      closed eyes, parted lips, a lifted chin, petals caught in motion, a soft shoulder angle,
+      a quiet gaze away, or a floral detail that feels slightly undone. The portrait should suggest
+      a private emotion mid-thought — confidence, ache, restraint, healing, distance, softness, or becoming.
+  
+      Keep all visual energy concentrated near the top. The lower two-thirds must remain blank white space
+      with no flowers, brushstrokes, shadows, textures, leaves, color splashes, or decorative elements.
+      The quote area must feel calm, open, readable, and luxurious.
+  
+      NO busy backgrounds, NO scenery, NO patterns, NO full-frame floral borders, NO abstract color washes
+      spreading downward, NO clutter, NO extra props, NO heavy texture, NO beauty-ad styling,
+      NO photorealism, NO centered elements that block text placement.
+  
+      The final image should feel like a save-worthy Pinterest or Instagram quote post:
+      emotionally intimate, visually premium, feminine, and designed around elegant readability.
+  
+      Text color MUST be dark (#111111). Set overlay type to "none" and skip_kenburns to true.
     categories: [womenpower]
     weight: high

@@ -262,6 +262,8 @@ def get_topic_info(category: str) -> dict:
         for g in groups:
             pct = g.get("weight", 10)
             lines.append(f"\n  {g['name'].upper().replace('_', ' ')} (~{pct}% of posts):")
+            if g.get("format_hint"):
+                lines.append(f"    FORMAT: {g['format_hint']}")
             for t in g["topics"]:
                 lines.append(f"    - {t}")
         topic_block = (

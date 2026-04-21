@@ -289,7 +289,9 @@ def _generate_with_validation(
     topic_block = info["topic_block"]
     image_hint  = info["image_hint"]
 
-    mode = random.choice(["real_author", "social_viral", "llm_generated"])
+    # womenpower: original voice only — real attribution breaks the personal tone
+    _modes = ["social_viral", "llm_generated"] if theme == "womenpower" else ["real_author", "social_viral", "llm_generated"]
+    mode = random.choice(_modes)
     logger.info(f"  Mode: {mode}")
 
     if mode == "real_author":
