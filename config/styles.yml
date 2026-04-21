@@ -15,20 +15,6 @@ styles:
 
   # ── HIGH VISUAL IMPACT — the scroll-stoppers ─────────────────────────────
 
-  anthropomorphic_vintage:
-    description: >
-      Vintage illustrated animals living as humans — choose a different animal and scenario each
-      time to match the quote's mood. Examples: a fox in a tailored jacket reading a letter, an
-      owl at a writing desk by candlelight, a bear in a café deep in thought, a rabbit sketching
-      at an easel, a deer in a library armchair, a hedgehog tending a small garden, a cat playing
-      violin by an open window, a mouse writing in a journal, a raccoon studying star charts,
-      a wolf pausing mid-walk to think. Style: 1930s–50s children's book illustration for adults.
-      CONTRAST IS KEY: vivid jewel-tone accent (cobalt, crimson, forest green) against warm
-      parchment backgrounds. Aged paper texture, fine detailed linework, quiet emotional subtext.
-      The bold saturated character against warm paper stops scrolling — nobody else does this.
-    categories: [morning, wisdom, love, latenight]
-    weight: high
-
   ghibli_anime:
     description: >
       2D hand-drawn animation frame inspired by classic Japanese animated cinema. VISUAL HOOK:

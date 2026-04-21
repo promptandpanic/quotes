@@ -260,7 +260,6 @@ styles:
 | `silhouette_landscape` | morning, wisdom, goodnight, latenight | high |
 | `cozy_aesthetic` | goodnight, latenight, love, mindfulness | high |
 | `minimalist_nature` | mindfulness, wisdom, goodnight | high |
-| `anthropomorphic_vintage` | wisdom, love, goodnight | medium |
 | `vector_girl` | love, goodnight, mindfulness, morning | medium |
 | `vector_couple` | love, goodnight | medium |
 | `nocturnal_aesthetic` | latenight, goodnight | medium |
