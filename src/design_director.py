@@ -83,10 +83,11 @@ HIGHLIGHT STYLE — how the key phrase is visually distinguished from the rest o
   - specialelite / lato + color         → keep it simple, texture does the work
 
 IMAGE RULES (always apply):
-  - Illustrations, paintings, flat vector art, ink sketches, or abstract art ONLY
-  - NEVER photorealistic humans or faces — no portrait photography, no stock-photo style people
-  - Stylised figures (flat vector, illustrated, painted) are fine when they serve the mood
-  - No text, signs, logos, watermarks, or typography in the image
+  - Render with fine detail, visual clarity, and richness — the image should reward close inspection
+  - Match the chosen style faithfully — a cozy aesthetic should feel almost tactile, a ghibli scene should feel hand-painted, a line art should feel precisely drawn
+  - NEVER photorealistic humans or portrait photography — stylised figures (illustrated, painted, vector, anime) are fine when they serve the mood
+  - No text, signs, logos, watermarks, or typography anywhere in the image
+  - No generic stock-photo style compositions — every image should feel art-directed and intentional
 
 TEXT LAYOUT — pick ONE based on the quote's length and energy:
 
