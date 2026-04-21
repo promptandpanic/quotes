@@ -2,8 +2,9 @@
 Quote retrieval — unified flow for all themes.
 
 Each run randomly picks a mode:
-  - real_author   : Gemini finds a real quote by a known person
-  - llm_generated : Gemini writes an original quote
+  - real_author   : Gemini finds a real quote by a known person (non-obvious sources preferred)
+  - social_viral  : Gemini finds/writes a quote in the style of viral social media posts
+  - llm_generated : Gemini writes an original quote (short and concrete encouraged)
 
 All quotes pass through a quality gate before acceptance.
 Fallback: curated pool in config/curated_quotes.yml.
@@ -50,12 +51,12 @@ _CURATED_POOL = _load_curated()
 # ---------------------------------------------------------------------------
 
 _CLICHE_MAP = {
-    "morning":     '"believe in yourself", "chase your dreams", "rise and shine", "hustle hard"',
-    "wisdom":      '"everything happens for a reason", "be the change", "time heals all wounds"',
-    "love":        '"soulmates", "love conquers all", "you complete me"',
-    "mindfulness": '"be present", "let it go", "inner peace"',
-    "goodnight":   '"count your blessings", "tomorrow is a new day", "sweet dreams"',
-    "latenight":   '"time heals", "let go and move on", "you deserve better"',
+    "morning":     '"believe in yourself", "chase your dreams", "rise and shine", "hustle hard", "surviving", "warrior", "every day is a gift"',
+    "wisdom":      '"everything happens for a reason", "be the change", "time heals all wounds", "your journey", "best version of yourself", "broken into pieces"',
+    "love":        '"soulmates", "love conquers all", "you complete me", "you deserve better", "red flags"',
+    "mindfulness": '"be present", "let it go", "inner peace", "heal yourself", "your healing journey"',
+    "goodnight":   '"count your blessings", "tomorrow is a new day", "sweet dreams", "you survived today"',
+    "latenight":   '"time heals", "let go and move on", "you deserve better", "surviving", "healing is not linear", "warrior"',
 }
 
 
@@ -65,9 +66,10 @@ def _build_real_prompt(category: str, max_words: int, topic_block: str) -> str:
 You are finding and evaluating a real quote for @_daily_dose_of_wisdom__, \
 an Indian Instagram page for emotionally intelligent youth aged 18-35.
 
-Find ONE real quote — actually written or spoken by a known person (author, philosopher, \
-filmmaker, poet, scientist, athlete, historical figure, or contemporary thinker). \
-The quote must be genuinely attributed — you must be confident the person said it.
+Find ONE real quote — actually written or spoken by a known person. Prefer filmmakers, \
+musicians, comedians, athletes, novelists, or contemporary thinkers over the usual \
+Rumi / Stoics / Einstein pool — those are overexposed. A sharp line from a film, \
+a lyric that works standalone, or a line from a novelist almost nobody quotes are all valid.
 
 {topic_block}
 
@@ -77,6 +79,7 @@ Rules for the quote:
 - Must resonate with an Indian aged 18-35 in 2025 — timeless but not cliché
 - Must feel RARE — not one of the top 1000 most quoted lines on the internet
 - No clichés: {cliches}
+- Short is fine — a complete 6-word quote beats a padded 20-word one
 
 Then score it strictly on these 4 dimensions (1-10 each):
 1. virality     — Would people screenshot and share this?
@@ -95,24 +98,69 @@ Return ONLY valid JSON — no markdown, no explanation:
 """
 
 
+def _build_social_prompt(category: str, max_words: int, topic_block: str) -> str:
+    cliches = _CLICHE_MAP.get(category, '"overused clichés"')
+    return f"""\
+You are finding or writing a quote in the style of something that went genuinely viral \
+on social media for @_daily_dose_of_wisdom__, an Indian Instagram page for emotionally \
+intelligent youth aged 18-35.
+
+Think Reddit threads, Twitter/X posts, Tumblr, Pinterest, Instagram captions — the kind \
+of line a real 25-year-old wrote from experience that thousands of people screenshot because \
+they felt seen. Not profound philosophy. Not a motivational poster. Just one true thing said simply.
+
+{topic_block}
+
+The quote should feel like:
+- Something a real person said, not a writer performing wisdom
+- The kind of line you text a friend and they reply "damn"
+- Simple enough that the visual does half the work — short is often better
+- Warm and specific, not vague and grand
+
+Rules:
+- Maximum {max_words} words. Short quotes (4-8 words) are especially welcome.
+- Concrete over abstract — one precise feeling, not a life philosophy
+- No clichés: {cliches}
+- Banned words: "surviving", "journey", "heal", "broken", "warrior", "storm", "chapter", "version of yourself"
+- Author field must be "Original"
+
+Then score it strictly on these 4 dimensions (1-10 each):
+1. virality     — Would people screenshot and share this instantly?
+2. engagement   — Would an Indian aged 18-30 feel seen by this?
+3. uniqueness   — Does it feel genuinely fresh and unheard-of?
+4. freshness    — Does it feel nothing like a generic motivational poster?
+
+Hard scoring rules:
+- uniqueness < 6 → accept must be false
+- Generic self-help language → accept must be false
+
+Return ONLY valid JSON — no markdown, no explanation:
+{{"quote":"the quote text","author":"Original","score":<avg 1-10>,\
+"virality":<1-10>,"engagement":<1-10>,"uniqueness":<1-10>,"freshness":<1-10>,\
+"reason":"<one sentence>","accept":<true if score>=7 AND uniqueness>=6, else false>}}
+"""
+
+
 def _build_llm_prompt(category: str, max_words: int, topic_block: str) -> str:
     cliches = _CLICHE_MAP.get(category, '"overused clichés"')
     return f"""\
 You are writing and evaluating an original quote for @_daily_dose_of_wisdom__, \
 an Indian Instagram page for emotionally intelligent youth aged 18-35.
 
-Write ONE original quote — something that feels like it was written by a thoughtful, \
-specific human mind. It should feel surprising and earned, not like a motivational poster.
+Write ONE original quote. It should feel like something a thoughtful person said once \
+and never repeated — not assembled from parts of other quotes. Specific and earned, not performed.
 
 {topic_block}
 
-Rules for the quote:
+Rules:
 - ORIGINAL — not attributed to any real person
 - Maximum {max_words} words total. Hard limit.
-- Specific and concrete — one precise feeling or truth, not a vague generality
-- Must resonate with an Indian aged 18-30 at an emotional gut level
-- Should feel like something you have NEVER seen on Instagram before
+- Short is valid — if the feeling is complete in 5 words, stop at 5. Short quotes let the visual carry the post.
+- Concrete over abstract: "you still made the tea on the worst morning" beats "strength lives in small moments"
+- Must resonate with an Indian aged 18-30 at a gut level
+- No Pinterest-assembled philosophy — warm simple lines are fine if they're genuinely fresh
 - No clichés: {cliches}
+- Banned words: "surviving", "journey", "heal", "broken", "warrior", "storm", "chapter", "version of yourself"
 
 Then score it strictly on these 4 dimensions (1-10 each):
 1. virality     — Would people screenshot and share this?
@@ -244,14 +292,15 @@ def _generate_with_validation(
     topic_block = info["topic_block"]
     image_hint  = info["image_hint"]
 
-    mode = random.choice(["real_author", "llm_generated"])
+    mode = random.choice(["real_author", "social_viral", "llm_generated"])
     logger.info(f"  Mode: {mode}")
 
-    base_prompt = (
-        _build_real_prompt(theme, max_words, topic_block)
-        if mode == "real_author"
-        else _build_llm_prompt(theme, max_words, topic_block)
-    )
+    if mode == "real_author":
+        base_prompt = _build_real_prompt(theme, max_words, topic_block)
+    elif mode == "social_viral":
+        base_prompt = _build_social_prompt(theme, max_words, topic_block)
+    else:
+        base_prompt = _build_llm_prompt(theme, max_words, topic_block)
     prompt = _append_avoid_hint(base_prompt, recent_hints or [])
 
     best: dict | None = None
@@ -273,7 +322,7 @@ def _generate_with_validation(
                 continue
 
             wc = len(text.split())
-            if wc < 4 or wc > max_words + 5:
+            if wc < 3 or wc > max_words + 5:
                 logger.info(f"    Skipped — word count {wc}")
                 time.sleep(RETRY_DELAY)
                 continue
@@ -300,7 +349,7 @@ def _generate_with_validation(
                 "highlight":  _extract_highlight(text),
                 "image_hint": image_hint,
                 "score":      score,
-                "source":     "gemini_real" if mode == "real_author" else "gemini_original",
+                "source":     "gemini_real" if mode == "real_author" else "gemini_social" if mode == "social_viral" else "gemini_original",
             }
 
             if accept:
