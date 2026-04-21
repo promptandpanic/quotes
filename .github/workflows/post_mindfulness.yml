@@ -1,9 +1,6 @@
 name: Post Mindfulness & Inner Peace
 
 on:
-  schedule:
-    - cron: "30 18 * * *"   # 06:30 PM IST
-      timezone: "Asia/Kolkata"
   workflow_dispatch:
 
 permissions:

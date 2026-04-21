@@ -1,9 +1,6 @@
 name: Post Love & Relationships
 
 on:
-  schedule:
-    - cron: "30 15 * * *"   # 03:30 PM IST
-      timezone: "Asia/Kolkata"
   workflow_dispatch:
 
 permissions:

@@ -1,9 +1,6 @@
 name: Post Morning Motivation
 
 on:
-  schedule:
-    - cron: "30 7 * * *"    # 07:30 AM IST
-      timezone: "Asia/Kolkata"
   workflow_dispatch:
 
 permissions:

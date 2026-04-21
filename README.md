@@ -9,9 +9,10 @@ Posts **7 quote Reels per day** with AI-generated visuals — zero manual effort
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         GitHub Actions (6x/day, UTC cron)                   │
+│              cron-job.org (7x/day, IST timings)                             │
 │                                                                             │
-│  cron fires (UTC) → maps schedule → THEME → python main.py                 │
+│  scheduled job → POST /actions/workflows/{workflow}/dispatches → GitHub     │
+│  Actions runs (workflow_dispatch) → THEME env var → python main.py          │
 └──────────────────────────────┬──────────────────────────────────────────────┘
                                │
                                ▼
@@ -103,17 +104,17 @@ src/notifier.py ─────────── Gmail success/failure email
 
 ## Posting schedule
 
-GitHub Actions cron always runs in UTC. Each trigger maps to a theme via `github.event.schedule`.
+Schedules are managed via cron-job.org and based on India (IST) timings.
 
-| IST | UTC | EDT | EST | Theme | Parameter |
-|---|---|---|---|---|---|
-| 7:00 AM | 1:30 AM | 9:30 PM (prev day) | 8:30 PM (prev day) | Morning Motivation | `morning` |
-| 11:00 AM | 5:30 AM | 1:30 AM | 12:30 AM | Life Wisdom | `wisdom` |
-| 3:00 PM | 9:30 AM | 5:30 AM | 4:30 AM | Love & Relationships | `love` |
-| 6:00 PM | 12:30 PM | 8:30 AM | 7:30 AM | Mindfulness & Inner Peace | `mindfulness` |
-| 8:15 PM | 2:45 PM | 10:45 AM | 9:45 AM | Life Wisdom (Evening) | `wisdom` |
-| 10:00 PM | 4:30 PM | 12:30 PM | 11:30 AM | Goodnight & Gratitude | `goodnight` |
-| 1:00 AM (next day) | 7:30 PM | 3:30 PM | 2:30 PM | Late Night Feels | `latenight` |
+| IST | Theme | Workflow |
+|---|---|---|
+| 7:30 AM | Morning Motivation | `post_morning.yml` |
+| 11:30 AM | Life Wisdom | `post_wisdom.yml` |
+| 3:30 PM | Love & Relationships | `post_love.yml` |
+| 6:30 PM | Mindfulness & Inner Peace | `post_mindfulness.yml` |
+| 8:45 PM | Life Wisdom (Evening) | `post_wisdom_evening.yml` |
+| 10:30 PM | Goodnight & Gratitude | `post_goodnight.yml` |
+| 1:30 AM | Late Night Feels | `post_latenight.yml` |
 
 ---
 
@@ -293,18 +294,9 @@ Unknown or anonymous authors are silently skipped on-screen — no "— Unknown"
 
 ---
 
-### Change post timing → `.github/workflows/post_quotes.yml`
+### Change post timing
 
-All times are in UTC. Add a new cron line and a matching case in the theme-detection step:
-
-```yaml
-schedule:
-  - cron: "30 9 * * *"   # 09:30 UTC = 3:00 PM IST
-```
-
-```bash
-"30 9 * * *") echo "THEME=love" >> $GITHUB_ENV ;;
-```
+Update the schedule on cron-job.org for the relevant job. Each job maps 1:1 to a workflow file in `.github/workflows/`.
 
 ---
 
@@ -474,7 +466,7 @@ ffmpeg -i downloaded.mp3 -t 20 -c:a libmp3lame -q:a 2 assets/audio/morning.mp3
 │   └── static/                      # Pre-generated fallback images (one per theme)
 │
 └── .github/workflows/
-    └── post_quotes.yml              # UTC cron + theme mapping + secrets wiring
+    └── post_*.yml                   # One workflow per theme, triggered via workflow_dispatch
 ```
 
 ---
@@ -485,7 +477,7 @@ ffmpeg -i downloaded.mp3 -t 20 -c:a libmp3lame -q:a 2 assets/audio/morning.mp3
 
 **"Reel container creation failed"** — Repo must be **public** so Instagram can fetch the video URL from GitHub Releases.
 
-**Actions not running on schedule** — GitHub pauses Actions on repos with no recent activity. Push any commit to wake them up, or trigger manually via Actions → Run workflow.
+**Actions not running** — Workflows are triggered via cron-job.org. Check the job's execution log there first. You can also trigger manually via Actions → Run workflow.
 
 **Image has text or watermark baked in** — The `[style_name]` bracket prefix is stripped before sending to any image model. Check the `re.sub` at the top of `get_image()` in `src/image_generator.py` is intact.
 

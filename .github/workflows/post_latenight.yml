@@ -1,9 +1,6 @@
 name: Post Late Night Feels
 
 on:
-  schedule:
-    - cron: "30 1 * * *"    # 01:30 AM IST
-      timezone: "Asia/Kolkata"
   workflow_dispatch:
 
 permissions:
