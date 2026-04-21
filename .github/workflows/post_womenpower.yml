@@ -1,7 +1,9 @@
-name: Post Love & Relationships
+name: Post She Feels
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "30 4 */2 * *"   # every other day at 4:30 UTC = 10:00 AM IST
 
 permissions:
   contents: write
@@ -13,7 +15,7 @@ jobs:
     timeout-minutes: 15
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-      THEME: love
+      THEME: womenpower  # "She Feels" — image-only, no reel, no TTS
 
     steps:
       - name: Checkout repository

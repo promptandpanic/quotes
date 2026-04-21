@@ -57,6 +57,7 @@ _CLICHE_MAP = {
     "mindfulness": '"be present", "let it go", "inner peace", "heal yourself", "your healing journey"',
     "goodnight":   '"count your blessings", "tomorrow is a new day", "sweet dreams", "you survived today"',
     "latenight":   '"time heals", "let go and move on", "you deserve better", "surviving", "healing is not linear", "warrior"',
+    "womenpower":  '"boss babe", "girl boss", "she believed she could", "women are strong", "girl power", "empowered women empower women", "know your worth", "her vibe", "toxic", "healed", "healing journey", "unbothered"',
 }
 
 

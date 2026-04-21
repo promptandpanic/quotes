@@ -16,7 +16,13 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-from src.config import AUDIO_FILE, IMAGE_HEIGHT, IMAGE_WIDTH, REEL_DURATION_SEC
+from src.config import (
+    AUDIO_FILE,
+    IMAGE_HEIGHT,
+    IMAGE_WIDTH,
+    REEL_DURATION_SEC,
+    TTS_MUSIC_VOLUME,
+)
 from src.image_composer import compose_base, compose_partial, get_reveal_counts
 
 logger = logging.getLogger(__name__)
@@ -33,6 +39,51 @@ HANDLE         = "@_daily_dose_of_wisdom__"
 HANDLE_FONT    = Path("assets/fonts/bebas.ttf")
 HANDLE_SIZE    = 62
 FOLLOW_SIZE    = 44
+
+
+def _audio_filter_parts(
+    music_idx: int | None,
+    tts_idx: int | None,
+    total: float,
+    tts_delay_ms: int = 2000,
+) -> tuple[list[str], str]:
+    """
+    Build ffmpeg filter_complex parts for audio mixing.
+    Returns (parts_list, output_label) — label is '' when there is no audio.
+
+    When TTS is present the music plays at full volume during the intro,
+    then smoothly ducks to TTS_MUSIC_VOLUME over 0.4s as the voice starts.
+    """
+    fade_st = max(0.0, total - 1.5)
+    tts_start = tts_delay_ms / 1000.0
+    duck_start = max(0.0, tts_start - 0.2)
+    duck_end   = tts_start + 0.2
+    vol        = TTS_MUSIC_VOLUME
+    # Linear ramp: full volume → TTS_MUSIC_VOLUME over 0.4s around tts_start
+    duck_expr  = (
+        f"if(lt(t,{duck_start:.2f}),1.0,"
+        f"if(lt(t,{duck_end:.2f}),"
+        f"(1.0+({vol}-1.0)*(t-{duck_start:.2f})/{duck_end-duck_start:.2f}),"
+        f"{vol}))"
+    )
+
+    if music_idx is not None and tts_idx is not None:
+        return [
+            f"[{music_idx}:a]volume='{duck_expr}'[music_ducked]",
+            f"[{tts_idx}:a]adelay={tts_delay_ms}|{tts_delay_ms}[tts_del]",
+            f"[music_ducked][tts_del]amix=inputs=2:duration=longest:"
+            f"dropout_transition=0,afade=t=out:st={fade_st:.2f}:d=1.5[aout]",
+        ], "[aout]"
+    elif music_idx is not None:
+        return [
+            f"[{music_idx}:a]afade=t=out:st={fade_st:.2f}:d=1.5[aout]",
+        ], "[aout]"
+    elif tts_idx is not None:
+        return [
+            f"[{tts_idx}:a]adelay={tts_delay_ms}|{tts_delay_ms},"
+            f"afade=t=out:st={fade_st:.2f}:d=1.5[aout]",
+        ], "[aout]"
+    return [], ""
 
 
 def _audio_path(theme: str) -> str:
@@ -107,7 +158,8 @@ def _render_handle_zoom_frames(handle_dir: Path, n_frames: int) -> None:
 # Fade animation — typing reveal + Ken Burns + handle zoom end card
 # ---------------------------------------------------------------------------
 
-def _create_reel_fade(image_bytes: bytes, quote: dict, brief: dict, theme: str = "") -> bytes | None:
+def _create_reel_fade(image_bytes: bytes, quote: dict, brief: dict, theme: str = "",
+                      tts_bytes: bytes | None = None) -> bytes | None:
     total     = REEL_DURATION_SEC
     audio     = _audio_path(theme)
     has_audio = Path(audio).exists()
@@ -177,6 +229,13 @@ def _create_reel_fade(image_bytes: bytes, quote: dict, brief: dict, theme: str =
             audio_idx = N + 1
             cmd += ["-stream_loop", "-1", "-i", audio]
 
+        tts_idx = None
+        if tts_bytes:
+            tts_file = tmpdir / "tts.mp3"
+            tts_file.write_bytes(tts_bytes)
+            tts_idx = handle_idx + 1 + (1 if has_audio else 0)
+            cmd += ["-i", str(tts_file)]
+
         # --- filter graph ---
         parts = []
 
@@ -218,24 +277,28 @@ def _create_reel_fade(image_bytes: bytes, quote: dict, brief: dict, theme: str =
             f"[main][handle]overlay=0:0:enable='gte(t,{handle_appears:.2f})'[vout]"
         )
 
+        audio_parts, audio_out = _audio_filter_parts(
+            audio_idx, tts_idx, total,
+            tts_delay_ms=int(INTRO_SEC * 1000),
+        )
+        parts.extend(audio_parts)
+
         filt = ";".join(parts)
         cmd += ["-filter_complex", filt, "-map", "[vout]"]
-
-        if has_audio:
-            cmd += ["-map", f"{audio_idx}:a:0", "-c:a", "aac", "-b:a", "128k",
-                    "-af", f"afade=t=out:st={total - 1.5}:d=1.5"]
+        if audio_out:
+            cmd += ["-map", audio_out, "-c:a", "aac", "-b:a", "128k"]
         else:
             cmd += ["-an"]
         cmd += ["-c:v", "libx264", "-preset", "fast", "-pix_fmt", "yuv420p",
                 "-t", str(total), out_p]
 
+        has_any_audio = has_audio or bool(tts_bytes)
         logger.info(
             f"Reel: {total}s | {INTRO_SEC}s base → {n_steps}-step typing → "
             f"hold → fade@{fade_starts_at:.1f}s → handle zoom | "
-            f"audio={'yes' if has_audio else 'no'}"
+            f"music={'yes' if has_audio else 'no'}  tts={'yes' if tts_bytes else 'no'}"
         )
-        return _run_ffmpeg(cmd, out_p, total, has_audio, image_bytes, quote, brief,
-                           theme=theme, fallback=False)
+        return _run_ffmpeg(cmd, out_p, total, has_any_audio)
 
 
 # ---------------------------------------------------------------------------
@@ -264,7 +327,8 @@ def _build_xfade_filter(N: int, durs: list[float], cf: float) -> str:
     return ";".join(parts)
 
 
-def _create_reel_reveal(image_bytes: bytes, quote: dict, brief: dict, theme: str = "") -> bytes | None:
+def _create_reel_reveal(image_bytes: bytes, quote: dict, brief: dict, theme: str = "",
+                        tts_bytes: bytes | None = None) -> bytes | None:
     counts    = get_reveal_counts(quote, brief)
     n_segs    = len(counts)
     cf        = 0.5
@@ -295,37 +359,53 @@ def _create_reel_reveal(image_bytes: bytes, quote: dict, brief: dict, theme: str
         cmd   = ["ffmpeg", "-y"]
         for p, dur in zip(paths, durs):
             cmd += ["-loop", "1", "-t", f"{dur:.3f}", "-i", p]
+
+        audio_idx = None
         if has_audio:
+            audio_idx = N
             cmd += ["-stream_loop", "-1", "-i", audio]
 
-        filt = _build_xfade_filter(N, durs, cf)
+        tts_idx = None
+        if tts_bytes:
+            tts_file = tmpdir / "tts.mp3"
+            tts_file.write_bytes(tts_bytes)
+            tts_idx = N + (1 if has_audio else 0)
+            cmd += ["-i", str(tts_file)]
+
+        # Build video filter, then append audio filter parts
+        parts = _build_xfade_filter(N, durs, cf).split(";")
+        audio_parts, audio_out = _audio_filter_parts(
+            audio_idx, tts_idx, total,
+            tts_delay_ms=int(INTRO_SEC * 1000),
+        )
+        parts.extend(audio_parts)
+
+        filt = ";".join(parts)
         cmd += ["-filter_complex", filt, "-map", "[vout]"]
-        if has_audio:
-            cmd += ["-map", f"{N}:a:0", "-c:a", "aac", "-b:a", "128k",
-                    "-af", f"afade=t=out:st={total - 1.5}:d=1.5"]
+        if audio_out:
+            cmd += ["-map", audio_out, "-c:a", "aac", "-b:a", "128k"]
         else:
             cmd += ["-an"]
         cmd += ["-c:v", "libx264", "-preset", "fast", "-pix_fmt", "yuv420p",
                 "-t", str(total), out_p]
 
-        logger.info(f"Reveal Reel: {N} frames, {total}s | audio={'yes' if has_audio else 'no'}")
-        return _run_ffmpeg(cmd, out_p, total, has_audio, image_bytes, quote, brief,
-                           theme=theme, fallback=True)
+        has_any_audio = has_audio or bool(tts_bytes)
+        logger.info(
+            f"Reveal Reel: {N} frames, {total}s | "
+            f"music={'yes' if has_audio else 'no'}  tts={'yes' if tts_bytes else 'no'}"
+        )
+        return _run_ffmpeg(cmd, out_p, total, has_any_audio)
 
 
 # ---------------------------------------------------------------------------
 # ffmpeg runner
 # ---------------------------------------------------------------------------
 
-def _run_ffmpeg(cmd, out_p, total, has_audio, image_bytes, quote, brief,
-                theme: str = "", fallback=False) -> bytes | None:
+def _run_ffmpeg(cmd, out_p, total, has_audio) -> bytes | None:
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
         if result.returncode != 0:
             logger.error(f"ffmpeg error:\n{result.stderr[-2000:]}")
-            if fallback:
-                logger.info("Reveal failed — falling back to fade animation")
-                return _create_reel_fade(image_bytes, quote, brief, theme=theme)
             return None
         out = Path(out_p)
         kb  = out.stat().st_size // 1024
@@ -333,8 +413,6 @@ def _run_ffmpeg(cmd, out_p, total, has_audio, image_bytes, quote, brief,
         return out.read_bytes()
     except subprocess.TimeoutExpired:
         logger.error("ffmpeg timed out")
-        if fallback:
-            return _create_reel_fade(image_bytes, quote, brief)
         return None
     except Exception as exc:
         logger.error(f"ffmpeg exception: {exc}")
@@ -349,8 +427,20 @@ def create_reel(image_bytes: bytes, quote: dict, brief: dict, theme: str = "") -
     if not _ffmpeg_available():
         logger.warning("ffmpeg not found — skipping Reel creation")
         return None
+
+    # Generate TTS once — reused if reveal falls back to fade
+    from src.tts import synthesize
+    tts_bytes = synthesize(quote.get("text", ""), brief.get("voice_gender"), theme=theme)
+
     animation = brief.get("animation", "fade")
     logger.info(f"Reel animation: {animation}")
     if animation == "reveal":
-        return _create_reel_reveal(image_bytes, quote, brief, theme=theme)
-    return _create_reel_fade(image_bytes, quote, brief, theme=theme)
+        result = _create_reel_reveal(image_bytes, quote, brief, theme=theme,
+                                     tts_bytes=tts_bytes)
+        if result is None:
+            logger.info("Reveal failed — falling back to fade animation")
+            result = _create_reel_fade(image_bytes, quote, brief, theme=theme,
+                                       tts_bytes=tts_bytes)
+        return result
+    return _create_reel_fade(image_bytes, quote, brief, theme=theme,
+                             tts_bytes=tts_bytes)

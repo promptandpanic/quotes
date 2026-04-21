@@ -223,7 +223,8 @@ center = subject at edges, center band is clear.",
 the line someone screenshots",
   "highlight_style": "color|italic|underline|caps|caps_italic|script",
   "skip_kenburns": false,
-  "mood_note": "one sentence — the visual feeling that stops someone mid-scroll"
+  "mood_note": "one sentence — the visual feeling that stops someone mid-scroll",
+  "voice_gender": "male|female — match the quote's emotional register. female for warmth/tenderness/intimacy/soft strength/nurturing; male for authority/gravitas/philosophical weight/bold energy/raw late-night honesty"
 }}
 '''
 
@@ -240,7 +241,7 @@ lower 35% open dark gradient for text. 9:16 portrait.",
         "overlay": {"type": "gradient_bottom", "opacity": 170, "color": "#000000"},
         "font": "bebas", "text_color": "#FFFFFF",
         "highlight_color": "#FF8C00", "decoration": "rule",
-        "layout": "big_center",
+        "layout": "big_center", "voice_gender": "male",
     },
     "wisdom": {
         "image_prompt": "[whimsical_sketch] Hand-drawn ink sketch of an ancient \
@@ -249,7 +250,7 @@ loose expressive lines, lower 40% fades to soft cream-shadow for text. 9:16 port
         "overlay": {"type": "gradient_bottom", "opacity": 180, "color": "#000000"},
         "font": "oswald", "text_color": "#F5F5F5",
         "highlight_color": "#FFD700", "decoration": "rule",
-        "layout": "full_card",
+        "layout": "full_card", "voice_gender": "male",
     },
     "love": {
         "image_prompt": "[watercolour_ink] Hand-painted watercolour wash of two hands \
@@ -258,7 +259,7 @@ cold-press paper texture, centre band soft and luminous for text. 9:16 portrait.
         "overlay": {"type": "vignette", "opacity": 150, "color": "#000000"},
         "font": "playfair", "text_color": "#FFF0F0",
         "highlight_color": "#FF6B8A", "decoration": "quote_mark",
-        "layout": "full_card",
+        "layout": "full_card", "voice_gender": "female",
     },
     "mindfulness": {
         "image_prompt": "[minimalist_nature] Single lotus flower on still dark water, \
@@ -267,7 +268,7 @@ ultra-minimal composition, center open and calm for text. 9:16 portrait.",
         "overlay": {"type": "gradient_center", "opacity": 155, "color": "#000000"},
         "font": "lato", "text_color": "#F0FFFF",
         "highlight_color": "#7FFFD4", "decoration": "none",
-        "layout": "full_card",
+        "layout": "full_card", "voice_gender": "female",
     },
     "goodnight": {
         "image_prompt": "[cozy_aesthetic] Candlelit wooden desk, open journal, \
@@ -276,7 +277,7 @@ bokeh fairy lights behind, lower 40% fades to near-black for text. 9:16 portrait
         "overlay": {"type": "solid", "opacity": 195, "color": "#000005"},
         "font": "playfair", "text_color": "#E8E8FF",
         "highlight_color": "#C8A2C8", "decoration": "quote_mark",
-        "layout": "sentence_reveal",
+        "layout": "sentence_reveal", "voice_gender": "female",
     },
     "latenight": {
         "image_prompt": "[nocturnal_aesthetic] Deep midnight blue sky, large glowing moon, \
@@ -285,7 +286,19 @@ lo-fi anime background painting energy — lower 40% open and dark for text. 9:1
         "overlay": {"type": "solid", "opacity": 210, "color": "#000005"},
         "font": "specialelite", "text_color": "#E0E0E0",
         "highlight_color": "#00CFCF", "decoration": "none",
-        "layout": "sentence_reveal",
+        "layout": "sentence_reveal", "voice_gender": "male",
+    },
+    "womenpower": {
+        "image_prompt": "[women_line_art] Pure warm cream #FAFAFA background. A small delicate \
+minimal ink line-art of a woman's face in profile — eyes closed, hair in a loose bun, pure \
+fine black ink lines only, no fill. The illustration sits centered in the upper third of the \
+frame. The entire lower two-thirds is completely empty white space. No other elements, \
+no textures, no patterns. Feels exactly like a premium minimal journal page. 9:16 portrait.",
+        "overlay": {"type": "none", "opacity": 0, "color": "#000000"},
+        "font": "cormorant", "text_color": "#111111",
+        "highlight_color": "#C0395A", "decoration": "none",
+        "layout": "full_card", "voice_gender": "female",
+        "skip_kenburns": True,
     },
 }
 
@@ -364,6 +377,10 @@ def generate_brief(quote: dict, theme: str, recent_styles: list[str] | None = No
     # Guarantee highlight is set
     if not brief.get("highlight"):
         brief["highlight"] = quote.get("highlight", text.split(".")[0][:40])
+
+    # Normalise voice_gender
+    vg = str(brief.get("voice_gender", "")).lower().strip()
+    brief["voice_gender"] = vg if vg in ("male", "female") else "male"
 
     # Normalise overlay
     ov = brief.get("overlay", {})

@@ -260,3 +260,43 @@ styles:
       fine detail in every surface. The image should feel like a dream remembered vividly.
     categories: [latenight, wisdom]
     weight: low
+
+  # ── WOMENPOWER — exclusive aesthetic ────────────────────────────────────
+
+  women_line_art:
+    description: >
+      Pure white or warm cream (#FAFAFA) background. A small, delicate minimal ink line-art
+      illustration of a woman sits in the UPPER THIRD of the frame — choose ONE of these:
+      a woman's face in profile with eyes closed and hair in a bun, a woman sitting with knees
+      drawn to her chest, a woman's silhouette with flowing hair from behind, a close-up of
+      a woman's hand holding a single flower, a woman looking out a window from the side,
+      a woman with head tilted back and eyes shut. The illustration is pure fine black ink
+      lines only — no fill, no shading, no colour. It must be small and centered, occupying
+      at most the top 30% of the frame. The ENTIRE lower two-thirds is completely empty white
+      space — this emptiness IS the aesthetic. NO background elements, NO textures, NO patterns,
+      NO colour. The image must feel exactly like a premium minimal journal page or editorial
+      aesthetic Pinterest illustration. Text color MUST be dark (#111111). Set overlay type
+      to "none" and skip_kenburns to true.
+    categories: [womenpower]
+    weight: high
+
+  women_vivid_art:
+    description: >
+      Clean white or soft cream background with a vivid feminine illustration of a woman's
+      face or bust portrait — choose one variant that matches the quote's mood:
+      (a) FLORAL HAIR — a woman with eyes closed and dramatic flowers woven through her hair,
+      blooms in deep crimson, blush pink, marigold gold, or cobalt blue — choose 2-3 bold
+      flower colours that contrast beautifully; (b) BOLD LIP — a woman in profile or
+      three-quarter view with one dramatic colour element — a striking lip in berry, coral,
+      deep red, or fuchsia, the rest of the face in soft neutral tones; (c) FLORAL FRAME —
+      a minimal woman silhouette or face surrounded by a loose wreath of illustrated flowers
+      and leaves, vibrant botanical colours. The illustration style is FLAT VECTOR or clean
+      watercolour — not photorealistic. Palette is always clean: white/cream background, the
+      woman illustration in soft neutral skin tones, with ONE to THREE vivid accent colours
+      only in the flowers, lips, or botanicals. Subject sits in the UPPER THIRD of the frame.
+      The lower two-thirds is completely empty and white — generous white space for the quote.
+      No busy backgrounds, no patterns, no clutter. Feels like a premium feminine editorial
+      illustration. Text color MUST be dark (#111111). Set overlay type to "none" and
+      skip_kenburns to true.
+    categories: [womenpower]
+    weight: high

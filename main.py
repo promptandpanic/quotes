@@ -205,9 +205,13 @@ def run() -> bool:
     brief           = best["brief"]
     image_bytes_raw = best["raw"]
 
-    # 8. Animated Reel video
-    logger.info("Creating animated Reel…")
-    video_bytes = create_reel(image_bytes_raw, quote, brief, theme=theme_key)
+    # 8. Animated Reel video (skipped for image-only themes)
+    video_bytes = None
+    if theme_cfg.get("video", True):
+        logger.info("Creating animated Reel…")
+        video_bytes = create_reel(image_bytes_raw, quote, brief, theme=theme_key)
+    else:
+        logger.info("Video skipped (image-only theme)")
 
     # --- DRY_RUN: save locally and exit ---
     if DRY_RUN:
