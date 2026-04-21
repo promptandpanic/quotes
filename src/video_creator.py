@@ -50,14 +50,28 @@ def _audio_filter_parts(
     """
     Build ffmpeg filter_complex parts for audio mixing.
     Returns (parts_list, output_label) — label is '' when there is no audio.
-    When both music and TTS are present, music is ducked to TTS_MUSIC_VOLUME.
+
+    When TTS is present the music plays at full volume during the intro,
+    then smoothly ducks to TTS_MUSIC_VOLUME over 0.4s as the voice starts.
     """
     fade_st = max(0.0, total - 1.5)
+    tts_start = tts_delay_ms / 1000.0
+    duck_start = max(0.0, tts_start - 0.2)
+    duck_end   = tts_start + 0.2
+    vol        = TTS_MUSIC_VOLUME
+    # Linear ramp: full volume → TTS_MUSIC_VOLUME over 0.4s around tts_start
+    duck_expr  = (
+        f"if(lt(t,{duck_start:.2f}),1.0,"
+        f"if(lt(t,{duck_end:.2f}),"
+        f"(1.0+({vol}-1.0)*(t-{duck_start:.2f})/{duck_end-duck_start:.2f}),"
+        f"{vol}))"
+    )
+
     if music_idx is not None and tts_idx is not None:
         return [
-            f"[{music_idx}:a]volume={TTS_MUSIC_VOLUME}[music_soft]",
+            f"[{music_idx}:a]volume='{duck_expr}'[music_ducked]",
             f"[{tts_idx}:a]adelay={tts_delay_ms}|{tts_delay_ms}[tts_del]",
-            f"[music_soft][tts_del]amix=inputs=2:duration=longest:"
+            f"[music_ducked][tts_del]amix=inputs=2:duration=longest:"
             f"dropout_transition=0,afade=t=out:st={fade_st:.2f}:d=1.5[aout]",
         ], "[aout]"
     elif music_idx is not None:
