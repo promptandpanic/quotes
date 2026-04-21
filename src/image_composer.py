@@ -315,11 +315,12 @@ def _vignette(img: Image.Image, intensity: int = 160) -> Image.Image:
     return Image.alpha_composite(rgba, vig).convert("RGB")
 
 
-def _watermark(draw: ImageDraw.ImageDraw) -> None:
+def _watermark(draw: ImageDraw.ImageDraw, dark: bool = False) -> None:
     wm_font = _font("lato_light", 22)
     w = _tw(draw, WATERMARK_TEXT, wm_font)
+    fill = (80, 80, 80, 180) if dark else (200, 200, 200, 180)
     draw.text(((IMAGE_WIDTH - w) // 2, IMAGE_HEIGHT - 50),
-              WATERMARK_TEXT, font=wm_font, fill=(200, 200, 200, 180))
+              WATERMARK_TEXT, font=wm_font, fill=fill)
 
 
 # ---------------------------------------------------------------------------
@@ -493,7 +494,8 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
         draw.text((ax, ay), dash, font=dash_font, fill=hi_color)
         draw.text((ax + (d_bb[2] - d_bb[0]), ay), author, font=a_font, fill=ac)
 
-    _watermark(draw)
+    dark_watermark = brief.get("overlay", {}).get("type") == "none"
+    _watermark(draw, dark=dark_watermark)
     return img
 
 
