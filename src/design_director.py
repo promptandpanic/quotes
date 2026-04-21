@@ -389,8 +389,10 @@ def generate_brief(quote: dict, theme: str, recent_styles: list[str] | None = No
         layout = "full_card"
     brief["layout"] = layout
 
+    # Font size scales with quote length — _fit_text will auto-shrink further if needed
     if layout == "big_center":
-        brief["font_size"]  = 108
+        # Short punchy quotes get more canvas — start larger
+        brief["font_size"]  = 96 if word_count <= 7 else 88
         brief["text_zone"]  = "center"
         brief["animation"]  = "fade"
         # Overlay must cover the center zone — gradient_bottom/top only cover edges
@@ -399,11 +401,12 @@ def generate_brief(quote: dict, theme: str, recent_styles: list[str] | None = No
             brief["overlay"]["type"] = "solid"
             brief["overlay"]["opacity"] = max(brief["overlay"].get("opacity", 170), 185)
     elif layout == "sentence_reveal":
-        brief["font_size"]  = 96
+        # Longer multi-sentence quotes start smaller — auto-shrink handles the rest
+        brief["font_size"]  = max(64, 86 - max(0, word_count - 15) * 1)
         brief["text_zone"]  = brief.get("text_zone", "bottom")
         brief["animation"]  = "reveal"
     else:  # full_card
-        brief["font_size"]  = 88
+        brief["font_size"]  = max(60, 78 - max(0, word_count - 12) * 1)
         brief["text_zone"]  = brief.get("text_zone", "center")
         brief["animation"]  = "fade"
 

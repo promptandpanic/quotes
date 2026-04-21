@@ -27,14 +27,22 @@ from src.config import IMAGE_HEIGHT, IMAGE_WIDTH, WATERMARK_TEXT
 logger = logging.getLogger(__name__)
 
 FONTS_DIR    = Path("assets/fonts")
-MARGIN_X     = 60                              # left + right padding (px each side)
-TEXT_MAX_W   = IMAGE_WIDTH - 2 * MARGIN_X      # 960px usable text width
+
+# Instagram mobile safe zones (1080×1920 canvas):
+#   Right side: action icons (like/comment/share/save) occupy ~150px
+#   Bottom:     username + caption + music bar + comment box ~420px
+#   Left/Top:   minimal chrome
+MARGIN_X          = 72                                      # left padding
+MARGIN_X_R        = 180                                     # right padding — clears action icons
+TEXT_MAX_W        = IMAGE_WIDTH - MARGIN_X - MARGIN_X_R    # 828px usable width
+TEXT_ZONE_CX      = (MARGIN_X + IMAGE_WIDTH - MARGIN_X_R) // 2   # 486 — centre of safe zone
+INSTAGRAM_SAFE_BOTTOM = IMAGE_HEIGHT - 420                  # 1500px — bottom of text-safe area
 
 # Max block height per text zone — text auto-shrinks only as last resort
 _ZONE_MAX_H = {
-    "top":    int(IMAGE_HEIGHT * 0.60),
-    "center": int(IMAGE_HEIGHT * 0.82),
-    "bottom": int(IMAGE_HEIGHT * 0.72),
+    "top":    int(IMAGE_HEIGHT * 0.55),
+    "center": int(IMAGE_HEIGHT * 0.72),
+    "bottom": INSTAGRAM_SAFE_BOTTOM - int(IMAGE_HEIGHT * 0.28),  # ~960px usable for bottom zone
 }
 
 _FONT_URLS = {
@@ -173,15 +181,15 @@ def _layout_lines(disp_text: str, font: ImageFont.FreeTypeFont,
 def _fit_text(disp_text: str, font_key: str, font_size: int,
               layout: str, zone: str) -> tuple[list[str], ImageFont.FreeTypeFont, int]:
     """Return (lines, font, size) using the largest font where the block fits the zone.
-    Minimum floor is 80pt — text is never shrunk below that regardless of fit."""
-    max_h = _ZONE_MAX_H.get(zone, int(IMAGE_HEIGHT * 0.75))
-    for size in range(font_size, 80, -2):
+    Minimum floor is 62pt — text is never shrunk below that regardless of fit."""
+    max_h = _ZONE_MAX_H.get(zone, int(IMAGE_HEIGHT * 0.70))
+    for size in range(font_size, 62, -2):
         f = _font(font_key, size)
         lines = _layout_lines(disp_text, f, layout)
         if len(lines) * int(size * 1.28) <= max_h:
             return lines, f, size
-    # Floor: always render at minimum 82pt — let it overflow rather than shrink text
-    size = 82
+    # Floor: render at minimum 64pt — let it overflow rather than shrink further
+    size = 64
     f = _font(font_key, size)
     return _layout_lines(disp_text, f, layout), f, size
 
@@ -253,7 +261,7 @@ def _render_line(draw, img_width: int, y: int, line: str,
         _stroke_text(draw, (x, y), before, font, fill=fill)
         x += bw
     if hi_disp:
-        _stroke_text(draw, (x, y), hi_disp, hi_font, fill=hi_fill)
+        _stroke_text(draw, (x, y), hi_disp, hi_font, fill=hi_fill, stroke=1)  # thin stroke → fill colour dominates
         if hi_style == "underline":
             uy = y + hi_font.getbbox(hi_disp)[3] + 2
             draw.rectangle([(x, uy), (x + hw, uy + 3)], fill=(*hi_fill, 255))
@@ -423,7 +431,7 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
     bg_lum   = _bg_luminance(img, text_zone)
     txt_color = _ensure_readable(txt_color, bg_lum)
 
-    font_size = max(88, int(brief.get("font_size", 88)))
+    font_size = max(64, int(brief.get("font_size", 78)))
     all_lines, f, font_size = _fit_text(disp_text, font_key, font_size, layout, text_zone)
     hi_f = _highlight_font(font_key, hi_style, font_size)
 
@@ -436,24 +444,24 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
         y = int(IMAGE_HEIGHT * 0.08)
     elif text_zone == "center":
         y = (IMAGE_HEIGHT - block_h) // 2
-    else:  # bottom
-        y = IMAGE_HEIGHT - block_h - 100
+    else:  # bottom — anchor to Instagram safe bottom, not the raw canvas edge
+        y = INSTAGRAM_SAFE_BOTTOM - block_h
 
     draw = ImageDraw.Draw(img)
 
-    # Decoration
+    # Decoration — aligned to the safe text zone
     if decoration == "rule":
-        draw.line([(70, y - 20), (IMAGE_WIDTH - 70, y - 20)],
+        draw.line([(MARGIN_X, y - 20), (IMAGE_WIDTH - MARGIN_X_R, y - 20)],
                   fill=(*hi_color, 220), width=3)
     elif decoration == "quote_mark":
         dq_font = _font("playfair", 260)
-        draw.text((28, y - 40), "\u201c", font=dq_font, fill=(*hi_color, 30))
+        draw.text((MARGIN_X - 44, y - 40), "\u201c", font=dq_font, fill=(*hi_color, 30))
 
     # Text lines — word-level highlight styling
     for line in lines:
         has_hi = bool(hi_phrase and hi_phrase in line.lower())
         _render_line(
-            draw, IMAGE_WIDTH, y, line,
+            draw, TEXT_ZONE_CX * 2, y, line,
             font=f, fill=txt_color,
             hi_font=hi_f, hi_fill=hi_color,
             hi_phrase=hi_phrase if has_hi else "",
@@ -480,7 +488,7 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
         d_bb = dash_font.getbbox(dash)
         n_bb = a_font.getbbox(author)
         total_w = (d_bb[2] - d_bb[0]) + (n_bb[2] - n_bb[0])
-        ax = (IMAGE_WIDTH - total_w) // 2
+        ax = (TEXT_ZONE_CX * 2 - total_w) // 2
         ay = y + 16
         draw.text((ax, ay), dash, font=dash_font, fill=hi_color)
         draw.text((ax + (d_bb[2] - d_bb[0]), ay), author, font=a_font, fill=ac)
@@ -505,7 +513,7 @@ def get_reveal_counts(quote: dict, brief: dict) -> list[int]:
     font_key  = brief.get("font", "oswald")
     if font_key == "playfair_it":
         font_key = "playfair"
-    font_size = max(88, int(brief.get("font_size", 88)))
+    font_size = max(64, int(brief.get("font_size", 78)))
     text      = _sanitize(quote["text"])
     upper     = font_key == "bebas"
     disp_text = text.upper() if upper else text
