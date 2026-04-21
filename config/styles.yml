@@ -87,14 +87,15 @@ styles:
 
   minimalist_line_art:
     description: >
-      A single continuous flowing ink line on stark white. Choose the subject to match the quote —
-      examples: a face in profile, two figures leaning toward each other, hands almost touching,
-      a figure curled in thought, two people back to back, a figure looking up, hands cupped
-      around something small, a seated figure with knees drawn up, two figures walking apart,
-      a face dissolving into birds. One unbroken stroke implies the whole scene. CONTRAST RULE:
-      the single color accent must be pure and saturated — not a pale wash but a bold solid fill:
-      crimson red, cobalt blue, pure gold, electric teal. Vast white space, precise black line,
-      one saturated pop. Three elements in extreme contrast. The restraint IS the scroll-stopper.
+      Precise, detailed ink illustration — fine confident linework on warm cream or white.
+      Choose the subject to match the quote — examples: a face in profile with expressive detail,
+      two figures leaning toward each other, hands almost touching, a figure curled in thought,
+      someone writing at a desk by lamplight, a person at a window watching rain, a figure
+      releasing birds. NOT a single abstract stroke — the drawing must be clearly readable and
+      finely rendered, like a high-quality editorial illustration. CONTRAST RULE: one saturated
+      color accent used deliberately — crimson red, cobalt blue, pure gold, or electric teal —
+      on a specific element (a scarf, a light source, a detail). Clean white ground, detailed
+      black linework, one vivid accent. Clarity and precision is the aesthetic.
     categories: [wisdom, love, mindfulness, latenight]
     weight: high
 
@@ -173,15 +174,16 @@ styles:
 
   minimalist_vector:
     description: >
-      Bold flat 2D poster illustration — no human figures, clean geometric symbolic imagery.
-      Choose the symbol to match the quote — examples: a compass on a blank horizon, a lone
-      doorway standing in open space, a lighthouse beam splitting dark water, a path forking
-      in two directions, a ladder leaning against nothing, a single window with light behind
-      it, a key floating in negative space, a bridge disappearing into fog, a candle with
-      a long shadow, a mountain peak with a single flag. CONTRAST IS THE STYLE: maximum 3
-      colors, always high-contrast — deep navy against electric yellow, pure black against
-      vivid coral, forest green against bright cream. Flat, bold, no gradients, no textures.
-      Reads in under one second at thumbnail size.
+      Bold flat 2D poster illustration — clean, graphic, and immediately readable. No human
+      figures. Choose a clear concrete symbol to match the quote — examples: a lighthouse beam
+      cutting through dark water, a path forking through a forest, a window with warm light
+      spilling out, a bridge over still water at dusk, a candle casting a long shadow on a table,
+      a mountain peak with a clear sky, a compass on a map, a hot air balloon over a landscape,
+      a staircase lit from above, a lone tree against a vivid sky. Every element should be
+      purposeful and clearly recognizable. CONTRAST IS THE STYLE: maximum 3 bold colors —
+      deep navy against electric yellow, pure black against vivid coral, forest green against
+      bright cream. Flat fills, crisp edges, no gradients, no textures. Reads in under one
+      second at thumbnail size.
     categories: [morning, wisdom, mindfulness]
     weight: medium
 
@@ -215,47 +217,44 @@ styles:
 
   risograph_print:
     description: >
-      Duotone risograph print effect — choose the subject to match the quote — a figure
-      in profile, a landscape, two people walking, a tree, a window, an abstract form, a
-      cityscape at night, a field with a lone figure, a staircase, an open door. The entire
-      image rendered in just two overlapping ink colours with visible halftone grain and
-      slight misregistration. CONTRAST RULE: the two inks must be high-contrast
-      complementaries — indigo + acid yellow, deep teal + vivid coral, near-black navy +
-      bright warm cream, dark forest green + hot coral. Halftone grain should be coarse and
-      visible. In a feed of smooth clean AI imagery, visible grain and bold color contrast
-      look hand-printed and completely unique.
+      Duotone risograph print — a clearly composed scene with bold graphic character. Choose a
+      specific, readable subject: a figure on a rooftop watching the city, two people walking
+      under a large moon, a person cycling past illuminated shop fronts, someone reading under
+      a large window, a forest path with dappled light, a coastal cliff at dusk, a couple on a
+      bench by water. Subject must be specific and clearly legible — not vague shapes.
+      The entire image rendered in two high-contrast overlapping inks with slight misregistration
+      giving a hand-printed feel. CONTRAST RULE: the two inks must be bold complementaries —
+      indigo + warm cream, deep teal + vivid coral, dark navy + acid yellow, forest green + peach.
+      The grain and misregistration add texture but must not obscure the scene's clarity.
     categories: [wisdom, latenight, mindfulness]
     weight: medium
 
   # ── ACCENT — used sparingly for high impact ──────────────────────────────
 
-  double_exposure:
+  cinematic_portrait:
     description: >
-      Silhouette filled with layered landscape texture. Choose the silhouette shape and
-      interior texture to match the quote's metaphor — examples: a face filled with dense
-      forest, a figure filled with starry night sky, outstretched hands filled with ocean
-      waves, a seated figure filled with mountain ranges, a bird silhouette filled with
-      cityscapes, a head-and-shoulders filled with storm clouds, hands cupped around a
-      glowing forest interior. CONTRAST HOOK: the silhouette boundary must be crisp and
-      hard against the background. Inside: rich detailed texture. Outside: a single stark
-      tone (near-white, deep charcoal, or one bold color). The contrast between intricate
-      interior and stark exterior IS what makes this work. Used sparingly — only for quotes
-      with genuine metaphorical depth.
-    categories: [latenight, love, wisdom]
-    weight: low
+      A richly detailed cinematic scene — painterly, dramatic, deeply composed. NOT a photo,
+      NOT a portrait of a real person — a painted or digitally illustrated scene with a strong
+      sense of story and atmosphere. Choose the scene to match the quote — examples: a figure
+      in a dimly lit room reading a letter by window light, a person standing in a rain-lit
+      street at night, two figures silhouetted in a glowing doorway, someone sitting alone in
+      a warmly lit café corner, a figure at the edge of a platform watching a departing train,
+      a person on a fire escape watching the city at night, someone slow-dancing alone in a
+      kitchen. Lighting is the mood: warm amber vs cool shadows, single practical light source,
+      cinematic colour grading. Painted or illustrated aesthetic — fine details, textured surfaces,
+      emotional depth. Every element should contribute to the story of the quote.
+    categories: [latenight, love, wisdom, goodnight]
+    weight: medium
 
   dark_surreal:
     description: >
-      Impossible dream-logic scene — choose the surreal premise to match the quote.
-      Examples: a figure walking calmly on a ceiling while the room continues below, a
-      door standing alone in open ocean, a city built upside-down reflected in a lake,
-      a staircase that spirals into open sky, a figure whose shadow moves independently,
-      a room with no floor where furniture floats in dark space, clocks melting into a
-      landscape, a figure whose reflection in water does something different. CONTRAST
-      RULE: the impossible element is rendered with hyper-real detail while the
-      surrounding scene is deep dark and atmospheric — the contrast between the too-real
-      surreal object and the near-black dreamlike setting creates the vertigo. Used rarely
-      — only for late-night existential content where the image should feel as unmoored
-      and vivid as the thought.
+      A surreal scene rendered with hyperreal painterly detail — dreamlike premise, but everything
+      in the frame is finely rendered and clearly visible. Choose a specific scene: a lit doorway
+      standing in the middle of a dark ocean, a figure walking calmly up a staircase into open
+      sky, a person sitting at a dining table in the middle of a forest at night, a bed floating
+      in a vast dark lake with warm lamplight overhead, a figure watching rain fall upward in a
+      quiet room. The surreal element must feel inevitable — not chaotic. CONTRAST: near-black
+      atmospheric setting with one or two brilliantly lit focal elements. Painterly texture,
+      fine detail in every surface. The image should feel like a dream remembered vividly.
     categories: [latenight, wisdom]
     weight: low

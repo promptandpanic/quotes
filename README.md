@@ -268,7 +268,7 @@ styles:
 | `risograph_print` | morning, love, wisdom | medium |
 | `metaphorical_digital` | wisdom, latenight, mindfulness | medium |
 | `wholesome_doodle` | love, morning, goodnight | medium |
-| `double_exposure` | latenight, love, wisdom | low |
+| `cinematic_portrait` | latenight, love, wisdom, goodnight | medium |
 | `dark_surreal` | latenight, wisdom | low |
 
 > **Global image rule:** All prompts explicitly block photorealistic humans, portrait photography, text, logos, and watermarks. Illustrations, paintings, flat vector art, ink sketches, and abstract art only.
