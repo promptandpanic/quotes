@@ -89,6 +89,40 @@ IMAGE RULES (always apply):
   - No text, signs, logos, watermarks, or typography anywhere in the image
   - No generic stock-photo style compositions — every image should feel art-directed and intentional
 
+TEXT PLACEMENT — CRITICAL RULES (read carefully, these directly affect image quality):
+
+  STEP 1 — Decide WHERE the text will live BEFORE writing the image prompt:
+  - text_zone: top    → text block sits in the upper 35% of the image
+  - text_zone: center → text block sits across the middle third
+  - text_zone: bottom → text block sits in the lower 35% of the image
+
+  STEP 2 — Write the image_prompt so that zone is GENUINELY CLEAR:
+  - If text_zone is top: the subject/scene must sit in the LOWER half. The top must be open sky,
+    plain background, soft texture, or gradual fade — nothing visually complex.
+  - If text_zone is bottom: the subject must sit in the UPPER half. Bottom must be clear.
+  - If text_zone is center: the subject must hug the left or right edge, or be in extreme
+    foreground/background. The center band must be uncluttered.
+  - NEVER place the subject in the same zone you intend for text. Text on top of a character,
+    face, or focal element is the single most common failure — eliminate it by design.
+
+  STEP 3 — Match the overlay to the text_zone:
+  - text_zone: top    → overlay type: gradient_top
+  - text_zone: bottom → overlay type: gradient_bottom
+  - text_zone: center → overlay type: gradient_center or vignette
+  - Light/pale backgrounds (parchment, cream, white) in the text zone need opacity ≥ 180 to
+    make white text readable. If background is very pale and overlay is light, use dark text instead.
+
+FONT — match to the image's art style (wrong font breaks the mood entirely):
+  - Vintage illustrated / anthropomorphic: cormorant or playfair
+  - Watercolour / ink wash: satisfy or cormorant
+  - Ghibli / anime: josefin or raleway
+  - Cozy aesthetic / warm realism: merriweather or lato
+  - Cinematic / dark dramatic: oswald or merriweather
+  - Bold graphic poster / vector: bebas or anton
+  - Line art / minimalist: josefin or lato
+  - Late-night raw emotion: specialelite
+  - Love / poetic: dancing or playfair
+
 TEXT LAYOUT — pick ONE based on the quote's length and energy:
 
   big_center     — SHORT punchy quotes only (≤12 words, single sentence).
@@ -98,14 +132,12 @@ TEXT LAYOUT — pick ONE based on the quote's length and energy:
 
   sentence_reveal — MULTI-SENTENCE quotes (2-4 sentences).
                    Each complete sentence fades in one by one and stays visible.
-                   Text fills bottom zone, large readable size.
                    Video: each sentence appears in sequence, full quote visible at end.
                    Pick this for: emotional late-night, wisdom with build-up, love quotes.
 
   full_card      — MEDIUM quotes (1-2 sentences, 12-30 words).
-                   Full text visible from the start, centered or bottom, clean hold.
-                   Text fills the screen comfortably — large and bold.
-                   Video: image crossfades in revealing all text, holds for full duration.
+                   Full text visible from the start, clean hold.
+                   Video: image crossfades in revealing all text.
                    Pick this for: mindfulness, goodnight, poetic single thoughts.
 
 ──────────────────────────────────────────────
@@ -117,16 +149,14 @@ Return ONLY valid JSON — no markdown, no text outside the JSON:
 sentences: (1) Exact subject and action — who or what is in the scene, what they are doing, \
 which specific emotion this conveys. (2) Setting and environment — time of day, location, \
 surface textures, weather, atmosphere. (3) Art style execution — the specific technique, \
-medium, brushwork, linework, or texture that defines the chosen style (e.g. 'loose expressive \
-pencil lines with vivid selective color pops on warm cream parchment', or 'flat 2D vector with \
-clean outlines and bold 4-colour palette against a soft gradient'). (4) Full colour palette — \
-4-5 colours with hex values and names (e.g. midnight blue #1a1a3e, warm ochre #c4832a, \
-blush rose #e8a5a5). (5) Lighting — direction, quality, and emotional temperature (e.g. 'single \
-warm candle from the left casting long soft shadows', 'flat overcast light, grey and muted'). \
-(6) Composition — where the subject sits in the 9:16 frame, and which third of the image \
-(lower or upper) stays open, dark, and visually simple so quote text can sit clearly on it. \
-Absolutely no text, signs, words, numbers, logos, or watermarks anywhere in the image. \
-9:16 portrait format.",
+medium, brushwork, linework, or texture that defines the chosen style. (4) Full colour palette — \
+4-5 colours with hex values and names (e.g. midnight blue #1a1a3e, warm ochre #c4832a). \
+(5) Lighting — direction, quality, and emotional temperature. \
+(6) Composition — EXPLICITLY state: where the subject sits in the 9:16 frame (upper half / \
+lower half / left edge / right edge), and which zone (top third / bottom third / center band) \
+is kept completely open, uncluttered, and visually simple for the quote text. The open zone \
+must match text_zone exactly. Absolutely no text, signs, words, numbers, logos, or watermarks \
+anywhere in the image. 9:16 portrait format.",
 
   "overlay": {{
     "type": "gradient_bottom|gradient_top|gradient_center|solid|vignette",
@@ -144,6 +174,10 @@ background AND text_color. Avoid colours close in hue or brightness to text_colo
   "author_color": "#RRGGBB — colour for the author name. Must be readable against the background. \
 Often the highlight_color, a softer tint of it, or a warm off-white. \
 Only rendered when a real author exists — skip for Unknown/anonymous.",
+  "text_zone": "top|center|bottom — MUST match the open/clear zone described in image_prompt. \
+top = subject in lower half, upper third is clear. \
+bottom = subject in upper half, lower third is clear. \
+center = subject at edges, center band is clear.",
   "decoration": "rule|quote_mark|none",
   "layout": "big_center|sentence_reveal|full_card",
   "highlight": "3-6 most emotionally powerful CONSECUTIVE words from the quote — \
