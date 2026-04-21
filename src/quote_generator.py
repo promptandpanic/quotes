@@ -24,7 +24,7 @@ import yaml
 
 logger = logging.getLogger(__name__)
 
-MAX_ATTEMPTS       = 3
+MAX_ATTEMPTS       = 2
 IMAGE_JUDGE_MAX    = 3   # kept in image_judge.py — noted here for clarity
 MIN_QUALITY_SCORE  = 7
 MIN_UNIQUENESS     = 6   # hard floor — generic/overexposed quotes always rejected
@@ -63,35 +63,29 @@ _CLICHE_MAP = {
 def _build_real_prompt(category: str, max_words: int, topic_block: str) -> str:
     cliches = _CLICHE_MAP.get(category, '"overused clichés"')
     return f"""\
-You are finding and evaluating a real quote for @_daily_dose_of_wisdom__, \
+You are finding and evaluating real quotes for @_daily_dose_of_wisdom__, \
 an Indian Instagram page for emotionally intelligent youth aged 18-35.
 
-Find ONE real quote — actually written or spoken by a known person. Prefer filmmakers, \
-musicians, comedians, athletes, novelists, or contemporary thinkers over the usual \
-Rumi / Stoics / Einstein pool — those are overexposed. A sharp line from a film, \
-a lyric that works standalone, or a line from a novelist almost nobody quotes are all valid.
+Find 3 DIFFERENT real quotes — each actually written or spoken by a known person. \
+Prefer filmmakers, musicians, comedians, athletes, novelists, or contemporary thinkers \
+over the usual Rumi / Stoics / Einstein pool — those are overexposed. A sharp line from \
+a film, a lyric that works standalone, or a line from a novelist almost nobody quotes are all valid.
 
 {topic_block}
 
-Rules for the quote:
+Rules for each quote:
 - REAL quote by a REAL, named person — not "Unknown" or "Anonymous"
 - Maximum {max_words} words total. Hard limit.
 - Must resonate with an Indian aged 18-35 in 2025 — timeless but not cliché
 - Must feel RARE — not one of the top 1000 most quoted lines on the internet
 - No clichés: {cliches}
 - Short is fine — a complete 6-word quote beats a padded 20-word one
+- All 3 must be from different authors and different emotional angles
 
-Then score it strictly on these 4 dimensions (1-10 each):
-1. virality     — Would people screenshot and share this?
-2. engagement   — Would an Indian aged 18-30 feel this in their chest?
-3. uniqueness   — Is this rare? Score 1-4 if widely circulated online.
-4. freshness    — Does it feel nothing like a generic motivational poster?
+Score each on 4 dimensions (1-10): virality, engagement, uniqueness (1-4 if widely circulated), freshness.
+Hard rule: uniqueness < 6 → reject. Generic self-help → reject.
 
-Hard scoring rules:
-- uniqueness < 6 → accept must be false regardless of other scores
-- Generic self-help language → accept must be false
-
-Return ONLY valid JSON — no markdown, no explanation:
+Then pick the single best-scoring quote and return ONLY that one as JSON — no markdown, no explanation:
 {{"quote":"the exact quote text","author":"Full Name","score":<avg 1-10>,\
 "virality":<1-10>,"engagement":<1-10>,"uniqueness":<1-10>,"freshness":<1-10>,\
 "reason":"<one sentence>","accept":<true if score>=7 AND uniqueness>=6, else false>}}
@@ -101,9 +95,8 @@ Return ONLY valid JSON — no markdown, no explanation:
 def _build_social_prompt(category: str, max_words: int, topic_block: str) -> str:
     cliches = _CLICHE_MAP.get(category, '"overused clichés"')
     return f"""\
-You are finding or writing a quote in the style of something that went genuinely viral \
-on social media for @_daily_dose_of_wisdom__, an Indian Instagram page for emotionally \
-intelligent youth aged 18-35.
+You are writing quotes in the style of things that go genuinely viral on social media \
+for @_daily_dose_of_wisdom__, an Indian Instagram page for emotionally intelligent youth aged 18-35.
 
 Think Reddit threads, Twitter/X posts, Tumblr, Pinterest, Instagram captions — the kind \
 of line a real 25-year-old wrote from experience that thousands of people screenshot because \
@@ -111,30 +104,24 @@ they felt seen. Not profound philosophy. Not a motivational poster. Just one tru
 
 {topic_block}
 
-The quote should feel like:
+Write 3 DIFFERENT candidates. Each should feel like:
 - Something a real person said, not a writer performing wisdom
 - The kind of line you text a friend and they reply "damn"
 - Simple enough that the visual does half the work — short is often better
 - Warm and specific, not vague and grand
 
-Rules:
+Rules for each:
 - Maximum {max_words} words. Short quotes (4-8 words) are especially welcome.
 - Concrete over abstract — one precise feeling, not a life philosophy
 - No clichés: {cliches}
 - Banned words: "surviving", "journey", "heal", "broken", "warrior", "storm", "chapter", "version of yourself"
+- All 3 must explore different feelings or angles
 - Author field must be "Original"
 
-Then score it strictly on these 4 dimensions (1-10 each):
-1. virality     — Would people screenshot and share this instantly?
-2. engagement   — Would an Indian aged 18-30 feel seen by this?
-3. uniqueness   — Does it feel genuinely fresh and unheard-of?
-4. freshness    — Does it feel nothing like a generic motivational poster?
+Score each on 4 dimensions (1-10): virality, engagement, uniqueness, freshness.
+Hard rule: uniqueness < 6 → reject. Generic self-help → reject.
 
-Hard scoring rules:
-- uniqueness < 6 → accept must be false
-- Generic self-help language → accept must be false
-
-Return ONLY valid JSON — no markdown, no explanation:
+Then pick the single best-scoring quote and return ONLY that one as JSON — no markdown, no explanation:
 {{"quote":"the quote text","author":"Original","score":<avg 1-10>,\
 "virality":<1-10>,"engagement":<1-10>,"uniqueness":<1-10>,"freshness":<1-10>,\
 "reason":"<one sentence>","accept":<true if score>=7 AND uniqueness>=6, else false>}}
@@ -144,15 +131,15 @@ Return ONLY valid JSON — no markdown, no explanation:
 def _build_llm_prompt(category: str, max_words: int, topic_block: str) -> str:
     cliches = _CLICHE_MAP.get(category, '"overused clichés"')
     return f"""\
-You are writing and evaluating an original quote for @_daily_dose_of_wisdom__, \
+You are writing original quotes for @_daily_dose_of_wisdom__, \
 an Indian Instagram page for emotionally intelligent youth aged 18-35.
 
-Write ONE original quote. It should feel like something a thoughtful person said once \
-and never repeated — not assembled from parts of other quotes. Specific and earned, not performed.
+Write 3 DIFFERENT original quotes. Each should feel like something a thoughtful person \
+said once and never repeated — not assembled from parts of other quotes. Specific and earned, not performed.
 
 {topic_block}
 
-Rules:
+Rules for each:
 - ORIGINAL — not attributed to any real person
 - Maximum {max_words} words total. Hard limit.
 - Short is valid — if the feeling is complete in 5 words, stop at 5. Short quotes let the visual carry the post.
@@ -161,18 +148,12 @@ Rules:
 - No Pinterest-assembled philosophy — warm simple lines are fine if they're genuinely fresh
 - No clichés: {cliches}
 - Banned words: "surviving", "journey", "heal", "broken", "warrior", "storm", "chapter", "version of yourself"
+- All 3 must be emotionally distinct from each other
 
-Then score it strictly on these 4 dimensions (1-10 each):
-1. virality     — Would people screenshot and share this?
-2. engagement   — Would an Indian aged 18-30 feel this in their chest?
-3. uniqueness   — Does it feel genuinely fresh and unheard-of?
-4. freshness    — Does it feel nothing like a generic motivational poster?
+Score each on 4 dimensions (1-10): virality, engagement, uniqueness, freshness.
+Hard rule: uniqueness < 6 → reject. Generic self-help → reject.
 
-Hard scoring rules:
-- uniqueness < 6 → accept must be false
-- Generic self-help language → accept must be false
-
-Return ONLY valid JSON — no markdown, no explanation:
+Then pick the single best-scoring quote and return ONLY that one as JSON — no markdown, no explanation:
 {{"quote":"the quote text","author":"Original","score":<avg 1-10>,\
 "virality":<1-10>,"engagement":<1-10>,"uniqueness":<1-10>,"freshness":<1-10>,\
 "reason":"<one sentence>","accept":<true if score>=7 AND uniqueness>=6, else false>}}
