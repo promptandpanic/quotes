@@ -8,3 +8,7 @@ google-genai>=0.3.0
 
 # Utilities
 pyyaml>=6.0
+
+# TTS narration — edge-tts is the free fallback (Microsoft neural voices)
+# ElevenLabs uses requests (already listed above) — no extra package needed
+edge-tts>=6.0.0

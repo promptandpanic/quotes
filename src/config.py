@@ -101,6 +101,60 @@ AUDIO_FILE        = "assets/audio/background.mp3"
 
 REPEAT_WINDOW_DAYS = int(os.environ.get("REPEAT_WINDOW_DAYS", "3"))
 
+# ---------------------------------------------------------------------------
+# TTS (Text-to-Speech) — provider cascade and voice selection
+# ---------------------------------------------------------------------------
+
+# Comma-separated provider priority list: elevenlabs,edge,none
+# Tried left to right; first success is used. "none" = intentionally silent.
+TTS_PROVIDERS = os.environ.get("TTS_PROVIDERS", "elevenlabs,edge,none")
+
+# ElevenLabs
+ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY", "")
+ELEVENLABS_MODEL   = os.environ.get("ELEVENLABS_MODEL", "eleven_multilingual_v2")
+
+# ElevenLabs global fallback voices (used when no per-theme override matches)
+# Male:   Adam  (pNInz6obpgDQGcFmaJgB) — Dominant, Firm — american
+# Female: Sarah (EXAVITQu4vr4xnSDxMaL) — Mature, Reassuring, Confident — american
+ELEVENLABS_VOICE_MALE   = os.environ.get("ELEVENLABS_VOICE_MALE",   "pNInz6obpgDQGcFmaJgB")
+ELEVENLABS_VOICE_FEMALE = os.environ.get("ELEVENLABS_VOICE_FEMALE", "EXAVITQu4vr4xnSDxMaL")
+
+# Per-theme voice overrides — each individually overridable via env var.
+# Resolution order: theme+gender override → global fallback above.
+# All IDs verified against live ElevenLabs account.
+ELEVENLABS_THEME_VOICES: dict[str, str] = {
+    # morning — bold, dominant, punchy
+    "morning:male":       os.environ.get("ELEVENLABS_VOICE_MORNING_MALE",       "pNInz6obpgDQGcFmaJgB"),  # Adam     — Dominant, Firm
+    "morning:female":     os.environ.get("ELEVENLABS_VOICE_MORNING_FEMALE",     "FGY2WhTYpPnrIDTdsKH5"),  # Laura    — Enthusiast, bright energy
+    # wisdom — wise, measured, balanced
+    "wisdom:male":        os.environ.get("ELEVENLABS_VOICE_WISDOM_MALE",        "pqHfZKP75CvOlQylNhV4"),  # Bill     — Wise, Mature, Balanced
+    "wisdom:female":      os.environ.get("ELEVENLABS_VOICE_WISDOM_FEMALE",      "EXAVITQu4vr4xnSDxMaL"),  # Sarah    — Mature, Reassuring, Confident
+    # love — smooth, warm, sensual
+    "love:male":          os.environ.get("ELEVENLABS_VOICE_LOVE_MALE",          "cjVigY5qzO86Huf0OWal"),  # Eric     — Smooth, Trustworthy
+    "love:female":        os.environ.get("ELEVENLABS_VOICE_LOVE_FEMALE",        "cgSgspJ2msm6clMCkdW9"),  # Jessica  — Playful, Bright, Warm (most sensual available)
+    # mindfulness — relaxed, neutral, grounded
+    "mindfulness:male":   os.environ.get("ELEVENLABS_VOICE_MINDFULNESS_MALE",   "SAz9YHcvj6GT2YYXdXww"),  # River    — Relaxed, Neutral
+    "mindfulness:female": os.environ.get("ELEVENLABS_VOICE_MINDFULNESS_FEMALE", "hpp4J3VqNfWAUOO0d1Us"),  # Bella    — Professional, Bright, Warm
+    # goodnight — laid-back, warm, settled
+    "goodnight:male":     os.environ.get("ELEVENLABS_VOICE_GOODNIGHT_MALE",     "bIHbv24MWmeRgasZH58o"),  # Will     — Relaxed Optimist
+    "goodnight:female":   os.environ.get("ELEVENLABS_VOICE_GOODNIGHT_FEMALE",   "EXAVITQu4vr4xnSDxMaL"),  # Sarah    — Mature, Reassuring, warm
+    # latenight — deep/slow male, mature/sensual female — 3am energy
+    "latenight:male":     os.environ.get("ELEVENLABS_VOICE_LATENIGHT_MALE",     "nPczCjzI2devNBz1zQrb"),  # Brian    — Deep, Resonant, Comforting
+    "latenight:female":   os.environ.get("ELEVENLABS_VOICE_LATENIGHT_FEMALE",   "EXAVITQu4vr4xnSDxMaL"),  # Sarah    — Mature, Reassuring (calm 3am presence)
+}
+
+# edge-tts voice names (Microsoft neural, free fallback — Indian English)
+EDGE_TTS_VOICE_MALE   = os.environ.get("EDGE_TTS_VOICE_MALE",   "en-IN-PrabhatNeural")
+EDGE_TTS_VOICE_FEMALE = os.environ.get("EDGE_TTS_VOICE_FEMALE", "en-IN-NeerjaExpressiveNeural")
+
+# Static voice gender used when the AI brief doesn't specify one
+# (applies to curated/fallback quotes where design_director hasn't run)
+TTS_STATIC_VOICE_GENDER = os.environ.get("TTS_STATIC_VOICE_GENDER", "male")
+
+# Background music volume (0.0–1.0) when TTS narration is active
+# ~0.12 (~-18 dB) ducks the music under the spoken voice
+TTS_MUSIC_VOLUME = float(os.environ.get("TTS_MUSIC_VOLUME", "0.12"))
+
 GITHUB_DB_PATH    = "data/posted_quotes.json"
 MEDIA_RELEASE_TAG = "media-pool"
 
