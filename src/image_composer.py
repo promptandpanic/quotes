@@ -46,24 +46,31 @@ _FONT_URLS = {
     "anton":        ("anton.ttf",            "https://fonts.gstatic.com/s/anton/v27/1Ptgg87LROyAm0K0.ttf"),
     "cinzel":       ("cinzel_bold.ttf",      "https://fonts.gstatic.com/s/cinzel/v26/8vIU7ww63mVu7gtR-kwKxNvkNOjw-jHgTYo.ttf"),
     "josefin":      ("josefin_bold.ttf",     "https://fonts.gstatic.com/s/josefinsans/v34/Qw3PZQNVED7rKGKxtqIqX5E-AVSJrOCfjY46_N_XXME.ttf"),
+    "fjalla":       ("fjalla.ttf",           "https://github.com/google/fonts/raw/main/ofl/fjallaone/FjallaOne-Regular.ttf"),
+    # Modern geometric sans
+    "poppins":      ("poppins_bold.ttf",     "https://github.com/google/fonts/raw/main/ofl/poppins/Poppins-Bold.ttf"),
+    "poppins_light":("poppins_light.ttf",    "https://github.com/google/fonts/raw/main/ofl/poppins/Poppins-Light.ttf"),
+    "nunito":       ("nunito_bold.ttf",      "https://fonts.gstatic.com/s/nunito/v32/XRXI3I6Li01BKofiOc5wtlZ2di8HDOUhRTM.ttf"),
+    "nunito_light": ("nunito_light.ttf",     "https://fonts.gstatic.com/s/nunito/v32/XRXI3I6Li01BKofiOc5wtlZ2di8HDFwmRTM.ttf"),
+    "jost":         ("jost_bold.ttf",        "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7mxEIgVG.ttf"),
+    "worksans":     ("worksans_bold.ttf",    "https://fonts.gstatic.com/s/worksans/v24/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K67QNig.ttf"),
     # Serif
     "playfair":     ("playfair_bold.ttf",    "https://fonts.gstatic.com/s/playfairdisplay/v40/nuFRD-vYSZviVYUb_rj3ij__anPXDTnCjmHKM4nYO7KN_qiTbtY.ttf"),
     "playfair_it":  ("playfair_it.ttf",      "https://fonts.gstatic.com/s/playfairdisplay/v40/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKeiukDQ.ttf"),
     "merriweather": ("merriweather_bold.ttf","https://fonts.gstatic.com/s/merriweather/v33/u-4D0qyriQwlOrhSvowK_l5UcA6zuSYEqOzpPe3HOZJ5eX1WtLaQwmYiScCmDxhtNOKl8yDrOSAqEw.ttf"),
     "cormorant":    ("cormorant_bold.ttf",   "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3smX5slCNuHLi8bLeY9MK7whWMhyjYrGFEsdtdc62E6zd5LDfOjw.ttf"),
-    # Geometric sans (Instagram-trendy)
-    "jost":         ("jost_bold.ttf",        "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7mxEIgVG.ttf"),
-    "worksans":     ("worksans_bold.ttf",    "https://fonts.gstatic.com/s/worksans/v24/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K67QNig.ttf"),
-    # Display serif (emotional / editorial)
     "spectral":     ("spectral_bold.ttf",    "https://github.com/google/fonts/raw/main/ofl/spectral/Spectral-Bold.ttf"),
     "vollkorn":     ("vollkorn_bold.ttf",    "https://fonts.gstatic.com/s/vollkorn/v30/0ybgGDoxxrvAnPhYGzMlQLzuMasz6Df213auGQ.ttf"),
     # Script
     "dancing":      ("dancing.ttf",          "https://fonts.gstatic.com/s/dancingscript/v29/If2cXTr6YS-zF4S-kcSWSVi_sxjsohD9F50Ruu7B1i0HTQ.ttf"),
     "satisfy":      ("satisfy.ttf",          "https://fonts.gstatic.com/s/satisfy/v22/rP2Hp2yn6lkG50LoOZQ.ttf"),
-    # Handwriting (casual / child-like, great for personal / relatable content)
+    "pacifico":     ("pacifico.ttf",         "https://github.com/google/fonts/raw/main/ofl/pacifico/Pacifico-Regular.ttf"),
+    # Handwriting
     "caveat":       ("caveat_bold.ttf",      "https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjRV6SII.ttf"),
+    "kalam":        ("kalam.ttf",            "https://github.com/google/fonts/raw/main/ofl/kalam/Kalam-Regular.ttf"),
+    "indieflower":  ("indieflower.ttf",      "https://github.com/google/fonts/raw/main/ofl/indieflower/IndieFlower-Regular.ttf"),
     # Texture / character
-    "specialelite": ("specialelite.ttf",     "https://github.com/google/fonts/raw/main/apache/specialelite/SpecialElite-Regular.ttf"),
+    "specialelite": ("specialelite.ttf",     "https://fonts.gstatic.com/s/specialelite/v20/XLYgIZbkc4JPUL5CVArUVL0nhnc.ttf"),
     # Utility (always downloaded — fallback font)
     "lato":         ("lato.ttf",             "https://github.com/google/fonts/raw/main/ofl/lato/Lato-Regular.ttf"),
     "lato_bold":    ("lato_bold.ttf",        "https://github.com/google/fonts/raw/main/ofl/lato/Lato-Bold.ttf"),
@@ -368,7 +375,7 @@ def _contrast_ratio(lum_a: float, lum_b: float) -> float:
 def _ensure_readable(color: tuple, bg_lum: float) -> tuple:
     """Return color if it contrasts sufficiently with bg_lum, else white or near-black."""
     txt_lum = 0.299 * color[0] + 0.587 * color[1] + 0.114 * color[2]
-    if _contrast_ratio(txt_lum, bg_lum) >= 3.5:
+    if _contrast_ratio(txt_lum, bg_lum) >= 4.5:
         return color
     # Pick whichever of white / dark gives higher contrast
     white_cr = _contrast_ratio(255, bg_lum)

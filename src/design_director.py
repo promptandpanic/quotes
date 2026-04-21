@@ -36,20 +36,39 @@ AVAILABLE FONTS (pick the one that best matches the quote's emotion):
   DISPLAY / BOLD — high impact, strong presence
   bebas        — all-caps ultra-bold display             → morning energy, power, raw impact
   anton        — condensed heavy poster font             → punchy one-liners, bold statements
+  fjalla       — condensed assertive display, poster     → bold morning, power statements, facts
   oswald       — condensed bold, editorial authority     → wisdom, stoic quotes, strong truths
   montserrat   — geometric bold, modern & versatile      → any theme, clean and confident
   cinzel       — classical Roman capitals, timeless      → ancient wisdom, philosophy, gravitas
   raleway      — elegant geometric bold                  → sophisticated, premium feel
   josefin      — minimal geometric, architectural        → minimalist aesthetic, clean wisdom
 
+  MODERN GEOMETRIC SANS — clean, versatile, Instagram-native
+  poppins      — rounded geometric bold, widely loved    → morning, relatable wisdom, any upbeat theme
+  poppins_light — ultra-thin elegant, airy               → simple_text_card, minimalist, breathable layouts
+  nunito       — rounded friendly bold, approachable     → love, wholesome, goodnight, gentle wisdom
+  nunito_light — thin rounded, light and soft            → simple_text_card, airy minimalist, calm quotes
+  jost         — clean geometric bold, architectural     → editorial modern wisdom, bold but refined
+  worksans     — sturdy modern sans, grounded            → mindfulness, practical wisdom, clarity
+
   SERIF — literary, warm, trustworthy
   playfair     — elegant bold serif, literary warmth     → love, poetry, reflection
   merriweather — sturdy readable serif, journalistic     → wisdom, goodnight, long quotes
   cormorant    — ultra-elegant high-contrast serif       → luxury feel, intimate love quotes
+  spectral     — dramatic editorial serif, high contrast → deep philosophy, dark wisdom, gravitas
+  vollkorn     — warm old-style serif, book-like         → storytelling, gentle evening reflection
 
-  SCRIPT — flowing, personal, emotional
+  SCRIPT — flowing, celebratory, emotional
   dancing      — flowing bold script                     → love, warmth, celebration
   satisfy      — casual elegant script                   → friendly warmth, goodnight, soft wisdom
+  pacifico     — bold rounded playful script             → fun, warmth, light-hearted, joy, celebration
+
+  HANDWRITING — authentic, casual, personal
+  caveat       — casual bold handwriting                 → personal self-talk, relatable everyday emotions,
+                                                           simple_text_card, approachable wisdom
+  kalam        — natural handwriting, warm Indian feel   → personal, goodnight, relatable, latenight
+  indieflower  — free-spirited loose handwriting         → playful, simple_text_card, doodle styles,
+                                                           wholesome light-hearted quotes
 
   TEXTURE / CHARACTER
   specialelite — typewriter grit, raw texture            → late-night honesty, unfiltered emotion
@@ -61,6 +80,14 @@ AVAILABLE OVERLAYS (ensure text is readable — opacity 140-220):
   gradient_center — dark band across middle           (pair with text_zone: center)
   solid           — full dark overlay across image    (for bright/complex backgrounds)
   vignette        — edges darken, centre stays bright (text_zone: center)
+  none            — NO overlay (ONLY for simple_text_card / pure white or cream backgrounds
+                    where text_color is dark #111111 or #1a1a1a)
+
+⚠️  CONTRAST IS NON-NEGOTIABLE:
+  - Dark overlay (opacity ≥ 140) on a photo/painting → near-white text (#FFFFFF, #F5F5F5)
+  - Light / pale / cream / parchment / white background (including overlay=none) → MUST use
+    near-black text (#111111, #1a1a1a, #222222). White text on cream = unreadable. Never do it.
+  - Always pick highlight_color that contrasts with BOTH background and text_color.
 
 DECORATIONS:
   rule       — thin accent-colour horizontal line above the text block
@@ -76,11 +103,14 @@ HIGHLIGHT STYLE — how the key phrase is visually distinguished from the rest o
   script      — key phrase switches to flowing script font (Dancing Script) — warm, emotional, great for love/goodnight
 
   Pairing guide:
-  - bebas / anton / oswald + italic     → striking serif-on-sans contrast
-  - playfair / cormorant + underline    → editorial elegance
-  - montserrat / josefin + caps         → clean graphic emphasis
-  - any font + script                   → emotional warmth (love, goodnight, latenight)
-  - specialelite / lato + color         → keep it simple, texture does the work
+  - bebas / anton / fjalla / oswald + italic     → striking serif-on-sans contrast
+  - playfair / cormorant / spectral + underline  → editorial elegance
+  - montserrat / josefin / poppins / jost + caps → clean graphic emphasis
+  - nunito / poppins + color                     → friendly modern emphasis
+  - any font + script                            → emotional warmth (love, goodnight, latenight)
+  - specialelite / lato + color                  → keep it simple, texture does the work
+  - caveat / kalam / indieflower / satisfy / dancing / pacifico → set skip_kenburns: true
+  - poppins_light / nunito_light                 → always use with dark text on pale/white bg
 
 IMAGE RULES (always apply):
   - Render with fine detail, visual clarity, and richness — the image should reward close inspection
@@ -115,13 +145,17 @@ TEXT PLACEMENT — CRITICAL RULES (read carefully, these directly affect image q
 FONT — match to the image's art style (wrong font breaks the mood entirely):
   - Vintage illustrated / anthropomorphic: cormorant or playfair
   - Watercolour / ink wash: satisfy or cormorant
-  - Ghibli / anime: josefin or raleway
-  - Cozy aesthetic / warm realism: merriweather or lato
-  - Cinematic / dark dramatic: oswald or merriweather
-  - Bold graphic poster / vector: bebas or anton
-  - Line art / minimalist: josefin or lato
-  - Late-night raw emotion: specialelite
-  - Love / poetic: dancing or playfair
+  - Ghibli / anime: josefin or raleway or poppins
+  - Cozy aesthetic / warm realism: merriweather, nunito, or lato
+  - Cinematic / dark dramatic: oswald, spectral, or merriweather
+  - Bold graphic poster / vector: bebas, anton, or fjalla
+  - Silhouette / landscape: oswald, vollkorn, or poppins
+  - Risograph / duotone: jost or worksans
+  - Wholesome doodle / whimsical sketch: nunito, caveat, or indieflower
+  - Line art / minimalist / simple_text_card: poppins_light, nunito_light, josefin, or caveat
+  - Late-night raw emotion: specialelite or kalam
+  - Love / poetic: dancing, pacifico, or playfair
+  - Personal / relatable / handwritten feel: caveat, kalam, or indieflower (warm, NOT all-caps)
 
 TEXT LAYOUT — pick ONE based on the quote's length and energy:
 
@@ -159,16 +193,16 @@ must match text_zone exactly. Absolutely no text, signs, words, numbers, logos, 
 anywhere in the image. 9:16 portrait format.",
 
   "overlay": {{
-    "type": "gradient_bottom|gradient_top|gradient_center|solid|vignette",
+    "type": "gradient_bottom|gradient_top|gradient_center|solid|vignette|none",
     "opacity": 140-220,
     "color": "#000000"
   }},
 
-  "font": "bebas|anton|oswald|montserrat|cinzel|raleway|josefin|playfair|merriweather|cormorant|dancing|satisfy|specialelite|lato",
+  "font": "bebas|anton|fjalla|oswald|montserrat|cinzel|raleway|josefin|poppins|poppins_light|nunito|nunito_light|jost|worksans|playfair|merriweather|cormorant|spectral|vollkorn|dancing|satisfy|pacifico|caveat|kalam|indieflower|specialelite|lato",
   "text_color": "#RRGGBB — CRITICAL: must have strong contrast against the overlay/background. \
 If the overlay is dark (opacity ≥ 140), use near-white (#FFFFFF, #F5F5F5, #FFFAF0). \
-If the overlay is light or the background is pale/bright, use near-black (#111111, #1a1a1a). \
-NEVER pick a colour similar in brightness to the background — low contrast makes text unreadable.",
+If the overlay is none OR the background is pale/cream/parchment/white, MUST use near-black (#111111, #1a1a1a). \
+NEVER white or light text on a cream/parchment background — it is completely unreadable.",
   "highlight_color": "#RRGGBB — accent colour for the key phrase. Must contrast with BOTH the \
 background AND text_color. Avoid colours close in hue or brightness to text_color.",
   "author_color": "#RRGGBB — colour for the author name. Must be readable against the background. \
@@ -183,6 +217,7 @@ center = subject at edges, center band is clear.",
   "highlight": "3-6 most emotionally powerful CONSECUTIVE words from the quote — \
 the line someone screenshots",
   "highlight_style": "color|italic|underline|caps|caps_italic|script",
+  "skip_kenburns": false,
   "mood_note": "one sentence — the visual feeling that stops someone mid-scroll"
 }}
 '''
@@ -353,6 +388,11 @@ def generate_brief(quote: dict, theme: str, recent_styles: list[str] | None = No
         brief["font_size"]  = 108
         brief["text_zone"]  = "center"
         brief["animation"]  = "fade"
+        # Overlay must cover the center zone — gradient_bottom/top only cover edges
+        ov_type = brief["overlay"].get("type", "gradient_bottom")
+        if ov_type not in ("gradient_center", "solid", "vignette"):
+            brief["overlay"]["type"] = "solid"
+            brief["overlay"]["opacity"] = max(brief["overlay"].get("opacity", 170), 185)
     elif layout == "sentence_reveal":
         brief["font_size"]  = 96
         brief["text_zone"]  = brief.get("text_zone", "bottom")

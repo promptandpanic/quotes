@@ -188,10 +188,13 @@ def _create_reel_fade(image_bytes: bytes, quote: dict, brief: dict, theme: str =
             start_frames.append(sf)
             stream_dur += durs[i + 1] - cf
 
+        skip_kenburns = brief.get("skip_kenburns", False)
         for i, sf in enumerate(start_frames):
             # Ken Burns only on intro/fade-out background frames — text frames stay static
-            # so longer quotes don't drift out of frame as the zoom increases
-            if i == 0 or i == N - 1:
+            # so longer quotes don't drift out of frame as the zoom increases.
+            # skip_kenburns=True disables zoom entirely (used for handwriting/script fonts
+            # and simple_text_card style where motion reduces readability).
+            if not skip_kenburns and (i == 0 or i == N - 1):
                 parts.append(f"[{i}:v]{sc},{_zoompan_at(total_frames, sf)}[v{i}]")
             else:
                 parts.append(f"[{i}:v]{sc},setsar=1,fps={FPS}[v{i}]")

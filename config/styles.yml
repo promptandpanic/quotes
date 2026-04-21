@@ -215,6 +215,22 @@ styles:
     categories: [wisdom, latenight, mindfulness]
     weight: medium
 
+  simple_text_card:
+    description: >
+      Clean minimal illustration on a pure white or warm cream background — the text IS the
+      hero, the image supports it quietly. Choose ONE simple element that complements the quote:
+      a precise single-line-art figure (runner, reader, someone sitting, a person stretching),
+      a single botanical (flower, leaf, lone branch), a minimal geometric shape, or a small
+      decorative motif. NO overlay — the white/cream background provides contrast for dark text.
+      Subject MUST sit in the upper half of the frame; the lower third is completely clean and
+      empty. Palette is extremely restrained: linework in deep charcoal or black, background
+      pure white or warm cream (#FAFAFA or #FDF6EC), at most one small accent color on a
+      detail. Text color MUST be dark (#111111 or #1a1a1a). Works best for short punchy quotes
+      that are powerful on their own. Feels premium, editorial, like a high-quality print card.
+      Set overlay type to "none" and skip_kenburns to true.
+    categories: [morning, wisdom, mindfulness, love]
+    weight: medium
+
   # ── ACCENT — used sparingly for high impact ──────────────────────────────
 
   cinematic_portrait:
