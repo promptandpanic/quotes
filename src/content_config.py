@@ -65,6 +65,41 @@ _AUTHOR_IMAGE_HINTS = {
         "geometry dissolving into deep space, lotus floating on still dark water, soft purple "
         "and white palette. Dreamlike abstract painterly illustration, no people."
     ),
+    "Maya Angelou": (
+        "Vintage typewriter on a warm walnut desk surrounded by open poetry books with ink "
+        "annotations, magnolia flowers in bloom, warm amber lamp glow, rich burgundy and gold "
+        "palette. Painterly literary illustration, no human figures."
+    ),
+    "Malala Yousafzai": (
+        "Stack of school books with a bright candle flame, open notebook and quill, "
+        "educational symbols, warm golden light against deep teal darkness. "
+        "Watercolour illustration, no people."
+    ),
+    "Chimamanda Ngozi Adichie": (
+        "Vibrant West African kente cloth patterns framing an open book, ink quill, "
+        "bold geometric shapes in crimson, gold, and deep green, warm candlelight. "
+        "Graphic editorial illustration, no human figures."
+    ),
+    "Frida Kahlo": (
+        "Vibrant Mexican folk art motifs — marigold flowers, colourful embroidery patterns, "
+        "mirror frame decorated with painted vines and butterflies, warm terracotta and cobalt palette. "
+        "Bold painterly illustration inspired by Mexican folk art, no people."
+    ),
+    "Indira Gandhi": (
+        "Lotus flower on a still pool at dawn with Indian Parliament silhouette in mist, "
+        "saffron and white palette, Indian flag colours, ancient stone steps by water. "
+        "Painterly watercolour illustration, no human figures."
+    ),
+    "Arundhati Roy": (
+        "Kerala backwaters at dusk — still dark water reflecting purple sky, open manuscript "
+        "pages floating like petals, banyan tree roots, tropical monsoon atmosphere, "
+        "deep violet and jade palette. Atmospheric watercolour illustration, no people."
+    ),
+    "Simone de Beauvoir": (
+        "Parisian café table at dawn — untouched black coffee, philosophical manuscript pages, "
+        "ink pen, bare window overlooking grey-blue Paris rooftops, single warm lamp against "
+        "cool morning light, muted navy and cream palette. Moody editorial illustration, no people."
+    ),
 }
 
 # Image hints per wisdom tradition — passed to design director so it can
@@ -200,6 +235,19 @@ def get_topic_info(category: str) -> dict:
 
         lines = "\n".join(f"  - {t}" for t in base)
         topic_block = f"Pick from these topic areas (rotate variety):\n{lines}"
+        return {"topic_block": topic_block, "image_hint": image_hint}
+
+    # ── WOMENPOWER ───────────────────────────────────────────────────────────
+    if category == "womenpower":
+        base = list(cfg.get("topics", []))
+        random.shuffle(base)
+        lines = "\n".join(f"  - {t}" for t in base)
+        topic_block = (
+            "Write original quotes — NOT empowerment slogans. Think like a sharp, emotionally \n"
+            "intelligent woman writing from lived experience. Short, specific, quietly powerful.\n"
+            "Pick from these emotional angles:\n"
+            + lines
+        )
         return {"topic_block": topic_block, "image_hint": image_hint}
 
     # ── GENERIC (goodnight, latenight) ───────────────────────────────────────

@@ -288,6 +288,18 @@ lo-fi anime background painting energy — lower 40% open and dark for text. 9:1
         "highlight_color": "#00CFCF", "decoration": "none",
         "layout": "sentence_reveal", "voice_gender": "male",
     },
+    "womenpower": {
+        "image_prompt": "[women_line_art] Pure warm cream #FAFAFA background. A small delicate \
+minimal ink line-art of a woman's face in profile — eyes closed, hair in a loose bun, pure \
+fine black ink lines only, no fill. The illustration sits centered in the upper third of the \
+frame. The entire lower two-thirds is completely empty white space. No other elements, \
+no textures, no patterns. Feels exactly like a premium minimal journal page. 9:16 portrait.",
+        "overlay": {"type": "none", "opacity": 0, "color": "#000000"},
+        "font": "cormorant", "text_color": "#111111",
+        "highlight_color": "#C0395A", "decoration": "none",
+        "layout": "full_card", "voice_gender": "female",
+        "skip_kenburns": True,
+    },
 }
 
 

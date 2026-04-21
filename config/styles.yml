@@ -260,3 +260,22 @@ styles:
       fine detail in every surface. The image should feel like a dream remembered vividly.
     categories: [latenight, wisdom]
     weight: low
+
+  # ── WOMENPOWER — exclusive aesthetic ────────────────────────────────────
+
+  women_line_art:
+    description: >
+      Pure white or warm cream (#FAFAFA) background. A small, delicate minimal ink line-art
+      illustration of a woman sits in the UPPER THIRD of the frame — choose ONE of these:
+      a woman's face in profile with eyes closed and hair in a bun, a woman sitting with knees
+      drawn to her chest, a woman's silhouette with flowing hair from behind, a close-up of
+      a woman's hand holding a single flower, a woman looking out a window from the side,
+      a woman with head tilted back and eyes shut. The illustration is pure fine black ink
+      lines only — no fill, no shading, no colour. It must be small and centered, occupying
+      at most the top 30% of the frame. The ENTIRE lower two-thirds is completely empty white
+      space — this emptiness IS the aesthetic. NO background elements, NO textures, NO patterns,
+      NO colour. The image must feel exactly like a premium minimal journal page or editorial
+      aesthetic Pinterest illustration. Text color MUST be dark (#111111). Set overlay type
+      to "none" and skip_kenburns to true.
+    categories: [womenpower]
+    weight: high

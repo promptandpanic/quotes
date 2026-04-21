@@ -88,6 +88,18 @@ THEMES = {
             "#HeartTalk", "#QuoteOfTheNight",
         ],
     },
+    "womenpower": {
+        "name":      "She Feels",
+        "utc_hour":  4,
+        "ist_label": "10:00 AM IST",
+        "video":     False,   # static image only — no reel, no music, no TTS
+        "hashtags": [
+            "#SheFeels", "#WomenQuotes", "#FeminineEnergy", "#HerThoughts",
+            "#QuoteForWomen", "#WomenOfIndia", "#IndianWomen",
+            "#DailyDoseOfWisdom", "#QuoteOfTheDay", "#SheKnows",
+            "#WomenWhoFeelDeeply", "#ForHer", "#AestheticQuotes",
+        ],
+    },
 }
 
 INSTAGRAM_HANDLE = "_daily_dose_of_wisdom__"
@@ -230,5 +242,17 @@ FALLBACK_QUOTES = {
         {"text": "The most common form of despair is not being who you are.", "author": "Søren Kierkegaard"},
         {"text": "One must still have chaos in oneself to be able to give birth to a dancing star.", "author": "Friedrich Nietzsche"},
         {"text": "It's okay to not be okay — as long as you are not giving up.", "author": "Karen Salmansohn"},
+    ],
+    "womenpower": [
+        {"text": "She stopped explaining herself to people who had already decided how to see her.", "author": "Original"},
+        {"text": "Being soft is not the same as being easy. She was gentle and still completely unshakeable.", "author": "Original"},
+        {"text": "She didn't leave to hurt you. She left because staying was hurting her.", "author": "Original"},
+        {"text": "The most powerful thing she ever did was trust herself in a room full of doubt.", "author": "Original"},
+        {"text": "She learned that love without self-respect is just a slow way of disappearing.", "author": "Original"},
+        {"text": "She stopped performing calm and started actually feeling it.", "author": "Original"},
+        {"text": "There is a kind of woman who doesn't argue. She just removes herself. Quietly. Completely.", "author": "Original"},
+        {"text": "She chose herself — not out of anger, but out of exhaustion from choosing everyone else first.", "author": "Original"},
+        {"text": "Not every feeling needs an audience. Some things she keeps just for herself.", "author": "Original"},
+        {"text": "She knows. She always knew. She was just waiting to see if you'd be honest.", "author": "Original"},
     ],
 }
