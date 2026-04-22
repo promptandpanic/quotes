@@ -3,13 +3,15 @@ Text-to-speech narration with cascading provider fallback.
 
 Provider priority is set by TTS_PROVIDERS (comma-separated list):
   elevenlabs  — ElevenLabs API (premium neural quality)
-  edge        — Microsoft Edge TTS via edge-tts (free, neural quality)
-  none        — silent (no narration)
+  edge        — Microsoft Edge TTS via edge-tts (disabled by default; set EDGE_TTS_ENABLED=true)
+  none        — silent/music-only (no narration)
+
+Default fallback: ElevenLabs → music only.  Edge-TTS is opt-in via EDGE_TTS_ENABLED secret.
 
 Voice gender comes from the creative brief (AI-selected per quote sentiment).
 Falls back to TTS_STATIC_VOICE_GENDER when the AI doesn't specify.
 
-Returns MP3 bytes or None (silent).
+Returns MP3 bytes or None (silent/music-only).
 """
 import asyncio
 import logging
@@ -116,7 +118,10 @@ async def _edge_synth_async(text: str, voice: str) -> bytes:
 
 
 def _edge_tts(text: str, gender: str) -> bytes | None:
-    from src.config import EDGE_TTS_VOICE_FEMALE, EDGE_TTS_VOICE_MALE
+    from src.config import EDGE_TTS_ENABLED, EDGE_TTS_VOICE_FEMALE, EDGE_TTS_VOICE_MALE
+    if not EDGE_TTS_ENABLED:
+        logger.debug("edge-tts: disabled (set EDGE_TTS_ENABLED=true to enable)")
+        return None
     voice = EDGE_TTS_VOICE_MALE if gender != "female" else EDGE_TTS_VOICE_FEMALE
     try:
         import edge_tts  # noqa: F401 — confirm package installed
