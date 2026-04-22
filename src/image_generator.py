@@ -1,16 +1,23 @@
 """
 Generate background images.
 
-Priority:
-  1. Leonardo AI      (free tier ~150 tokens/day, high quality — primary)
-  2. Gemini Imagen    (paid, excellent quality)
-  3. Gemini Flash     (free Gemini tier)
-  4. Pollinations.ai  (free, no key needed)
-  5. Static images    (assets/static/{theme}.jpg — pre-generated, always works)
-  6. PIL gradient     (zero-dependency absolute last resort)
+Priority (default — override via IMAGE_PROVIDER_ORDER env var):
+  1. HuggingFace      (FLUX.1-schnell, free tier, excellent quality)
+  2. Leonardo AI      (free tier ~150 tokens/day, or paid models)
+  3. Gemini Imagen    (paid, excellent quality)
+  4. Gemini Flash     (free Gemini tier)
+  5. Pollinations.ai  (free, no key needed)
+  6. Static images    (assets/static/{theme}.jpg — pre-generated, always works)
+  7. PIL gradient     (zero-dependency absolute last resort)
 
-Set LEONARDO_API_KEY in .env to enable Leonardo.
-Set GEMINI_IMAGE_MODEL in .env to control which Gemini image model is primary.
+GitHub Variables (Settings → Secrets and variables → Actions → Variables):
+  IMAGE_PROVIDER_ORDER  e.g. "huggingface,leonardo,imagen,gemini,pollinations"
+  LEONARDO_MODEL_ID     UUID or "flux-pro-2.0" (default: Leonardo Phoenix free)
+  HF_MODEL_ID           HuggingFace model ID (default: black-forest-labs/FLUX.1-schnell)
+  GEMINI_IMAGE_MODEL    Imagen model name
+
+GitHub Secrets:
+  HF_API_KEY, LEONARDO_API_KEY, GEMINI_API_KEY
 """
 import hashlib
 import io
@@ -39,7 +46,49 @@ _NO_TEXT = (
 
 
 # ---------------------------------------------------------------------------
-# 1. Leonardo AI — free tier, high quality, 9:16 native
+# 1. HuggingFace — FLUX.1-schnell, free tier, excellent quality
+# ---------------------------------------------------------------------------
+
+_HF_MODEL_ID = os.environ.get("HF_MODEL_ID", "black-forest-labs/FLUX.1-schnell")
+_HF_ROUTER   = "https://router.huggingface.co/hf-inference/models"
+
+
+def _huggingface(prompt: str) -> bytes | None:
+    api_key = os.environ.get("HF_API_KEY", "")
+    if not api_key:
+        return None
+    url     = f"{_HF_ROUTER}/{_HF_MODEL_ID}"
+    headers = {"Authorization": f"Bearer {api_key}"}
+    payload = {
+        "inputs": prompt[:1500],
+        "parameters": {
+            "width":               768,
+            "height":              1344,   # 9:16
+            "num_inference_steps": 4,
+            "guidance_scale":      0.0,
+        },
+    }
+    try:
+        resp = requests.post(url, headers=headers, json=payload, timeout=120)
+        if resp.status_code == 503:
+            try:
+                wait = float(resp.json().get("estimated_time", 20)) + 2
+            except Exception:
+                wait = 22
+            logger.info(f"HuggingFace model loading — waiting {wait:.0f}s…")
+            time.sleep(wait)
+            resp = requests.post(url, headers=headers, json=payload, timeout=120)
+        if resp.status_code == 200 and len(resp.content) > 10_000:
+            logger.info(f"✓ HuggingFace ({_HF_MODEL_ID}) image ({len(resp.content)//1024}KB)")
+            return resp.content
+        logger.warning(f"HuggingFace: {resp.status_code} {resp.text[:150]}")
+    except Exception as exc:
+        logger.warning(f"HuggingFace failed: {exc}")
+    return None
+
+
+# ---------------------------------------------------------------------------
+# 2. Leonardo AI — free tier, high quality, 9:16 native
 # ---------------------------------------------------------------------------
 
 # Model ID: set LEONARDO_MODEL_ID in .env
@@ -332,12 +381,19 @@ def get_image(theme: str, image_prompt: str, quote_text: str = "") -> bytes:
 
     order = [
         p.strip().lower()
-        for p in os.environ.get("IMAGE_PROVIDER_ORDER", "leonardo,imagen,gemini,pollinations").split(",")
+        for p in os.environ.get("IMAGE_PROVIDER_ORDER", "huggingface,leonardo,imagen,gemini,pollinations").split(",")
         if p.strip()
     ]
 
     for provider in order:
-        if provider == "leonardo" and os.environ.get("LEONARDO_API_KEY"):
+        if provider == "huggingface" and os.environ.get("HF_API_KEY"):
+            logger.info(f"Image gen — HuggingFace ({_HF_MODEL_ID})")
+            img = _huggingface(prompt)
+            if img:
+                return _ensure_size(img)
+            logger.info("HuggingFace failed — next provider…")
+
+        elif provider == "leonardo" and os.environ.get("LEONARDO_API_KEY"):
             logger.info(f"Image gen — Leonardo ({_LEONARDO_MODEL_ID})")
             img = _leonardo(prompt)
             if img:
