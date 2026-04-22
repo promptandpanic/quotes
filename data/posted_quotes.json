@@ -1,5 +1,16 @@
 {
-  "posted_hashes": [],
-  "history": [],
-  "last_updated": null
+  "posted_hashes": [
+    "fdcf8288050cb023"
+  ],
+  "history": [
+    {
+      "hash": "fdcf8288050cb023",
+      "text": "I have burnt my house down. Now I will burn the house of anyone who wants to follow me.",
+      "author": "Kabir Das",
+      "theme": "wisdom",
+      "style": "dark_surreal",
+      "posted_at": "2026-04-22T06:37:48.536355+00:00"
+    }
+  ],
+  "last_updated": "2026-04-22T06:37:48.536369+00:00"
 }
