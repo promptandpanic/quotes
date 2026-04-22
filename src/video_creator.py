@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 FPS            = 25
 INTRO_SEC      = 2.0    # background-only intro
 TYPING_DUR     = 1.2    # total time for text to appear (line by line)
-XFADE_TYPING   = 0.08   # crossfade between typing steps
+XFADE_TYPING   = 0.35   # crossfade between typing steps — smooth dissolve
 FADE_DUR_SEC   = 2.0    # quote → base xfade at end
 BASE_HOLD_SEC  = 0.3    # base shows alone after fade completes
 HANDLE_IN_SEC  = 0.5    # handle appears this many secs after fade starts
@@ -165,9 +165,10 @@ def _create_reel_fade(image_bytes: bytes, quote: dict, brief: dict, theme: str =
     has_audio = Path(audio).exists()
     W, H      = IMAGE_WIDTH, IMAGE_HEIGHT
 
-    counts  = get_reveal_counts(quote, brief)
-    n_steps = len(counts)
-    per_step = TYPING_DUR / n_steps
+    counts   = get_reveal_counts(quote, brief)
+    n_steps  = len(counts)
+    # Clamp so per_step always exceeds XFADE_TYPING — prevents broken ffmpeg filter graph
+    per_step = max(XFADE_TYPING + 0.05, TYPING_DUR / n_steps)
 
     # Hold time so total output = REEL_DURATION_SEC
     # output_dur = sum(durs) - sum(cfs)
@@ -420,50 +421,6 @@ def _run_ffmpeg(cmd, out_p, total, has_audio) -> bytes | None:
 
 
 # ---------------------------------------------------------------------------
-# Simple reel — still image + music, no effects, no TTS (womenpower)
-# ---------------------------------------------------------------------------
-
-def _create_reel_simple(image_bytes: bytes, theme: str = "") -> bytes | None:
-    """10-second still image + background music, zero effects."""
-    audio     = _audio_path(theme)
-    has_audio = Path(audio).exists()
-    W, H      = IMAGE_WIDTH, IMAGE_HEIGHT
-    total     = 10.0
-    fade_st   = total - 1.5
-
-    with tempfile.TemporaryDirectory() as tmpdir:
-        tmpdir = Path(tmpdir)
-
-        img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-        img_path = str(tmpdir / "still.jpg")
-        img.save(img_path, format="JPEG", quality=95)
-
-        out_p = str(tmpdir / "reel.mp4")
-        cmd   = ["ffmpeg", "-y", "-loop", "1", "-t", str(total), "-i", img_path]
-        if has_audio:
-            cmd += ["-i", audio]
-
-        sc    = _scale_crop()
-        parts = [f"[0:v]{sc},setsar=1,fps={FPS}[vout]"]
-        if has_audio:
-            parts.append(
-                f"[1:a]atrim=0:{total},asetpts=PTS-STARTPTS,"
-                f"afade=t=out:st={fade_st:.2f}:d=1.5[aout]"
-            )
-
-        cmd += ["-filter_complex", ";".join(parts), "-map", "[vout]"]
-        if has_audio:
-            cmd += ["-map", "[aout]", "-c:a", "aac", "-b:a", "128k"]
-        else:
-            cmd += ["-an"]
-        cmd += ["-c:v", "libx264", "-preset", "fast", "-pix_fmt", "yuv420p",
-                "-t", str(total), out_p]
-
-        logger.info(f"Simple Reel: {total}s still + music={'yes' if has_audio else 'no'}")
-        return _run_ffmpeg(cmd, out_p, total, has_audio)
-
-
-# ---------------------------------------------------------------------------
 # Public entry point
 # ---------------------------------------------------------------------------
 
@@ -472,14 +429,11 @@ def create_reel(image_bytes: bytes, quote: dict, brief: dict, theme: str = "") -
         logger.warning("ffmpeg not found — skipping Reel creation")
         return None
 
+    # Generate TTS once — skip if theme disables voice narration
     from src.config import THEMES
-    if THEMES.get(theme, {}).get("simple_reel"):
-        logger.info("Simple Reel mode (still + music, no effects)")
-        return _create_reel_simple(image_bytes, theme=theme)
-
-    # Generate TTS once — reused if reveal falls back to fade
     from src.tts import synthesize
-    tts_bytes = synthesize(quote.get("text", ""), brief.get("voice_gender"), theme=theme)
+    tts_enabled = THEMES.get(theme, {}).get("tts", True)
+    tts_bytes = synthesize(quote.get("text", ""), brief.get("voice_gender"), theme=theme) if tts_enabled else None
 
     animation = brief.get("animation", "fade")
     logger.info(f"Reel animation: {animation}")

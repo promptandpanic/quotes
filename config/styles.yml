@@ -1814,7 +1814,8 @@ styles:
       NO saturated color, NO playful doodles. The final image should feel like a premium
       minimal journal page, a fashion editorial sketch, or a saved Pinterest luxury feminine quote post.
   
-      Text color MUST be dark (#111111). Set overlay type to "none" and skip_kenburns to true.
+      Text color MUST be dark (#111111) — white or cream background requires dark text. Set skip_kenburns to true.
+      Font pairing: dancing, satisfy, cormorant, playfair, or josefin — choose the most emotionally resonant for the quote.
     categories: [womenpower]
     weight: high
 
@@ -1874,6 +1875,7 @@ styles:
       The final image should feel like a save-worthy Pinterest or Instagram quote post:
       emotionally intimate, visually premium, feminine, and designed around elegant readability.
   
-      Text color MUST be dark (#111111). Set overlay type to "none" and skip_kenburns to true.
+      Text color MUST be dark (#111111) — white or cream background requires dark text. Set skip_kenburns to true.
+      Font pairing: dancing, satisfy, cormorant, playfair, or josefin — choose the most emotionally resonant for the quote.
     categories: [womenpower]
     weight: high

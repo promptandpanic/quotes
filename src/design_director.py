@@ -179,6 +179,7 @@ TEXT LAYOUT — pick ONE based on the quote's length and energy:
                    Video: image crossfades in revealing all text.
                    Pick this for: mindfulness, goodnight, poetic single thoughts.
 
+
 ──────────────────────────────────────────────
 Be specific and emotionally precise. The image must DIRECTLY evoke this quote's feeling.
 
@@ -295,7 +296,7 @@ fine black ink lines only, no fill. The illustration sits centered in the upper 
 frame. The entire lower two-thirds is completely empty white space. No other elements, \
 no textures, no patterns. Feels exactly like a premium minimal journal page. 9:16 portrait.",
         "overlay": {"type": "none", "opacity": 0, "color": "#000000"},
-        "font": "cormorant", "text_color": "#111111",
+        "font": "dancing", "text_color": "#111111",
         "highlight_color": "#C0395A", "decoration": "none",
         "layout": "full_card", "voice_gender": "female",
         "skip_kenburns": True,

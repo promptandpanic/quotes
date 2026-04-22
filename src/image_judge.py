@@ -57,8 +57,12 @@ Score each dimension 1-10 (be honest and strict):
    Can you clearly read every word of the quote in the overlay?
    Score 1-3 if text is invisible, tiny, or barely legible.
    Score 4-6 if readable but contrast or size is marginal.
-   Score 7-10 only if text is large, clear, and high-contrast.
+   Score 7-10 only if text is large, clear, high-contrast, AND the text zone is visually
+   clean — free from illustration lines, artwork, or busy detail behind the words.
    DEDUCT -4 if background contains watermarks or typography artifacts behind the quote.
+   DEDUCT -3 if illustration elements, line art, or busy visual detail overlap the text
+   zone and create visual clutter — even if individual words are technically legible.
+   The text area must feel clean and unobstructed for a score above 6.
 
 4. quote_impact
    Is the quote emotionally powerful, relatable, and save-worthy?

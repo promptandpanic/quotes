@@ -30,44 +30,72 @@ THEMES = {
         "name":      "Morning Motivation",
         "utc_hour":  1,
         "ist_label": "07:00 AM IST",
-        "hashtags": ["#MorningMotivation", "#Motivation", "#GrowthMindset"],
+        "hashtags": [
+            "#MorningMotivation", "#GoodMorningIndia", "#DailyMotivation",
+            "#Motivation", "#GrowthMindset", "#PositiveVibes",
+            "#IndianYouth", "#MorningVibes", "#Inspiration", "#SelfImprovement",
+        ],
     },
     "wisdom": {
         "name":      "Life Wisdom",
         "utc_hour":  6,
         "ist_label": "12:00 PM IST",
-        "hashtags": ["#Wisdom", "#LifeQuotes", "#DeepThoughts"],
+        "hashtags": [
+            "#Wisdom", "#LifeQuotes", "#IndianWisdom",
+            "#DeepThoughts", "#QuoteOfTheDay", "#DailyWisdom",
+            "#LifeLesson", "#ThinkDeep", "#IndianYouth", "#InspirationDaily",
+        ],
     },
     "love": {
         "name":      "Love & Relationships",
         "utc_hour":  9,
         "ist_label": "03:00 PM IST",
-        "hashtags": ["#LoveQuotes", "#Relationships", "#HeartQuotes"],
+        "hashtags": [
+            "#LoveQuotes", "#Relationships", "#IndianLove",
+            "#HeartQuotes", "#RelationshipQuotes", "#LoveAndLife",
+            "#CoupleGoals", "#DesiLove", "#LoveVibes", "#HeartfeltQuotes",
+        ],
     },
     "mindfulness": {
         "name":      "Mindfulness & Inner Peace",
         "utc_hour":  12,
         "ist_label": "06:00 PM IST",
-        "hashtags": ["#Mindfulness", "#InnerPeace", "#MentalHealth"],
+        "hashtags": [
+            "#Mindfulness", "#InnerPeace", "#MentalHealthIndia",
+            "#SelfCare", "#Meditation", "#SelfLove",
+            "#MindfulLiving", "#InnerHealing", "#WellnessIndia", "#MentalHealth",
+        ],
     },
     "goodnight": {
         "name":      "Goodnight & Gratitude",
         "utc_hour":  15,
         "ist_label": "09:00 PM IST",
-        "hashtags": ["#GoodNight", "#Gratitude", "#NightVibes"],
+        "hashtags": [
+            "#GoodNightIndia", "#GoodNight", "#NightVibes",
+            "#Gratitude", "#NightThoughts", "#GoodNightQuotes",
+            "#SleepWell", "#GratitudeDaily", "#NightOwl", "#Bedtime",
+        ],
     },
     "latenight": {
         "name":      "Late Night Feels",
         "utc_hour":  19,
         "ist_label": "01:30 AM IST",
-        "hashtags": ["#LateNightThoughts", "#MidnightThoughts", "#Overthinking"],
+        "hashtags": [
+            "#LateNightThoughts", "#MidnightThoughts", "#Overthinking",
+            "#3amThoughts", "#LateNightFeels", "#NightThoughts",
+            "#DeepThoughts", "#MidnightVibes", "#InsomniaThoughts", "#LateNight",
+        ],
     },
     "womenpower": {
         "name":      "She Feels",
         "utc_hour":  4,
         "ist_label": "10:00 AM IST",
-        "simple_reel": True,  # still image + music, no effects, no TTS
-        "hashtags": ["#Women", "#She", "#FeminineEnergy"],
+        "tts":       False,  # background music only — no voice narration
+        "hashtags": [
+            "#WomenOfIndia", "#IndianWomen", "#GirlsWhoFeel",
+            "#Womanhood", "#SheFeels", "#WomenQuotes",
+            "#FeminineEnergy", "#GirlsTalk", "#Women", "#SheFelt",
+        ],
     },
 }
 
@@ -213,15 +241,15 @@ FALLBACK_QUOTES = {
         {"text": "It's okay to not be okay — as long as you are not giving up.", "author": "Karen Salmansohn"},
     ],
     "womenpower": [
-        {"text": "She stopped explaining herself to people who had already decided how to see her.", "author": "Original"},
-        {"text": "Being soft is not the same as being easy. She was gentle and still completely unshakeable.", "author": "Original"},
-        {"text": "She didn't leave to hurt you. She left because staying was hurting her.", "author": "Original"},
-        {"text": "The most powerful thing she ever did was trust herself in a room full of doubt.", "author": "Original"},
-        {"text": "She learned that love without self-respect is just a slow way of disappearing.", "author": "Original"},
-        {"text": "She stopped performing calm and started actually feeling it.", "author": "Original"},
-        {"text": "There is a kind of woman who doesn't argue. She just removes herself. Quietly. Completely.", "author": "Original"},
-        {"text": "She chose herself — not out of anger, but out of exhaustion from choosing everyone else first.", "author": "Original"},
-        {"text": "Not every feeling needs an audience. Some things she keeps just for herself.", "author": "Original"},
-        {"text": "She knows. She always knew. She was just waiting to see if you'd be honest.", "author": "Original"},
+        {"text": "She was tired. Not the sleepy kind. The kind that rest doesn't fix.", "author": "Original"},
+        {"text": "She said I'm fine so many times she almost forgot she wasn't.", "author": "Original"},
+        {"text": "She knew. She just wasn't ready to know yet.", "author": "Original"},
+        {"text": "She didn't leave angry. She left quietly, which was so much worse.", "author": "Original"},
+        {"text": "She cried in the car again. That's where the real conversations happen.", "author": "Original"},
+        {"text": "She laughed it off. She's very good at that.", "author": "Original"},
+        {"text": "She chose herself. It felt selfish for about three days. Then it felt like oxygen.", "author": "Original"},
+        {"text": "She's everyone's safe place. She wishes she had one too.", "author": "Original"},
+        {"text": "She stopped waiting. Not because she didn't care. Because she cared too much to keep going.", "author": "Original"},
+        {"text": "She kept giving chances because she kept seeing potential. The potential was never the person.", "author": "Original"},
     ],
 }

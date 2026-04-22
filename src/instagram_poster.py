@@ -152,7 +152,7 @@ def post_image(image_url: str, caption: str) -> str | None:
 
 _CAPTION_PROMPT = """\
 You write Instagram captions for @_daily_dose_of_wisdom__, \
-an Indian page for emotionally intelligent youth aged 18-35.
+an Indian Reels page for emotionally intelligent youth aged 18-35.
 
 Quote posted: "{text}"
 Author: {author}
@@ -167,14 +167,18 @@ Write a short, warm caption (2-3 lines max) that:
 - Ends with a soft call-to-action (e.g. "Save this for the days you need it.")
 - Feels human — not corporate, not preachy
 
-Then pick exactly 2 additional hashtags specific to THIS quote's emotion or topic. \
-Research what tags people actually use and search on Instagram for this feeling. \
-Choose mid-size communities (100K–5M posts) — not mega-broad (#love #life #quotes), \
-not too niche. Think: what would someone search right after feeling what this quote expresses? \
-Must not duplicate or semantically overlap the anchor tags above.
+Then pick exactly 18 additional hashtags for maximum Indian Reels reach. \
+Mix these four types — do NOT include any branding or page-name tags:
+1. Indian Reels discovery (4 tags): e.g. #ReelsIndia #IndianReels #ReelItFeelIt #IndiaReels
+2. Emotion/feeling (6 tags): what someone in India searches RIGHT AFTER feeling what this quote expresses — specific, mid-size (500K–10M posts)
+3. Topic/theme (5 tags): the subject matter — relationships, self-growth, healing, etc.
+4. Niche community (3 tags): smaller targeted communities (100K–1M posts) for deep reach
+
+Must not duplicate or semantically overlap the anchor tags above. \
+No generic mega-tags (#love #life #india #quotes #motivation alone).
 
 Return ONLY valid JSON:
-{{"hook": "<2-3 line caption>", "hashtags": ["tag1", "tag2"]}}
+{{"hook": "<2-3 line caption>", "hashtags": ["tag1", "tag2", "...18 total"]}}
 """
 
 
@@ -214,8 +218,10 @@ def build_caption(quote: dict, theme_cfg: dict) -> str:
             if m:
                 data = json.loads(m.group())
                 hook = data.get("hook", "").strip()
-                dynamic_tags = [f"#{t.lstrip('#')}" for t in data.get("hashtags", [])[:2]]
+                dynamic_tags = [f"#{t.lstrip('#')}" for t in data.get("hashtags", [])[:18]]
                 all_tags = anchor_tags + dynamic_tags
+                # Instagram cap: 30 hashtags
+                all_tags = all_tags[:30]
                 hashtag_str = " ".join(all_tags)
                 caption = (
                     f'"{text}"\n'

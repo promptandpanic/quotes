@@ -241,12 +241,12 @@ def get_topic_info(category: str) -> dict:
     if category == "womenpower":
         base = list(cfg.get("topics", []))
         random.shuffle(base)
-        lines = "\n".join(f"  - {t}" for t in base)
+        lines = "\n".join(f"  - {t}" for t in base[:20])
+        fmt   = cfg.get("format_hint", "").strip()
         topic_block = (
-            "Write original quotes — NOT empowerment slogans. Think like a sharp, emotionally \n"
-            "intelligent woman writing from lived experience. Short, specific, quietly powerful.\n"
-            "Pick from these emotional angles:\n"
-            + lines
+            f"{fmt}\n\n" if fmt else ""
+        ) + (
+            "Pick ONE of these emotional angles and write from it:\n" + lines
         )
         return {"topic_block": topic_block, "image_hint": image_hint}
 

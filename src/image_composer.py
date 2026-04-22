@@ -435,7 +435,7 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
     all_lines, f, font_size = _fit_text(disp_text, font_key, font_size, layout, text_zone)
     hi_f = _highlight_font(font_key, hi_style, font_size)
 
-    lines  = all_lines[:n_lines] if n_lines is not None else all_lines
+    lines = all_lines[:n_lines] if n_lines is not None else all_lines
     line_h = int(font_size * 1.28)
     # Use full block height for y anchoring (keeps position stable across partial frames)
     block_h = len(all_lines) * line_h
