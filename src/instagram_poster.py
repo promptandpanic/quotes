@@ -158,27 +158,34 @@ Quote posted: "{text}"
 Author: {author}
 Theme: {theme}
 
+Already using these hashtags (do NOT repeat or overlap with these):
+{anchor_tags}
+
 Write a short, warm caption (2-3 lines max) that:
 - Opens with a one-line hook that adds context or reflection — NOT the quote itself
 - Invites the reader to save it, share it, or tag someone
 - Ends with a soft call-to-action (e.g. "Save this for the days you need it.")
 - Feels human — not corporate, not preachy
 
-Then add 20 highly relevant hashtags for this specific quote (mix of broad + niche \
-Indian Instagram tags). Use real tags that people actually search.
+Then pick exactly 2 additional hashtags specific to THIS quote's emotion or topic. \
+Research what tags people actually use and search on Instagram for this feeling. \
+Choose mid-size communities (100K–5M posts) — not mega-broad (#love #life #quotes), \
+not too niche. Think: what would someone search right after feeling what this quote expresses? \
+Must not duplicate or semantically overlap the anchor tags above.
 
 Return ONLY valid JSON:
-{{"hook": "<2-3 line caption>", "hashtags": ["tag1", "tag2", ...]}}
+{{"hook": "<2-3 line caption>", "hashtags": ["tag1", "tag2"]}}
 """
 
 
 def build_caption(quote: dict, theme_cfg: dict) -> str:
-    text       = quote["text"].strip()
+    text        = quote["text"].strip()
     _raw_author = quote.get("author", "").strip()
     _SKIP_AUTHOR = {"unknown", "anonymous", "original", "original thought", ""}
     author      = "" if _raw_author.lower() in _SKIP_AUTHOR else _raw_author
     author_line = f"— {author}\n\n" if author else ""
     theme_name  = theme_cfg.get("name", "Daily Wisdom")
+    anchor_tags = theme_cfg.get("hashtags", [])
 
     api_key = os.environ.get("GEMINI_API_KEY", "")
     if api_key:
@@ -193,6 +200,7 @@ def build_caption(quote: dict, theme_cfg: dict) -> str:
                 text=text[:300].replace('"', "'"),
                 author=author,
                 theme=theme_name,
+                anchor_tags=", ".join(anchor_tags) if anchor_tags else "none",
             )
             from google.genai import types as _types
             raw = client.models.generate_content(
@@ -206,8 +214,9 @@ def build_caption(quote: dict, theme_cfg: dict) -> str:
             if m:
                 data = json.loads(m.group())
                 hook = data.get("hook", "").strip()
-                tags = data.get("hashtags", [])
-                hashtag_str = " ".join(f"#{t.lstrip('#')}" for t in tags[:25])
+                dynamic_tags = [f"#{t.lstrip('#')}" for t in data.get("hashtags", [])[:2]]
+                all_tags = anchor_tags + dynamic_tags
+                hashtag_str = " ".join(all_tags)
                 caption = (
                     f'"{text}"\n'
                     f"{author_line}"
@@ -215,15 +224,15 @@ def build_caption(quote: dict, theme_cfg: dict) -> str:
                     f"@_daily_dose_of_wisdom__\n\n"
                     f"{hashtag_str}"
                 )
-                logger.info(f"  ✓ AI caption generated ({len(tags)} hashtags)")
+                logger.info(f"  ✓ AI caption generated (anchors: {len(anchor_tags)}, dynamic: {len(dynamic_tags)})")
                 return caption[:2200]
         except Exception as exc:
             logger.warning(f"Caption generation failed: {exc} — using static fallback")
 
-    hashtags = " ".join(theme_cfg.get("hashtags", []))
+    hashtag_str = " ".join(anchor_tags)
     return (
         f'"{text}"\n'
         f"{author_line}"
         f"✨ {theme_name} | @_daily_dose_of_wisdom__\n\n"
-        f"{hashtags}"
+        f"{hashtag_str}"
     )[:2200]

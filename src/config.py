@@ -30,75 +30,44 @@ THEMES = {
         "name":      "Morning Motivation",
         "utc_hour":  1,
         "ist_label": "07:00 AM IST",
-        "hashtags": [
-            "#MorningMotivation", "#GoodMorning", "#DailyQuotes", "#Hustle",
-            "#SuccessMindset", "#Inspirational", "#NeverGiveUp", "#India",
-            "#DailyDoseOfWisdom", "#QuotesOfTheDay", "#GrowthMindset",
-            "#MondayMotivation", "#BeMotivated", "#PositiveVibes",
-        ],
+        "hashtags": ["#MorningMotivation", "#Motivation", "#GrowthMindset"],
     },
     "wisdom": {
         "name":      "Life Wisdom",
         "utc_hour":  6,
         "ist_label": "12:00 PM IST",
-        "hashtags": [
-            "#Wisdom", "#Philosophy", "#LifeQuotes", "#DeepThoughts",
-            "#StoicQuotes", "#IndianWisdom", "#DailyDoseOfWisdom",
-            "#AncientWisdom", "#LifeLessons", "#ThinkDeep", "#QuoteOfTheDay",
-        ],
+        "hashtags": ["#Wisdom", "#LifeQuotes", "#DeepThoughts"],
     },
     "love": {
         "name":      "Love & Relationships",
         "utc_hour":  9,
         "ist_label": "03:00 PM IST",
-        "hashtags": [
-            "#LoveQuotes", "#Relationships", "#HeartQuotes", "#Friendship",
-            "#TrueLove", "#RelationshipGoals", "#DailyDoseOfWisdom",
-            "#LoveIndia", "#InspirationalQuotes", "#QuoteOfTheDay",
-        ],
+        "hashtags": ["#LoveQuotes", "#Relationships", "#HeartQuotes"],
     },
     "mindfulness": {
         "name":      "Mindfulness & Inner Peace",
         "utc_hour":  12,
         "ist_label": "06:00 PM IST",
-        "hashtags": [
-            "#Mindfulness", "#Meditation", "#InnerPeace", "#Yoga",
-            "#ZenQuotes", "#Breathe", "#PresentMoment", "#Calm",
-            "#DailyDoseOfWisdom", "#Spirituality", "#QuoteOfTheDay",
-        ],
+        "hashtags": ["#Mindfulness", "#InnerPeace", "#MentalHealth"],
     },
     "goodnight": {
         "name":      "Goodnight & Gratitude",
         "utc_hour":  15,
         "ist_label": "09:00 PM IST",
-        "hashtags": [
-            "#GoodNight", "#NightQuotes", "#Dreams", "#Gratitude",
-            "#Hope", "#DreamBig", "#Thankful", "#DailyDoseOfWisdom",
-            "#QuoteOfTheDay", "#SleepWell",
-        ],
+        "hashtags": ["#GoodNight", "#Gratitude", "#NightVibes"],
     },
     "latenight": {
         "name":      "Late Night Feels",
         "utc_hour":  19,
         "ist_label": "01:30 AM IST",
-        "hashtags": [
-            "#LateNightThoughts", "#HeartbreakQuotes", "#3AMThoughts",
-            "#FeelingsQuotes", "#EmotionalQuotes", "#Overthinking",
-            "#MidnightThoughts", "#DailyDoseOfWisdom", "#RealTalk",
-            "#HeartTalk", "#QuoteOfTheNight",
-        ],
+        "hashtags": ["#LateNightThoughts", "#MidnightThoughts", "#Overthinking"],
     },
     "womenpower": {
         "name":      "She Feels",
         "utc_hour":  4,
         "ist_label": "10:00 AM IST",
-        "video":     False,   # static image only — no reel, no music, no TTS
-        "hashtags": [
-            "#SheFeels", "#WomenQuotes", "#FeminineEnergy", "#HerThoughts",
-            "#QuoteForWomen", "#WomenOfIndia", "#IndianWomen",
-            "#DailyDoseOfWisdom", "#QuoteOfTheDay", "#SheKnows",
-            "#WomenWhoFeelDeeply", "#ForHer", "#AestheticQuotes",
-        ],
+        "simple_reel": True,  # still image + music, no effects, no TTS
+        "hashtags": ["#Women", "#She", "#FeminineEnergy"],
     },
 }
 
