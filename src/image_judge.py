@@ -52,6 +52,10 @@ Score each dimension 1-10 (be honest and strict):
    DEDUCT heavily for: watermarks, AI-generated text bleeding through, technical artifacts.
    DEDUCT -4 for: any visible artist signature, handwritten name, copyright mark, or studio
    watermark painted into the artwork itself (bottom corner signatures, © symbols, etc.).
+   DEDUCT -5 for: ANY written character or text-like artifact embedded in the background
+   artwork — hashtags (#), at-signs, code fragments, pseudo-code, URLs, numbers, equations,
+   letters, words, or decorative glyphs/runes/strokes that read as written characters.
+   This is separate from the overlay quote text — only judge what is painted INTO the image.
 
 3. text_readability
    Can you clearly read every word of the quote in the overlay?
@@ -80,6 +84,10 @@ Respond ONLY with valid JSON (no markdown, no extra text):
 {{"image_hook":<1-10>,"image_quality":<1-10>,"text_readability":<1-10>,\
 "quote_impact":<1-10>,"image_text_harmony":<1-10>,\
 "has_signature":<true if any artist signature/watermark/copyright mark is visible in the artwork>,\
+"has_text_artifact":<true if ANY written character is embedded in the background artwork: \
+hashtags (#), at-signs, code, pseudo-code, URLs, numbers, equations, letters, words, or \
+decorative glyphs/runes that read as written characters. IGNORE the overlay quote text — \
+only flag characters painted INTO the image itself.>,\
 "issues":"<main issue if any, empty string if none>",\
 "accept":<true or false>}}
 '''
@@ -158,15 +166,17 @@ def judge_image(image_bytes: bytes, quote: dict) -> dict:
             result["quote_impact"]     = quote_impact
             result["image_text_harmony"] = harmony
 
-            issues_lower  = result.get("issues", "").lower()
-            has_artifact  = any(kw in issues_lower for kw in _ARTIFACT_KEYWORDS)
-            has_signature = bool(result.get("has_signature", False))
+            issues_lower      = result.get("issues", "").lower()
+            has_artifact      = any(kw in issues_lower for kw in _ARTIFACT_KEYWORDS)
+            has_signature     = bool(result.get("has_signature", False))
+            has_text_artifact = bool(result.get("has_text_artifact", False))
 
             result["accept"] = (
                 weighted >= _MIN_SCORE
                 and readability >= _MIN_READABILITY
                 and not has_artifact
                 and not has_signature
+                and not has_text_artifact
             )
 
             issues = result.get("issues", "")
@@ -176,6 +186,7 @@ def judge_image(image_bytes: bytes, quote: dict) -> dict:
                 f"readability={readability}  impact={quote_impact}  "
                 f"harmony={harmony}"
                 + ("  | ⚠ SIGNATURE DETECTED" if has_signature else "")
+                + ("  | ⚠ TEXT ARTIFACT IN IMAGE" if has_text_artifact else "")
                 + (f"  | {issues}" if issues else "")
             )
             return result

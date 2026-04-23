@@ -39,9 +39,14 @@ _STATIC_DIR = Path(__file__).parent.parent / "assets" / "static"
 _NO_TEXT = (
     " CRITICAL: absolutely no text, letters, numbers, words, labels, watermarks, "
     "signs, banners, or typography of any kind anywhere in the image. "
+    "Specifically forbidden: hashtags (#), at-signs (@), ampersands, asterisks, "
+    "code fragments, pseudo-code, programming syntax, URLs, equations, mathematical "
+    "notation, decorative glyphs or runes that read as written characters, "
+    "stylised lettering, calligraphy strokes that resemble letters, or any "
+    "symbol a viewer could mistake for text. "
     "No photorealistic humans or portrait photography — use illustrations, paintings, "
     "flat vector art, ink sketches, or abstract art instead. "
-    "Pure visual only — zero written characters."
+    "Pure visual only — zero written characters, zero symbols."
 )
 
 
@@ -143,7 +148,9 @@ def _leonardo(prompt: str, model_id: str | None = None) -> bytes | None:
                 "guidance_scale":  7,
                 "negative_prompt": (
                     "text, letters, words, watermark, logo, signature, caption, label, "
-                    "typography, graffiti, banner, photorealistic human, portrait photo"
+                    "typography, graffiti, banner, hashtag, # symbol, code, "
+                    "programming syntax, url, numbers, equation, symbol, glyph, "
+                    "rune, written character, photorealistic human, portrait photo"
                 ),
             }
 
