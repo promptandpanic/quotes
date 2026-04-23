@@ -117,12 +117,44 @@ HIGHLIGHT STYLE — how the key phrase is visually distinguished from the rest o
   - caveat / kalam / indieflower / satisfy / dancing / pacifico → set skip_kenburns: true
   - poppins_light / nunito_light                 → always use with dark text on pale/white bg
 
+IMAGE PHILOSOPHY — read this BEFORE writing the image_prompt:
+
+  The image is a MOOD, not an illustration of the words.
+  Do NOT translate every noun in the quote into an object in the frame.
+  Think: what FEELING does this quote create? What single scene, object, or
+  moment evokes THAT feeling — not the sentence itself?
+
+  Objects mentioned in the quote CAN appear, but only when they carry
+  metaphorical weight, not because they're named. A quote that mentions
+  "a door" does not need a literal door — unless the door itself is the
+  metaphor. A quote about "rain" does not require rain — unless rain is
+  the emotional anchor.
+
+  Prefer ONE evocative subject, rendered with intention, over a cluttered
+  literal translation. The viewer should feel the quote when they see the
+  image — before they've even read the words.
+
+  Examples of literal vs. metaphorical interpretation:
+    Quote: "Rest is not a reward, it's a right."
+      ❌ Literal:     a person sleeping in bed with a clock
+      ✓ Metaphorical: a single empty wooden swing at dusk, golden hour,
+                      nothing hurried — the feeling of rest, not the act
+    Quote: "You were born to burn, not to dim."
+      ❌ Literal:     a woman on fire or a dimming lightbulb
+      ✓ Metaphorical: a lone candle flame in deep dark, bright and still —
+                      dignity, not apology
+    Quote: "The quiet ones feel everything."
+      ❌ Literal:     a silent person with a speech bubble
+      ✓ Metaphorical: a still pond at night with a single ripple spreading
+                      outward — depth under stillness
+
 IMAGE RULES (always apply):
   - Render with fine detail, visual clarity, and richness — the image should reward close inspection
   - Match the chosen style faithfully — a cozy aesthetic should feel almost tactile, a ghibli scene should feel hand-painted, a line art should feel precisely drawn
   - NEVER photorealistic humans or portrait photography — stylised figures (illustrated, painted, vector, anime) are fine when they serve the mood
   - No text, signs, logos, watermarks, or typography anywhere in the image
   - No generic stock-photo style compositions — every image should feel art-directed and intentional
+  - Avoid showing the literal action in the quote (sleeping, running, crying, etc.) — show the AFTERMATH, the SETTING, or the METAPHOR instead
 
 TEXT PLACEMENT — CRITICAL RULES (read carefully, these directly affect image quality):
 
@@ -181,16 +213,21 @@ TEXT LAYOUT — pick ONE based on the quote's length and energy:
 
 
 ──────────────────────────────────────────────
-Be specific and emotionally precise. The image must DIRECTLY evoke this quote's feeling.
+Pause before writing the image_prompt. Re-read the IMAGE PHILOSOPHY above.
+The image should evoke the quote's FEELING — not describe the quote.
+Pick ONE metaphorical subject that carries the mood. If you are about to
+name an object that appears in the quote, ask: does it carry symbolic
+weight here, or am I just illustrating? If the latter, replace it.
 
 Return ONLY valid JSON — no markdown, no text outside the JSON:
 {{
   "image_prompt": "MUST start with [chosen_style_name] in brackets. Then write 5-6 richly detailed \
-sentences: (1) Exact subject and action — who or what is in the scene, what they are doing, \
-which specific emotion this conveys. (2) Setting and environment — time of day, location, \
-surface textures, weather, atmosphere. (3) Art style execution — the specific technique, \
-medium, brushwork, linework, or texture that defines the chosen style. (4) Full colour palette — \
-4-5 colours with hex values and names (e.g. midnight blue #1a1a3e, warm ochre #c4832a). \
+sentences: (1) The metaphorical subject — ONE evocative thing (object, scene, creature, fragment \
+of world) that embodies the quote's feeling. NOT a literal illustration of the quote's words. \
+State what it is, its posture or state, and the emotion it carries. (2) Setting and environment — \
+time of day, location, surface textures, weather, atmosphere. (3) Art style execution — the specific \
+technique, medium, brushwork, linework, or texture that defines the chosen style. (4) Full colour \
+palette — 4-5 colours with hex values and names (e.g. midnight blue #1a1a3e, warm ochre #c4832a). \
 (5) Lighting — direction, quality, and emotional temperature. \
 (6) Composition — EXPLICITLY state: where the subject sits in the 9:16 frame (upper half / \
 lower half / left edge / right edge), and which zone (top third / bottom third / center band) \
