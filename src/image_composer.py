@@ -142,10 +142,9 @@ def _centered_x(draw, text, font, width=IMAGE_WIDTH) -> int:
     return (width - _tw(draw, text, font)) // 2
 
 
-def pixel_wrap(text: str, font: ImageFont.FreeTypeFont,
-               max_width: int = TEXT_MAX_W) -> list[str]:
-    """Pixel-accurate word wrap — guaranteed to never exceed max_width."""
-    words = text.split()
+def _wrap_words(words: list[str], font: ImageFont.FreeTypeFont,
+                max_width: int) -> list[str]:
+    """Pixel-accurate word wrap of a token list."""
     lines: list[str] = []
     cur: list[str] = []
     for word in words:
@@ -157,25 +156,74 @@ def pixel_wrap(text: str, font: ImageFont.FreeTypeFont,
         else:
             if cur:
                 lines.append(" ".join(cur))
-            cur = [word]   # single word may still be wide — force it on its own line
+            cur = [word]
     if cur:
         lines.append(" ".join(cur))
-    return lines or [text]
+    return lines
+
+
+def pixel_wrap(text: str, font: ImageFont.FreeTypeFont,
+               max_width: int = TEXT_MAX_W,
+               keep_phrase: str = "") -> list[str]:
+    """Pixel-accurate word wrap — guaranteed to never exceed max_width.
+
+    If keep_phrase is supplied and the default wrap would split it across two
+    lines, retry with a forced break before the phrase so it stays whole on a
+    single line. Falls back to the default wrap if the phrase itself is wider
+    than max_width or the phrase is not found verbatim.
+    """
+    words = text.split()
+    lines = _wrap_words(words, font, max_width) or [text]
+
+    if not keep_phrase:
+        return lines
+
+    pl = keep_phrase.lower()
+    if any(pl in ln.lower() for ln in lines):
+        return lines  # phrase already whole on a line
+
+    # Locate phrase as a contiguous run of words (ignoring surrounding punctuation)
+    import string
+    _strip = string.punctuation
+    pwords = [w.lower().strip(_strip) for w in keep_phrase.split()]
+    wnorm  = [w.lower().strip(_strip) for w in words]
+    n = len(pwords)
+    start = -1
+    for i in range(len(wnorm) - n + 1):
+        if wnorm[i:i + n] == pwords:
+            start = i
+            break
+    if start <= 0:
+        return lines
+
+    phrase_line = " ".join(words[start:start + n])
+    pb = font.getbbox(phrase_line)
+    if pb[2] - pb[0] > max_width:
+        return lines  # phrase itself doesn't fit on one line — give up
+
+    left  = _wrap_words(words[:start], font, max_width)
+    right = _wrap_words(words[start:], font, max_width)
+    if right and pl in right[0].lower():
+        return left + right
+    return lines
 
 
 def _layout_lines(disp_text: str, font: ImageFont.FreeTypeFont,
-                  layout: str) -> list[str]:
+                  layout: str, keep_phrase: str = "") -> list[str]:
     """Wrap text.  sentence_reveal wraps each sentence separately so sentence
-    boundaries always coincide with line boundaries."""
+    boundaries always coincide with line boundaries.  If keep_phrase is given,
+    each wrap call biases its break point to keep the phrase on a single line."""
     if layout == "sentence_reveal":
         sentences = [s.strip() for s in re.split(r'(?<=[.!?])\s+', disp_text.strip())
                      if s.strip()]
         if len(sentences) > 1:
             lines: list[str] = []
             for sent in sentences:
-                lines.extend(pixel_wrap(sent, font))
+                # Only pass keep_phrase to the sentence that actually contains it
+                kp = keep_phrase if (keep_phrase and keep_phrase.lower() in sent.lower()) else ""
+                lines.extend(pixel_wrap(sent, font, keep_phrase=kp))
             return lines
-    return pixel_wrap(disp_text, font)
+    return pixel_wrap(disp_text, font, keep_phrase=keep_phrase)
 
 
 # Per-font size multipliers — applied to the brief's starting font_size before shrink loop.
@@ -210,7 +258,8 @@ _FONT_SIZE_SCALE: dict[str, float] = {
 
 
 def _fit_text(disp_text: str, font_key: str, font_size: int,
-              layout: str, zone: str) -> tuple[list[str], ImageFont.FreeTypeFont, int]:
+              layout: str, zone: str,
+              keep_phrase: str = "") -> tuple[list[str], ImageFont.FreeTypeFont, int]:
     """Return (lines, font, size) using the largest font where the block fits the zone.
     Starting size is scaled per font before the shrink loop; floor is 62pt."""
     scale = _FONT_SIZE_SCALE.get(font_key, 1.0)
@@ -218,13 +267,13 @@ def _fit_text(disp_text: str, font_key: str, font_size: int,
     max_h = _ZONE_MAX_H.get(zone, int(IMAGE_HEIGHT * 0.70))
     for size in range(font_size, 62, -2):
         f = _font(font_key, size)
-        lines = _layout_lines(disp_text, f, layout)
+        lines = _layout_lines(disp_text, f, layout, keep_phrase=keep_phrase)
         if len(lines) * int(size * 1.28) <= max_h:
             return lines, f, size
     # Floor: render at minimum 64pt — let it overflow rather than shrink further
     size = 64
     f = _font(font_key, size)
-    return _layout_lines(disp_text, f, layout), f, size
+    return _layout_lines(disp_text, f, layout, keep_phrase=keep_phrase), f, size
 
 
 def _sanitize(text: str) -> str:
@@ -464,7 +513,7 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
     decoration = brief.get("decoration", "none")
     layout     = brief.get("layout", "full_card")
     hi_style   = brief.get("highlight_style", "color")
-    hi_phrase  = _sanitize(brief.get("highlight") or "").lower()
+    hi_phrase  = _sanitize(brief.get("highlight") or "").strip(_QC).strip().lower()
 
     upper     = font_key == "bebas"
     disp_text = text.upper() if upper else text
@@ -474,8 +523,16 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
     txt_color = _ensure_readable(txt_color, bg_lum)
 
     font_size = max(64, int(brief.get("font_size", 78)))
-    all_lines, f, font_size = _fit_text(disp_text, font_key, font_size, layout, text_zone)
+    all_lines, f, font_size = _fit_text(disp_text, font_key, font_size, layout, text_zone,
+                                        keep_phrase=hi_phrase)
     hi_f = _highlight_font(font_key, hi_style, font_size)
+
+    if hi_phrase:
+        on_line = any(hi_phrase in ln.lower() for ln in all_lines)
+        if on_line:
+            logger.info(f"  ✓ highlight rendered: \"{hi_phrase}\"")
+        else:
+            logger.warning(f"  ⚠ highlight NOT rendered (phrase split or not found): \"{hi_phrase}\"")
 
     lines = all_lines[:n_lines] if n_lines is not None else all_lines
     line_h = int(font_size * 1.28)
