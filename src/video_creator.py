@@ -429,10 +429,17 @@ def create_reel(image_bytes: bytes, quote: dict, brief: dict, theme: str = "") -
         logger.warning("ffmpeg not found — skipping Reel creation")
         return None
 
-    # Generate TTS once — skip if theme disables voice narration
+    # Generate TTS once — skip if theme disables voice narration or quote has no real author
     from src.config import THEMES
     from src.tts import synthesize
-    tts_enabled = THEMES.get(theme, {}).get("tts", True)
+    _SKIP_AUTHOR = {"unknown", "anonymous", "original", "original thought", ""}
+    _author = quote.get("author", "").strip().lower()
+    tts_enabled = (
+        THEMES.get(theme, {}).get("tts", True)
+        and _author not in _SKIP_AUTHOR
+    )
+    if not tts_enabled:
+        logger.info("TTS: skipped — no attributed author (music only)")
     tts_bytes = synthesize(quote.get("text", ""), brief.get("voice_gender"), theme=theme) if tts_enabled else None
 
     animation = brief.get("animation", "fade")
