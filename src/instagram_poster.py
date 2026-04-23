@@ -51,18 +51,31 @@ def _poll_media_status(container_id: str) -> bool:
 
 
 def _publish(container_id: str) -> str | None:
-    """Publish a ready media container and return the post ID."""
-    resp = requests.post(
-        f"{GRAPH_BASE}/{_user_id()}/media_publish",
-        data={"creation_id": container_id, "access_token": _access_token()},
-        timeout=15,
-    )
-    if resp.status_code == 200:
-        post_id = resp.json().get("id")
-        logger.info(f"✓ Published! Post ID: {post_id}")
-        return post_id
-    logger.error(f"Publish failed: {resp.status_code} {resp.text[:300]}")
-    return None
+    """Publish a ready media container and return the post ID.
+
+    Retries up to 3 times with exponential backoff on network timeouts and
+    connection errors, as recommended by Meta for transient API failures.
+    """
+    url  = f"{GRAPH_BASE}/{_user_id()}/media_publish"
+    data = {"creation_id": container_id, "access_token": _access_token()}
+
+    for attempt in range(3):
+        try:
+            resp = requests.post(url, data=data, timeout=60)
+            if resp.status_code == 200:
+                post_id = resp.json().get("id")
+                logger.info(f"✓ Published! Post ID: {post_id}")
+                return post_id
+            logger.error(f"Publish failed: {resp.status_code} {resp.text[:300]}")
+            return None
+        except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError) as exc:
+            wait = 10 * (2 ** attempt)  # 10s → 20s → 40s
+            if attempt < 2:
+                logger.warning(f"Publish attempt {attempt + 1} failed ({exc}) — retrying in {wait}s…")
+                time.sleep(wait)
+            else:
+                logger.error(f"Publish failed after 3 attempts: {exc}")
+                return None
 
 
 # ---------------------------------------------------------------------------
