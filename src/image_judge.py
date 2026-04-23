@@ -102,43 +102,18 @@ _ARTIFACT_KEYWORDS = (
 
 def judge_image(image_bytes: bytes, quote: dict) -> dict:
     """
-    Send composed image to Gemini Vision for quality assessment.
+    Send composed image to a vision-capable LLM for quality assessment.
     Returns scores on 5 dimensions plus an accept/reject verdict.
-    Defaults to accept=True if Gemini is unavailable.
+    Defaults to accept=True if every provider fails.
     """
-    api_key = os.environ.get("GEMINI_API_KEY", "")
-    if not api_key:
-        return {"score": 8, "issues": "", "accept": True}
-
     try:
-        from google import genai
-        from google.genai import types
-        from src.config import GEMINI_TEXT_MODEL, GEMINI_TEXT_MODEL_FALLBACK
+        from src.llm import generate_vision
 
-        client = genai.Client(api_key=api_key)
         text   = quote.get("text", "")[:200].replace('"', "'")
         author = quote.get("author", "Unknown")
         prompt = _JUDGE_PROMPT.format(text=text, author=author)
-        contents = [
-            types.Part.from_bytes(data=image_bytes, mime_type="image/jpeg"),
-            types.Part(text=prompt),
-        ]
-        cfg = types.GenerateContentConfig(
-            automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
-        )
 
-        raw = None
-        for model in [GEMINI_TEXT_MODEL, GEMINI_TEXT_MODEL_FALLBACK]:
-            try:
-                response = client.models.generate_content(
-                    model=model, contents=contents, config=cfg,
-                )
-                raw = response.text.strip()
-                break
-            except Exception as exc:
-                if model == GEMINI_TEXT_MODEL_FALLBACK:
-                    raise
-                logger.warning(f"Judge primary model failed: {exc} — retrying with {GEMINI_TEXT_MODEL_FALLBACK}")
+        raw = generate_vision(prompt, image_bytes, mime_type="image/jpeg", role="image_judge")
 
         m = re.search(r"\{.*\}", raw, re.DOTALL)
         if m:

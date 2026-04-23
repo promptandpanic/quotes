@@ -313,62 +313,43 @@ def generate_brief(quote: dict, theme: str, recent_styles: list[str] | None = No
     Ask Gemini to act as creative director and return a full render spec.
     Falls back to theme defaults if Gemini is unavailable.
     """
-    text   = quote.get("text", "")
-    api_key = os.environ.get("GEMINI_API_KEY", "")
+    text = quote.get("text", "")
 
     brief = None
-    if api_key:
-        try:
-            from google import genai
-            from src.config import GEMINI_TEXT_MODEL, GEMINI_TEXT_MODEL_FALLBACK
-            from src.content_config import build_style_prompt_block
+    try:
+        from src.llm import generate_text
+        from src.content_config import build_style_prompt_block
 
-            client = genai.Client(api_key=api_key)
-            style_block = build_style_prompt_block(theme)
-            image_hint  = quote.get("image_hint", "")
-            image_hint_block = (
-                f"IMAGE DIRECTION: {image_hint}\n" if image_hint else ""
+        style_block = build_style_prompt_block(theme)
+        image_hint  = quote.get("image_hint", "")
+        image_hint_block = (
+            f"IMAGE DIRECTION: {image_hint}\n" if image_hint else ""
+        )
+        if recent_styles:
+            unique = list(dict.fromkeys(recent_styles))[-10:]
+            recent_styles_block = (
+                f"RECENTLY USED STYLES (last 14 days — avoid repeating unless clearly the best fit):\n"
+                f"  {', '.join(unique)}\n"
             )
-            if recent_styles:
-                unique = list(dict.fromkeys(recent_styles))[-10:]
-                recent_styles_block = (
-                    f"RECENTLY USED STYLES (last 14 days — avoid repeating unless clearly the best fit):\n"
-                    f"  {', '.join(unique)}\n"
-                )
-            else:
-                recent_styles_block = ""
-            prompt = _BRIEF_PROMPT.format(
-                text=text, theme=theme,
-                style_block=style_block,
-                image_hint_block=image_hint_block,
-                recent_styles_block=recent_styles_block,
-            )
+        else:
+            recent_styles_block = ""
+        prompt = _BRIEF_PROMPT.format(
+            text=text, theme=theme,
+            style_block=style_block,
+            image_hint_block=image_hint_block,
+            recent_styles_block=recent_styles_block,
+        )
 
-            from google.genai import types as _types
-            _cfg = _types.GenerateContentConfig(
-                automatic_function_calling=_types.AutomaticFunctionCallingConfig(disable=True),
-            )
-            raw = None
-            for _model in [GEMINI_TEXT_MODEL, GEMINI_TEXT_MODEL_FALLBACK]:
-                try:
-                    response = client.models.generate_content(
-                        model=_model, contents=prompt, config=_cfg,
-                    )
-                    raw = response.text.strip()
-                    break
-                except Exception as _exc:
-                    if _model == GEMINI_TEXT_MODEL_FALLBACK:
-                        raise
-                    logger.warning(f"Creative director primary model failed: {_exc} — retrying with {GEMINI_TEXT_MODEL_FALLBACK}")
-            m = re.search(r"\{.*\}", raw, re.DOTALL)
-            if m:
-                brief = json.loads(m.group())
-                logger.info(f"  Gemini layout={brief.get('layout')}  "
-                            f"font={brief.get('font')}  "
-                            f"highlight: \"{brief.get('highlight')}\"")
-                logger.info(f"  mood: {brief.get('mood_note', '')}")
-        except Exception as exc:
-            logger.warning(f"Creative brief generation failed: {exc} — using defaults")
+        raw = generate_text(prompt, role="creative_brief")
+        m = re.search(r"\{.*\}", raw, re.DOTALL)
+        if m:
+            brief = json.loads(m.group())
+            logger.info(f"  layout={brief.get('layout')}  "
+                        f"font={brief.get('font')}  "
+                        f"highlight: \"{brief.get('highlight')}\"")
+            logger.info(f"  mood: {brief.get('mood_note', '')}")
+    except Exception as exc:
+        logger.warning(f"Creative brief generation failed: {exc} — using defaults")
 
     if not brief:
         brief = dict(_DEFAULTS.get(theme, _DEFAULTS["wisdom"]))

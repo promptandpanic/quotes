@@ -204,49 +204,38 @@ def build_caption(quote: dict, theme_cfg: dict) -> str:
     theme_name  = theme_cfg.get("name", "Daily Wisdom")
     anchor_tags = theme_cfg.get("hashtags", [])
 
-    api_key = os.environ.get("GEMINI_API_KEY", "")
-    if api_key:
-        try:
-            import json
-            import re
-            from google import genai
-            from src.config import GEMINI_TEXT_MODEL
+    try:
+        import json
+        import re
+        from src.llm import generate_text
 
-            client = genai.Client(api_key=api_key)
-            prompt = _CAPTION_PROMPT.format(
-                text=text[:300].replace('"', "'"),
-                author=author,
-                theme=theme_name,
-                anchor_tags=", ".join(anchor_tags) if anchor_tags else "none",
+        prompt = _CAPTION_PROMPT.format(
+            text=text[:300].replace('"', "'"),
+            author=author,
+            theme=theme_name,
+            anchor_tags=", ".join(anchor_tags) if anchor_tags else "none",
+        )
+        raw = generate_text(prompt, role="caption")
+        m = re.search(r"\{.*\}", raw, re.DOTALL)
+        if m:
+            data = json.loads(m.group())
+            hook = data.get("hook", "").strip()
+            dynamic_tags = [f"#{t.lstrip('#')}" for t in data.get("hashtags", [])[:18]]
+            all_tags = anchor_tags + dynamic_tags
+            # Instagram cap: 30 hashtags
+            all_tags = all_tags[:30]
+            hashtag_str = " ".join(all_tags)
+            caption = (
+                f'"{text}"\n'
+                f"{author_line}"
+                f"{hook}\n\n"
+                f"@_daily_dose_of_wisdom__\n\n"
+                f"{hashtag_str}"
             )
-            from google.genai import types as _types
-            raw = client.models.generate_content(
-                model=GEMINI_TEXT_MODEL,
-                contents=prompt,
-                config=_types.GenerateContentConfig(
-                    automatic_function_calling=_types.AutomaticFunctionCallingConfig(disable=True),
-                ),
-            ).text
-            m = re.search(r"\{.*\}", raw, re.DOTALL)
-            if m:
-                data = json.loads(m.group())
-                hook = data.get("hook", "").strip()
-                dynamic_tags = [f"#{t.lstrip('#')}" for t in data.get("hashtags", [])[:18]]
-                all_tags = anchor_tags + dynamic_tags
-                # Instagram cap: 30 hashtags
-                all_tags = all_tags[:30]
-                hashtag_str = " ".join(all_tags)
-                caption = (
-                    f'"{text}"\n'
-                    f"{author_line}"
-                    f"{hook}\n\n"
-                    f"@_daily_dose_of_wisdom__\n\n"
-                    f"{hashtag_str}"
-                )
-                logger.info(f"  ✓ AI caption generated (anchors: {len(anchor_tags)}, dynamic: {len(dynamic_tags)})")
-                return caption[:2200]
-        except Exception as exc:
-            logger.warning(f"Caption generation failed: {exc} — using static fallback")
+            logger.info(f"  ✓ AI caption generated (anchors: {len(anchor_tags)}, dynamic: {len(dynamic_tags)})")
+            return caption[:2200]
+    except Exception as exc:
+        logger.warning(f"Caption generation failed: {exc} — using static fallback")
 
     hashtag_str = " ".join(anchor_tags)
     return (

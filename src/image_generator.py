@@ -392,11 +392,14 @@ def get_image(theme: str, image_prompt: str, quote_text: str = "") -> bytes:
         if p.strip()
     ]
 
+    from src.llm import record_model_used
+
     for provider in order:
         if provider == "huggingface" and os.environ.get("HF_API_KEY"):
             logger.info(f"Image gen — HuggingFace ({_HF_MODEL_ID})")
             img = _huggingface(prompt)
             if img:
+                record_model_used("image_generation", "huggingface", _HF_MODEL_ID)
                 return _ensure_size(img)
             logger.info("HuggingFace failed — next provider…")
 
@@ -404,11 +407,13 @@ def get_image(theme: str, image_prompt: str, quote_text: str = "") -> bytes:
             logger.info(f"Image gen — Leonardo ({_LEONARDO_MODEL_ID})")
             img = _leonardo(prompt)
             if img:
+                record_model_used("image_generation", "leonardo", _LEONARDO_MODEL_ID)
                 return _ensure_size(img)
             if _LEONARDO_MODEL_ID != _LEONARDO_FREE_MODEL_ID:
                 logger.info(f"Leonardo {_LEONARDO_MODEL_ID} failed — retrying with free Phoenix…")
                 img = _leonardo(prompt, model_id=_LEONARDO_FREE_MODEL_ID)
                 if img:
+                    record_model_used("image_generation", "leonardo", _LEONARDO_FREE_MODEL_ID)
                     return _ensure_size(img)
             logger.info("Leonardo failed — next provider…")
 
@@ -416,6 +421,7 @@ def get_image(theme: str, image_prompt: str, quote_text: str = "") -> bytes:
             logger.info(f"Image gen — {GEMINI_IMAGE_MODEL}")
             img = _imagen(prompt)
             if img:
+                record_model_used("image_generation", "imagen", GEMINI_IMAGE_MODEL)
                 return _ensure_size(img)
             logger.info(f"Imagen failed — next provider…")
 
@@ -423,6 +429,7 @@ def get_image(theme: str, image_prompt: str, quote_text: str = "") -> bytes:
             logger.info(f"Image gen — {_GEMINI_IMAGE_FALLBACK}")
             img = _gemini_flash_image(prompt)
             if img:
+                record_model_used("image_generation", "gemini", _GEMINI_IMAGE_FALLBACK)
                 return _ensure_size(img)
             logger.info("Gemini image failed — next provider…")
 
@@ -430,6 +437,7 @@ def get_image(theme: str, image_prompt: str, quote_text: str = "") -> bytes:
             logger.info("Image gen — Pollinations")
             img = _pollinations(prompt, quote_text)
             if img:
+                record_model_used("image_generation", "pollinations", "flux-dev")
                 return _ensure_size(img)
             logger.info("Pollinations failed — next provider…")
 
@@ -437,10 +445,12 @@ def get_image(theme: str, image_prompt: str, quote_text: str = "") -> bytes:
     logger.info("Pollinations failed — trying static image bank…")
     img = _static_image(theme)
     if img:
+        record_model_used("image_generation", "static_fallback", theme)
         return _ensure_size(img)
 
     # 6. PIL gradient (always works)
     logger.info("All image sources failed — using PIL gradient")
+    record_model_used("image_generation", "pil_gradient", theme)
     return _gradient_fallback(theme)
 
 

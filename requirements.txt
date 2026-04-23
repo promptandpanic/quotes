@@ -6,6 +6,9 @@ python-dotenv>=1.0.0
 # Google Gemini / Imagen
 google-genai>=0.3.0
 
+# Moonshot (Kimi) and any other OpenAI-compatible provider
+openai>=1.40.0
+
 # Utilities
 pyyaml>=6.0
 

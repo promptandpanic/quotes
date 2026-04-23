@@ -203,29 +203,10 @@ def _extract_highlight(text: str) -> str:
     return " ".join(words[-5:])
 
 
-def _gemini_client():
-    api_key = os.environ.get("GEMINI_API_KEY", "")
-    if not api_key:
-        raise RuntimeError("GEMINI_API_KEY not set")
-    from google import genai
-    return genai.Client(api_key=api_key)
-
-
-def _call(client, prompt: str) -> str:
-    from src.config import GEMINI_TEXT_MODEL, GEMINI_TEXT_MODEL_FALLBACK
-    from google.genai import types
-    cfg = types.GenerateContentConfig(
-        automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
-    )
-    for model in [GEMINI_TEXT_MODEL, GEMINI_TEXT_MODEL_FALLBACK]:
-        try:
-            resp = client.models.generate_content(model=model, contents=prompt, config=cfg)
-            return resp.text.strip()
-        except Exception as exc:
-            if model == GEMINI_TEXT_MODEL_FALLBACK:
-                raise
-            logger.warning(f"Primary text model failed: {exc} — retrying with {GEMINI_TEXT_MODEL_FALLBACK}")
-    raise RuntimeError("unreachable")
+def _call(prompt: str) -> str:
+    """Delegate to the provider cascade in src.llm."""
+    from src.llm import generate_text
+    return generate_text(prompt, role="quote_generation")
 
 
 def _append_avoid_hint(prompt: str, recent_hints: list[str]) -> str:
@@ -279,11 +260,6 @@ def _generate_with_validation(
 ) -> dict | None:
     from src.content_config import get_max_words, get_topic_info
 
-    try:
-        client = _gemini_client()
-    except RuntimeError:
-        return None
-
     max_words   = get_max_words(theme)
     info        = get_topic_info(theme)
     topic_block = info["topic_block"]
@@ -308,7 +284,7 @@ def _generate_with_validation(
         logger.info(f"  Quote attempt {attempt}/{MAX_ATTEMPTS}…")
         try:
             import json as _json
-            raw = _call(client, prompt)
+            raw = _call(prompt)
             m = re.search(r"\{.*\}", raw, re.DOTALL)
             if not m:
                 time.sleep(RETRY_DELAY)

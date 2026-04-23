@@ -31,6 +31,20 @@ from src.video_creator import create_reel
 
 MAX_DESIGN_ATTEMPTS = 3
 
+
+def _log_model_summary() -> None:
+    """Print which model/provider handled each role during this run."""
+    from src.llm import get_usage_summary
+    entries = get_usage_summary()
+    if not entries:
+        return
+    logger.info("=" * 55)
+    logger.info("  Model usage summary")
+    logger.info("-" * 55)
+    for e in entries:
+        logger.info(f"  {e['role']:20s} ← {e['provider']:12s} {e['model']}")
+    logger.info("=" * 55)
+
 # ---------------------------------------------------------------------------
 # Logging
 # ---------------------------------------------------------------------------
@@ -138,8 +152,8 @@ def run() -> bool:
     if recent_styles:
         logger.info(f"Passing {len(recent_styles)} recent style names to design director")
 
-    # 4. Generate quote (all themes now use Gemini)
-    logger.info("Generating quote with Gemini…")
+    # 4. Generate quote (provider picked by TEXT_PROVIDER_ORDER)
+    logger.info("Generating quote…")
     quote = generate_quote(theme_key, posted_hashes, recent_hints)
     src = quote.get("source", "?")
     author = quote.get("author", "")
@@ -217,6 +231,7 @@ def run() -> bool:
     if DRY_RUN:
         caption = build_caption(quote, theme_cfg)
         _save_locally(final_image, video_bytes, quote, brief, theme_key, caption)
+        _log_model_summary()
         logger.info("✅ Dry-run complete. Check output/ directory.")
         return True
 
@@ -267,6 +282,7 @@ def run() -> bool:
         logger.warning("DB save returned False — check token/repo settings")
 
     notify_success(theme_cfg["name"], quote, post_id)
+    _log_model_summary()
     logger.info(f"✅ Done! Post ID: {post_id}")
     return True
 

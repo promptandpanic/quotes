@@ -47,4 +47,9 @@ jobs:
           LEONARDO_MODEL_ID: ${{ vars.LEONARDO_MODEL_ID || 'flux-pro-2.0' }}
           HF_API_KEY: ${{ secrets.HF_API_KEY }}
           IMAGE_PROVIDER_ORDER: ${{ vars.IMAGE_PROVIDER_ORDER || 'leonardo,imagen,huggingface,gemini,pollinations' }}
+          MOONSHOT_API_KEY: ${{ secrets.MOONSHOT_API_KEY }}
+          MOONSHOT_TEXT_MODEL: ${{ vars.MOONSHOT_TEXT_MODEL || 'kimi-k2.6' }}
+          MOONSHOT_VISION_MODEL: ${{ vars.MOONSHOT_VISION_MODEL || 'moonshot-v1-128k-vision-preview' }}
+          TEXT_PROVIDER_ORDER: ${{ vars.TEXT_PROVIDER_ORDER || 'gemini,moonshot' }}
+          VISION_PROVIDER_ORDER: ${{ vars.VISION_PROVIDER_ORDER || 'gemini,moonshot' }}
         run: python main.py
