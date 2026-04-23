@@ -11,7 +11,8 @@
     "3e2e343b6e08209c",
     "5ba586c8464ea07c",
     "00c1aac1dc6f76ee",
-    "2d3918184c529ec2"
+    "2d3918184c529ec2",
+    "b49a4874abe89fa3"
   ],
   "history": [
     {
@@ -109,7 +110,15 @@
       "theme": "mindfulness",
       "style": "silhouette_landscape",
       "posted_at": "2026-04-23T13:00:43.632460+00:00"
+    },
+    {
+      "hash": "b49a4874abe89fa3",
+      "text": "You don’t owe your productivity a refund for the rest you already took.",
+      "author": "Original",
+      "theme": "mindfulness",
+      "style": "watercolour_ink",
+      "posted_at": "2026-04-23T14:27:46.715658+00:00"
     }
   ],
-  "last_updated": "2026-04-23T13:00:43.632472+00:00"
+  "last_updated": "2026-04-23T14:27:46.715672+00:00"
 }
