@@ -13,7 +13,8 @@
     "00c1aac1dc6f76ee",
     "2d3918184c529ec2",
     "b49a4874abe89fa3",
-    "8ec73e368a698133"
+    "8ec73e368a698133",
+    "3e3df898bbdae435"
   ],
   "history": [
     {
@@ -127,7 +128,15 @@
       "theme": "wisdom",
       "style": "watercolour_ink",
       "posted_at": "2026-04-23T15:16:57.157377+00:00"
+    },
+    {
+      "hash": "3e3df898bbdae435",
+      "text": "The pressure to 'become someone' stops at the door. Inside, you’re just a person putting the cooker on.",
+      "author": "Original",
+      "theme": "goodnight",
+      "style": "nocturnal_aesthetic",
+      "posted_at": "2026-04-23T17:01:44.446911+00:00"
     }
   ],
-  "last_updated": "2026-04-23T15:16:57.157391+00:00"
+  "last_updated": "2026-04-23T17:01:44.446926+00:00"
 }
