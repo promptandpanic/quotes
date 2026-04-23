@@ -45,4 +45,8 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           NOTIFY_EMAILS: ${{ secrets.NOTIFY_EMAILS }}
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          LEONARDO_API_KEY: ${{ secrets.LEONARDO_API_KEY }}
+          LEONARDO_MODEL_ID: ${{ vars.LEONARDO_MODEL_ID || 'flux-pro-2.0' }}
+          HF_API_KEY: ${{ secrets.HF_API_KEY }}
+          IMAGE_PROVIDER_ORDER: ${{ vars.IMAGE_PROVIDER_ORDER || 'leonardo,imagen,huggingface,gemini,pollinations' }}
         run: python main.py
