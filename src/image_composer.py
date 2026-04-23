@@ -202,6 +202,10 @@ def _sanitize(text: str) -> str:
             .replace('\u2014', ' - ')   # em-dash
             .replace('\u2013', '-')     # en-dash
             .replace('\u2026', '...')   # ellipsis
+            # Normalize curly quotes → straight so highlight phrase matching works
+            # even when LLM returns different apostrophe/quote chars than the text
+            .replace('\u2019', "'").replace('\u2018', "'")   # right/left single quote
+            .replace('\u201c', '"').replace('\u201d', '"')   # right/left double quote
             .replace('\u00e9', 'e').replace('\u00e8', 'e').replace('\u00ea', 'e')
             .replace('\u00e0', 'a').replace('\u00e2', 'a')
             .replace('\u00f4', 'o').replace('\u00fb', 'u')
@@ -236,17 +240,21 @@ def _split_at_phrase(line: str, phrase: str) -> tuple[str, str, str] | None:
     return line[:idx], line[idx:idx + len(phrase)], line[idx + len(phrase):]
 
 
+# Script/handwriting fonts — stroke makes them look artificially bold and hurts legibility
+_CURSIVE_FONTS = {"dancing", "satisfy", "pacifico", "caveat", "kalam", "indieflower"}
+
+
 def _render_line(draw, img_width: int, y: int, line: str,
                  font: ImageFont.FreeTypeFont, fill: tuple,
                  hi_font: ImageFont.FreeTypeFont, hi_fill: tuple,
-                 hi_phrase: str, hi_style: str) -> None:
+                 hi_phrase: str, hi_style: str, stroke: int = 3) -> None:
     """Render one line with per-word highlight styling, centered."""
     segs = _split_at_phrase(line, hi_phrase) if hi_phrase else None
 
     if segs is None:
         bb = font.getbbox(line)
         x = (img_width - (bb[2] - bb[0])) // 2
-        _stroke_text(draw, (x, y), line, font, fill=fill)
+        _stroke_text(draw, (x, y), line, font, fill=fill, stroke=stroke)
         return
 
     before, match, after = segs
@@ -257,17 +265,18 @@ def _render_line(draw, img_width: int, y: int, line: str,
     aw = (font.getbbox(after)[2] - font.getbbox(after)[0]) if after else 0
     x = (img_width - bw - hw - aw) // 2
 
+    hi_stroke = min(1, stroke)  # highlight always gets at most a hairline stroke
     if before:
-        _stroke_text(draw, (x, y), before, font, fill=fill)
+        _stroke_text(draw, (x, y), before, font, fill=fill, stroke=stroke)
         x += bw
     if hi_disp:
-        _stroke_text(draw, (x, y), hi_disp, hi_font, fill=hi_fill, stroke=1)  # thin stroke → fill colour dominates
+        _stroke_text(draw, (x, y), hi_disp, hi_font, fill=hi_fill, stroke=hi_stroke)
         if hi_style == "underline":
             uy = y + hi_font.getbbox(hi_disp)[3] + 2
             draw.rectangle([(x, uy), (x + hw, uy + 3)], fill=(*hi_fill, 255))
         x += hw
     if after:
-        _stroke_text(draw, (x, y), after, font, fill=fill)
+        _stroke_text(draw, (x, y), after, font, fill=fill, stroke=stroke)
 
 
 def _gradient_rect(img: Image.Image, y0: int, y1: int,
@@ -457,6 +466,10 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
         dq_font = _font("playfair", 260)
         draw.text((MARGIN_X - 44, y - 40), "\u201c", font=dq_font, fill=(*hi_color, 30))
 
+    # Script/cursive fonts must not use stroke — it fakes bold and hurts legibility.
+    # Only all-caps display fonts (bebas etc.) and explicit caps style get full stroke.
+    text_stroke = 0 if font_key in _CURSIVE_FONTS else 3
+
     # Text lines — word-level highlight styling
     for line in lines:
         has_hi = bool(hi_phrase and hi_phrase in line.lower())
@@ -466,6 +479,7 @@ def _draw_text(img: Image.Image, quote: dict, brief: dict,
             hi_font=hi_f, hi_fill=hi_color,
             hi_phrase=hi_phrase if has_hi else "",
             hi_style=hi_style,
+            stroke=text_stroke,
         )
         y += line_h
 
