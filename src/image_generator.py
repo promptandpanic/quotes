@@ -36,7 +36,14 @@ logger = logging.getLogger(__name__)
 
 _STATIC_DIR = Path(__file__).parent.parent / "assets" / "static"
 
-_NO_TEXT = (
+# Single source of truth for what NOT to include in any generated image.
+# Used in two forms:
+#   1. _NEGATIVE_PROMPT — prose, appended to the main prompt for every provider
+#      (HuggingFace / Pollinations / Gemini / Imagen don't accept a native
+#      negative_prompt field, so inlining is the only way to reach them)
+#   2. _NEGATIVE_PROMPT_KEYWORDS — comma-separated token list for Leonardo's
+#      native negative_prompt field, which prefers keywords over prose
+_NEGATIVE_PROMPT = (
     " CRITICAL: absolutely no text, letters, numbers, words, labels, watermarks, "
     "signs, banners, or typography of any kind anywhere in the image. "
     "Specifically forbidden: hashtags (#), at-signs (@), ampersands, asterisks, "
@@ -44,9 +51,19 @@ _NO_TEXT = (
     "notation, decorative glyphs or runes that read as written characters, "
     "stylised lettering, calligraphy strokes that resemble letters, or any "
     "symbol a viewer could mistake for text. "
+    "NO artist signatures, handwritten names, painted initials, monograms, "
+    "corner scribbles, copyright symbols (©), studio marks, or any painted "
+    "mark that resembles an artist's signature in the bottom corners or edges. "
     "No photorealistic humans or portrait photography — use illustrations, paintings, "
     "flat vector art, ink sketches, or abstract art instead. "
-    "Pure visual only — zero written characters, zero symbols."
+    "Pure visual only — zero written characters, zero symbols, zero signatures."
+)
+_NEGATIVE_PROMPT_KEYWORDS = (
+    "text, letters, words, watermark, logo, signature, handwritten name, "
+    "artist signature, corner signature, monogram, initials, copyright, © symbol, "
+    "studio mark, caption, label, typography, graffiti, banner, hashtag, # symbol, "
+    "code, programming syntax, url, numbers, equation, symbol, glyph, rune, "
+    "written character, photorealistic human, portrait photo"
 )
 
 
@@ -146,12 +163,7 @@ def _leonardo(prompt: str, model_id: str | None = None) -> bytes | None:
                 "height":          1472,   # ~9:16
                 "num_images":      1,
                 "guidance_scale":  7,
-                "negative_prompt": (
-                    "text, letters, words, watermark, logo, signature, caption, label, "
-                    "typography, graffiti, banner, hashtag, # symbol, code, "
-                    "programming syntax, url, numbers, equation, symbol, glyph, "
-                    "rune, written character, photorealistic human, portrait photo"
-                ),
+                "negative_prompt": _NEGATIVE_PROMPT_KEYWORDS,
             }
 
         r = requests.post(f"{base_url}/generations",
@@ -382,9 +394,9 @@ def get_image(theme: str, image_prompt: str, quote_text: str = "") -> bytes:
     clean_prompt = _re.sub(r'^\[[\w_]+\]\s*', '', image_prompt).strip()
 
     if len(clean_prompt) > 100:
-        prompt = clean_prompt.rstrip(" .") + "." + _NO_TEXT
+        prompt = clean_prompt.rstrip(" .") + "." + _NEGATIVE_PROMPT
     else:
-        prompt = clean_prompt + _NO_TEXT + " Illustrated or painterly style, 9:16 portrait."
+        prompt = clean_prompt + _NEGATIVE_PROMPT + " Illustrated or painterly style, 9:16 portrait."
 
     order = [
         p.strip().lower()
