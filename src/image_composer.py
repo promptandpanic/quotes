@@ -178,10 +178,43 @@ def _layout_lines(disp_text: str, font: ImageFont.FreeTypeFont,
     return pixel_wrap(disp_text, font)
 
 
+# Per-font size multipliers — applied to the brief's starting font_size before shrink loop.
+# Thin/light fonts need a bigger starting point to stay readable.
+# Wide/chunky fonts trim slightly to avoid premature line-breaks.
+# Everything not listed defaults to 1.0 (condensed display fonts are the reference).
+_FONT_SIZE_SCALE: dict[str, float] = {
+    # Light / thin strokes — boost for legibility
+    "poppins_light": 1.25,
+    "nunito_light":  1.25,
+    "lato_light":    1.20,
+    "cormorant":     1.15,  # ultra high-contrast, hairline thins need more mass
+    # Script — loose spacing + ascenders benefit from a larger start
+    "dancing":       1.15,
+    "satisfy":       1.12,
+    "indieflower":   1.15,
+    # Handwriting — informal, generous size reads more naturally
+    "caveat":        1.12,
+    "kalam":         1.10,
+    # Serif — slightly larger for elegance and warmth
+    "playfair":      1.08,
+    "playfair_it":   1.12,
+    "merriweather":  1.05,
+    "spectral":      1.05,
+    "vollkorn":      1.05,
+    "cinzel":        1.05,
+    "specialelite":  1.05,
+    # Wide / chunky — trim slightly to avoid premature wrapping
+    "pacifico":      0.92,
+    "montserrat":    0.95,
+}
+
+
 def _fit_text(disp_text: str, font_key: str, font_size: int,
               layout: str, zone: str) -> tuple[list[str], ImageFont.FreeTypeFont, int]:
     """Return (lines, font, size) using the largest font where the block fits the zone.
-    Minimum floor is 62pt — text is never shrunk below that regardless of fit."""
+    Starting size is scaled per font before the shrink loop; floor is 62pt."""
+    scale = _FONT_SIZE_SCALE.get(font_key, 1.0)
+    font_size = max(64, int(font_size * scale))
     max_h = _ZONE_MAX_H.get(zone, int(IMAGE_HEIGHT * 0.70))
     for size in range(font_size, 62, -2):
         f = _font(font_key, size)
