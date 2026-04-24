@@ -118,72 +118,93 @@ Schedules are managed via cron-job.org and based on India (IST) timings.
 
 ---
 
-## GitHub Secrets
+## GitHub Secrets & Variables
 
-Repo → **Settings → Secrets and variables → Actions → New repository secret**
+Repo → **Settings → Secrets and variables → Actions**
 
-### Required
+There are two tabs. Put each value in the correct one — the workflows reference them as `${{ secrets.NAME }}` vs `${{ vars.NAME }}` and will silently see nothing if misplaced.
 
-| Secret | Description |
+- **Secrets** tab — encrypted at rest, never printed in logs. Use for API keys and anything sensitive.
+- **Variables** tab — plain-text config you'd want to tweak without editing code (provider order, model IDs).
+
+### Secrets — required
+
+| Name | Source |
 |---|---|
-| `GEMINI_API_KEY` | Google AI Studio key — [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey) |
-| `INSTAGRAM_ACCESS_TOKEN` | 60-day Meta long-lived token |
-| `INSTAGRAM_BUSINESS_ACCOUNT_ID` | Numeric Instagram Business/Creator account ID |
-| `GITHUB_TOKEN` | Auto-provided by GitHub Actions — no action needed |
+| `GEMINI_API_KEY` | [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey) |
+| `INSTAGRAM_ACCESS_TOKEN` | 60-day Meta long-lived Page token |
+| `INSTAGRAM_BUSINESS_ACCOUNT_ID` | Numeric IG Business/Creator account ID |
 
-### Image generation
+`GITHUB_TOKEN` is auto-provided by Actions — no action needed.
 
-| Secret | Default | Description |
+### Secrets — optional (enable extra providers)
+
+Every provider key is optional. If unset, that provider is silently skipped in its cascade — the workflow continues with whichever provider does have a key.
+
+| Name | Purpose |
+|---|---|
+| `MOONSHOT_API_KEY` | [platform.moonshot.ai](https://platform.moonshot.ai/console/api-keys) — LLM fallback when Gemini is rate-limited. Also serves the image judge (vision). |
+| `HF_API_KEY` | [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) — enables FLUX.1-schnell image generation on the free tier |
+| `LEONARDO_API_KEY` | [app.leonardo.ai](https://app.leonardo.ai) → User Settings → API. Paid tier needed for `flux-pro-2.0`; free quota covers Phoenix/Flux Dev. |
+| `ELEVENLABS_API_KEY` | Premium TTS. Accepts comma-separated keys — rotates automatically on quota hit. |
+| `SMTP_USERNAME` | Gmail address for success/failure email notifications |
+| `SMTP_PASSWORD` | Gmail **App Password** (16 chars, not your login password) |
+| `NOTIFY_EMAILS` | Comma-separated recipient emails |
+
+**Gmail App Password:** Google Account → Security → 2-Step Verification → App passwords → create one named "quotes-bot" → copy the 16-char code.
+
+### Variables — configuration knobs
+
+These are plain strings you'd tweak to reorder providers or swap models without touching the workflow YAML. Every variable has a sensible default baked into the workflows, so you only need to set one when you want a different value.
+
+| Name | Default | Options |
 |---|---|---|
-| `LEONARDO_API_KEY` | — | [app.leonardo.ai](https://app.leonardo.ai) → User Settings → API. Enables Leonardo as primary image source. |
-| `LEONARDO_MODEL_ID` | `6bef9f1b-29cb-40c7-b9df-32b51c1f67d3` | Leonardo model to use. See model table below. |
-| `IMAGE_PROVIDER_ORDER` | `leonardo,imagen,gemini,pollinations` | Comma-separated list controlling which image source is tried first. Change to skip or reorder providers. |
+| `IMAGE_PROVIDER_ORDER` | `leonardo,imagen,huggingface,gemini,pollinations` | any subset of `leonardo, imagen, huggingface, gemini, pollinations` |
+| `TEXT_PROVIDER_ORDER` | `gemini,moonshot` | `gemini`, `moonshot` (order matters — left is tried first) |
+| `VISION_PROVIDER_ORDER` | `gemini,moonshot` | same options as text |
+| `LEONARDO_MODEL_ID` | `flux-pro-2.0` | see Leonardo model table below |
+| `MOONSHOT_TEXT_MODEL` | `kimi-k2.6` | `kimi-k2.6`, `kimi-k2.5`, `moonshot-v1-{8k,32k,128k}`, `moonshot-v1-auto` |
+| `MOONSHOT_VISION_MODEL` | `moonshot-v1-128k-vision-preview` | `moonshot-v1-{8k,32k,128k}-vision-preview` |
+
+**Recipe — flip the default LLM to Moonshot when Gemini runs out:**
+Set `TEXT_PROVIDER_ORDER=moonshot,gemini` and `VISION_PROVIDER_ORDER=moonshot,gemini`.
 
 **Leonardo model options:**
 
 | Model | `LEONARDO_MODEL_ID` | Cost | Quality |
 |---|---|---|---|
-| Leonardo Phoenix (default) | `6bef9f1b-29cb-40c7-b9df-32b51c1f67d3` | Free daily quota | Good |
+| Leonardo Phoenix | `6bef9f1b-29cb-40c7-b9df-32b51c1f67d3` | Free daily quota | Good |
 | Flux Dev | `b2614463-296c-462a-9586-aafdb8f00e36` | Free daily quota | Good |
-| **Flux 2 Pro** | `flux-pro-2.0` | ~$0.046/image (paid credit) | Excellent, native 9:16 |
+| **Flux 2 Pro** (default) | `flux-pro-2.0` | ~$0.046/image (paid credit) | Excellent, native 9:16 |
 
-> When `LEONARDO_MODEL_ID=flux-pro-2.0` and the paid quota/credit runs out, the bot automatically falls back to Leonardo Phoenix (free) before leaving Leonardo entirely.
+> When `LEONARDO_MODEL_ID=flux-pro-2.0` and the paid quota/credit runs out, the bot automatically falls back to Leonardo Phoenix (free) before moving on to the next provider in `IMAGE_PROVIDER_ORDER`.
 
 **IMAGE_PROVIDER_ORDER examples:**
 
 ```
-# Default — Leonardo first, then Gemini
-IMAGE_PROVIDER_ORDER=leonardo,imagen,gemini,pollinations
-
-# Skip Leonardo, use Gemini Imagen first
-IMAGE_PROVIDER_ORDER=imagen,gemini,pollinations
+# Default — Leonardo first, then Imagen
+leonardo,imagen,huggingface,gemini,pollinations
 
 # Free-only (no paid APIs)
-IMAGE_PROVIDER_ORDER=leonardo,gemini,pollinations
+huggingface,leonardo,gemini,pollinations
 
-# Pollinations only (testing, no keys needed)
-IMAGE_PROVIDER_ORDER=pollinations
+# Skip Leonardo entirely
+imagen,huggingface,gemini,pollinations
+
+# Testing, no API keys required
+pollinations
 ```
 
-### AI text models
+### Text-model overrides (rarely needed, Secrets tab)
+
+Only set these to pin specific Gemini model versions:
 
 | Secret | Default | Description |
 |---|---|---|
-| `GEMINI_TEXT_MODEL` | `gemini-2.5-flash-preview-04-17` | Used for quote generation, design briefs, captions, image judging |
-| `GEMINI_TEXT_MODEL_FALLBACK` | `gemini-2.0-flash` | Reserved for future fallback wiring |
-| `GEMINI_IMAGE_MODEL` | `imagen-4.0-fast-generate-001` | Gemini image model (used when Leonardo unavailable) |
-| `GEMINI_IMAGE_MODEL_FALLBACK` | `gemini-2.5-flash-preview-04-17` | Free-tier Gemini image generation |
-
-### Other optional secrets
-
-| Secret | Default | Description |
-|---|---|---|
-| `REPEAT_WINDOW_DAYS` | `10` | Days before a quote can repeat |
-| `SMTP_USERNAME` | — | Gmail address for success/failure notifications |
-| `SMTP_PASSWORD` | — | Gmail App Password (16-char, not login password) |
-| `NOTIFY_EMAILS` | — | Comma-separated recipient emails |
-
-**Gmail App Password:** Google Account → Security → 2-Step Verification → App passwords → create one named "quotes-bot" → copy the 16-char code.
+| `GEMINI_TEXT_MODEL` | `gemini-3-flash-preview` | Primary text model |
+| `GEMINI_TEXT_MODEL_FALLBACK` | `gemini-2.5-flash` | Used when the primary fails |
+| `GEMINI_IMAGE_MODEL` | `imagen-4.0-fast-generate-001` | Gemini image model |
+| `GEMINI_IMAGE_MODEL_FALLBACK` | `gemini-3.1-flash-image-preview` | Free-tier image fallback |
 
 ---
 
