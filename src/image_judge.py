@@ -56,6 +56,48 @@ Score each dimension 1-10 (be honest and strict):
    artwork — hashtags (#), at-signs, code fragments, pseudo-code, URLs, numbers, equations,
    letters, words, or decorative glyphs/runes/strokes that read as written characters.
    This is separate from the overlay quote text — only judge what is painted INTO the image.
+   DEDUCT -4 for: clear anatomy / structural impossibility in a single subject — see
+   the ANATOMY CHECK below.
+
+ANATOMY / STRUCTURE CHECK (catch AI-fusion errors, but don't overreach):
+Before scoring, pause and ask: could the main subject physically exist?
+Scan the image deliberately for these specific AI-generation failures:
+
+PEOPLE & ANIMALS — flag if you see:
+  - a single person/animal with a wrong NUMBER of body parts: three arms, three
+    legs, two heads, six fingers on one hand, two faces on one head
+  - limbs that belong to one person but appear attached to another, or two
+    bodies visually merged/sharing a limb
+
+VEHICLES — flag if you see:
+  - a single vehicle with TWO front ends, TWO cockpits, TWO steering wheels,
+    or two driver cabins facing opposite directions
+  - duplicate headlights/wheels/doors in impossible positions (e.g. wheels
+    visible on both ends where only one end should have them)
+  - an auto-rickshaw / tuk-tuk / car / bike whose body looks like two
+    vehicles of the same kind fused into one — this is a common AI error
+  - more wheels than the vehicle type should have (a regular auto-rickshaw
+    has 3 wheels; a car has 4 visible at most from one angle)
+
+OBJECTS — flag if you see:
+  - two animals or objects of the same kind fused at the body
+  - duplicate critical features on one object (two handles on one mug where
+    only one is expected, two spouts on one kettle)
+
+DO NOT flag any of the following — they are valid:
+  - surreal / metaphorical compositions (tree growing from a teacup, ink
+    turning into a bird, a door floating in water)
+  - multiple distinct and SEPARATE subjects in the scene — two separate
+    people, two parked cars, a group photo — as long as EACH one is
+    structurally coherent on its own
+  - stylised or exaggerated proportions that read as a deliberate art style
+    (chibi, cubist, impressionist brushwork, long-limbed fashion illustration)
+  - partial occlusion, shadows, reflections, silhouettes, motion blur
+  - abstract or symbolic imagery
+
+Rule of thumb: if a viewer would instantly say "wait, that's not possible" about
+ONE subject's own body, flag it. If the weirdness is intentional-looking art
+style or a metaphor, DO NOT flag. When genuinely in doubt, DO NOT flag.
 
 3. text_readability
    Can you clearly read every word of the quote in the overlay?
@@ -88,6 +130,17 @@ Respond ONLY with valid JSON (no markdown, no extra text):
 hashtags (#), at-signs, code, pseudo-code, URLs, numbers, equations, letters, words, or \
 decorative glyphs/runes that read as written characters. IGNORE the overlay quote text — \
 only flag characters painted INTO the image itself.>,\
+"subject_structure":"<one short sentence factually describing the main subject's physical \
+structure — no judgement yet. For a person: how many heads/arms/legs are visible. For a \
+vehicle: how many front ends, driver cabins, and total wheels are visible. For animals: \
+limb count. Example: 'one auto-rickshaw, 3 wheels, one front end, one driver cabin' or \
+'one person with 2 arms and 2 legs'.>,\
+"has_anatomy_flaw":<based on what you wrote in subject_structure, is the single main \
+subject physically possible? true ONLY for a clear physical impossibility in ONE subject \
+as described in the ANATOMY CHECK above (extra limbs on one body, a vehicle with two \
+front ends, fused bodies, wrong number of wheels for the vehicle type, etc.). False for \
+surreal/abstract/metaphorical imagery or multiple distinct separate subjects. When in \
+doubt, false.>,\
 "issues":"<main issue if any, empty string if none>",\
 "accept":<true or false>}}
 '''
@@ -145,12 +198,13 @@ def judge_image(image_bytes: bytes, quote: dict) -> dict:
             has_artifact      = any(kw in issues_lower for kw in _ARTIFACT_KEYWORDS)
             has_signature     = bool(result.get("has_signature", False))
             has_text_artifact = bool(result.get("has_text_artifact", False))
+            has_anatomy_flaw  = bool(result.get("has_anatomy_flaw", False))
 
             # Hard gates — these are absolute disqualifiers, not score-based.
             # main.py checks this to avoid the "best of N" fallback promoting
             # a hard-gate-violating image just because it has the highest score.
             result["hard_gate_failure"] = (
-                has_artifact or has_signature or has_text_artifact
+                has_artifact or has_signature or has_text_artifact or has_anatomy_flaw
             )
 
             result["accept"] = (
@@ -167,6 +221,7 @@ def judge_image(image_bytes: bytes, quote: dict) -> dict:
                 f"harmony={harmony}"
                 + ("  | ⚠ SIGNATURE DETECTED" if has_signature else "")
                 + ("  | ⚠ TEXT ARTIFACT IN IMAGE" if has_text_artifact else "")
+                + ("  | ⚠ ANATOMY FLAW" if has_anatomy_flaw else "")
                 + (f"  | {issues}" if issues else "")
             )
             return result
