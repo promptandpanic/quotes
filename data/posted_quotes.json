@@ -26,7 +26,8 @@
     "75ae5e2317b9de83",
     "40de5e70aa45ee5e",
     "b31bf6655be71be5",
-    "d873eb37538af49c"
+    "d873eb37538af49c",
+    "fab2f4a64d12bf61"
   ],
   "history": [
     {
@@ -244,7 +245,15 @@
       "theme": "latenight",
       "style": "nocturnal_aesthetic",
       "posted_at": "2026-04-24T20:01:09.716314+00:00"
+    },
+    {
+      "hash": "fab2f4a64d12bf61",
+      "text": "One day you'll realise your father started asking your opinion because he ran out of people older than him to ask.",
+      "author": "Florence Welch",
+      "theme": "latenight",
+      "style": "carousel_drawer",
+      "posted_at": "2026-04-24T20:23:33.515350+00:00"
     }
   ],
-  "last_updated": "2026-04-24T20:01:09.716329+00:00"
+  "last_updated": "2026-04-24T20:23:33.515360+00:00"
 }
