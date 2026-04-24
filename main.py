@@ -17,6 +17,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()  # loads .env for local dev; no-op in GitHub Actions (secrets injected via env)
 
+from src.carousel_composer import compose_carousel
 from src.config import THEMES
 from src.db_manager import DBManager
 from src.design_director import generate_brief
@@ -24,7 +25,7 @@ from src.github_uploader import GitHubUploader
 from src.image_composer import compose
 from src.image_generator import get_image
 from src.image_judge import judge_image
-from src.instagram_poster import build_caption, post_image, post_reel
+from src.instagram_poster import build_caption, post_carousel, post_image, post_reel
 from src.notifier import notify_failure, notify_success
 from src.quote_generator import generate_quote
 from src.video_creator import create_reel
@@ -66,11 +67,18 @@ DRY_RUN = os.environ.get("DRY_RUN", "").lower() in ("1", "true", "yes")
 def _select_theme() -> tuple[str, dict]:
     theme_key = os.environ.get("THEME", "").lower().strip()
     if theme_key and theme_key in THEMES:
+        # Explicit THEME overrides the enabled flag — supports manual/test runs.
         return theme_key, THEMES[theme_key]
 
     utc_hour = datetime.now(timezone.utc).hour
-    closest = min(THEMES.items(), key=lambda kv: abs(kv[1]["utc_hour"] - utc_hour))
-    logger.info(f"THEME not set — using closest match: {closest[0]} (UTC hour {utc_hour})")
+    # Only auto-match among enabled themes so disabled slots don't get picked
+    # when the UTC-hour is closest to their scheduled time.
+    enabled_themes = {k: v for k, v in THEMES.items() if v.get("enabled", True)}
+    if not enabled_themes:
+        enabled_themes = THEMES
+    closest = min(enabled_themes.items(),
+                  key=lambda kv: abs(kv[1]["utc_hour"] - utc_hour))
+    logger.info(f"THEME not set — using closest enabled match: {closest[0]} (UTC hour {utc_hour})")
     return closest[0], closest[1]
 
 
@@ -92,7 +100,8 @@ def _clean_output() -> None:
 
 
 def _save_locally(image_bytes: bytes, video_bytes: bytes | None,
-                  quote: dict, brief: dict, theme_key: str, caption: str) -> None:
+                  quote: dict, brief: dict, theme_key: str, caption: str,
+                  carousel_slides: list[bytes] | None = None) -> None:
     out_dir = Path("output")
     out_dir.mkdir(exist_ok=True)
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -105,6 +114,12 @@ def _save_locally(image_bytes: bytes, video_bytes: bytes | None,
         vid_path = out_dir / f"{theme_key}_{stamp}.mp4"
         vid_path.write_bytes(video_bytes)
         logger.info(f"[DRY_RUN] Video saved → {vid_path}")
+
+    if carousel_slides:
+        for i, data in enumerate(carousel_slides, 1):
+            p = out_dir / f"{theme_key}_{stamp}_slide{i}.jpg"
+            p.write_bytes(data)
+            logger.info(f"[DRY_RUN] Carousel slide {i} saved → {p}")
 
     logger.info(f"[DRY_RUN] Quote : \"{quote['text']}\"")
     ov = brief.get("overlay", {})
@@ -137,6 +152,12 @@ def run() -> bool:
     # 1. Theme
     theme_key, theme_cfg = _select_theme()
     logger.info(f"Theme: {theme_cfg['name']}  ({theme_cfg['ist_label']})")
+
+    # Skip disabled themes when fired automatically (no explicit THEME env var).
+    # Lets you keep cron-job.org triggers in place while the theme is paused.
+    if not theme_cfg.get("enabled", True) and not os.environ.get("THEME", "").strip():
+        logger.info(f"Theme '{theme_key}' is disabled (config.py) — exiting without posting.")
+        return True
 
     # 2. Load DB — only quotes within the repeat window count as "used"
     db = DBManager()
@@ -241,18 +262,33 @@ def run() -> bool:
     brief           = best["brief"]
     image_bytes_raw = best["raw"]
 
-    # 8. Animated Reel video (skipped for image-only themes)
+    # Resolve post format. Precedence: FORMAT env var > theme "format" key > "reel".
+    # Values: "reel" | "carousel" | "image".
+    post_format = (os.environ.get("FORMAT") or theme_cfg.get("format") or "reel").lower()
+    if post_format not in {"reel", "carousel", "image"}:
+        logger.warning(f"Unknown FORMAT={post_format} — defaulting to reel")
+        post_format = "reel"
+    logger.info(f"Post format: {post_format}")
+
+    # 8. Compose carousel slides (if selected) — animated Reel (if reel)
+    carousel_slides: list[bytes] | None = None
     video_bytes = None
-    if theme_cfg.get("video", True):
+    if post_format == "carousel":
+        logger.info("Composing 3-slide carousel…")
+        carousel_slides = compose_carousel(image_bytes_raw, quote, brief)
+        logger.info(f"✓ Carousel: {len(carousel_slides)} slides, "
+                    f"sizes={[len(s)//1024 for s in carousel_slides]}KB")
+    elif theme_cfg.get("video", True) and post_format == "reel":
         logger.info("Creating animated Reel…")
         video_bytes = create_reel(image_bytes_raw, quote, brief, theme=theme_key)
     else:
-        logger.info("Video skipped (image-only theme)")
+        logger.info("Video skipped (image-only theme or FORMAT=image)")
 
     # --- DRY_RUN: save locally and exit ---
     if DRY_RUN:
         caption = build_caption(quote, theme_cfg)
-        _save_locally(final_image, video_bytes, quote, brief, theme_key, caption)
+        _save_locally(final_image, video_bytes, quote, brief, theme_key, caption,
+                      carousel_slides=carousel_slides)
         _log_model_summary()
         logger.info("✅ Dry-run complete. Check output/ directory.")
         return True
@@ -261,9 +297,28 @@ def run() -> bool:
     caption = build_caption(quote, theme_cfg)
     post_id = None
 
-    # 10. Try Reel first
     uploader = GitHubUploader()
-    if video_bytes:
+
+    # 10a. Carousel path
+    if carousel_slides:
+        logger.info(f"Uploading {len(carousel_slides)} carousel slides…")
+        slide_urls: list[str] = []
+        for i, data in enumerate(carousel_slides, 1):
+            url = uploader.upload(data, filename=f"slide_{i}.jpg")
+            if not url:
+                logger.error(f"Slide {i} upload failed — aborting carousel")
+                slide_urls = []
+                break
+            slide_urls.append(url)
+        if slide_urls:
+            import time
+            time.sleep(5)  # let GitHub CDN propagate
+            logger.info("Posting carousel to Instagram…")
+            post_id = post_carousel(slide_urls, caption)
+            uploader.cleanup()
+
+    # 10b. Reel path
+    if not post_id and video_bytes:
         logger.info(f"Uploading Reel ({len(video_bytes) // 1024} KB)…")
         video_url = uploader.upload(video_bytes)
 

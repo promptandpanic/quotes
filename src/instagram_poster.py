@@ -160,6 +160,73 @@ def post_image(image_url: str, caption: str) -> str | None:
 
 
 # ---------------------------------------------------------------------------
+# Carousel post
+# ---------------------------------------------------------------------------
+
+def post_carousel(image_urls: list[str], caption: str) -> str | None:
+    """
+    Create a 2-10 slide carousel from a list of publicly accessible image URLs.
+    Creates each child container with is_carousel_item=true, then parents them
+    into a CAROUSEL container.
+    Returns post ID on success, None on failure.
+    """
+    if not (2 <= len(image_urls) <= 10):
+        logger.error(f"Carousel needs 2-10 images, got {len(image_urls)}")
+        return None
+
+    token   = _access_token()
+    user_id = _user_id()
+
+    # Create each child container
+    child_ids: list[str] = []
+    for idx, url in enumerate(image_urls):
+        logger.info(f"  Carousel child {idx+1}/{len(image_urls)}…")
+        resp = requests.post(
+            f"{GRAPH_BASE}/{user_id}/media",
+            data={
+                "image_url":        url,
+                "is_carousel_item": "true",
+                "access_token":     token,
+            },
+            timeout=30,
+        )
+        if resp.status_code != 200:
+            logger.error(f"Carousel child {idx+1} failed: {resp.status_code} {resp.text[:200]}")
+            return None
+        cid = resp.json().get("id")
+        if not cid:
+            logger.error(f"Carousel child {idx+1}: no id in response {resp.text[:200]}")
+            return None
+        child_ids.append(cid)
+
+    # Create the parent carousel container
+    logger.info("  Creating carousel parent container…")
+    parent_payload = {
+        "media_type":   "CAROUSEL",
+        "children":     ",".join(child_ids),
+        "caption":      caption,
+        "location_id":  _LOCATION_ID,
+        "access_token": token,
+    }
+    resp = requests.post(f"{GRAPH_BASE}/{user_id}/media", data=parent_payload, timeout=30)
+    if resp.status_code != 200 and "location_id" in parent_payload:
+        logger.warning(f"Carousel parent failed with location — retrying without: {resp.text[:200]}")
+        parent_payload.pop("location_id")
+        resp = requests.post(f"{GRAPH_BASE}/{user_id}/media", data=parent_payload, timeout=30)
+    if resp.status_code != 200:
+        logger.error(f"Carousel parent failed: {resp.status_code} {resp.text[:300]}")
+        return None
+
+    container_id = resp.json().get("id")
+    logger.info(f"Carousel container: {container_id}. Polling…")
+
+    if not _poll_media_status(container_id):
+        return None
+
+    return _publish(container_id)
+
+
+# ---------------------------------------------------------------------------
 # Caption builder
 # ---------------------------------------------------------------------------
 
@@ -180,18 +247,20 @@ Write a short, warm caption (2-3 lines max) that:
 - Ends with a soft call-to-action (e.g. "Save this for the days you need it.")
 - Feels human — not corporate, not preachy
 
-Then pick exactly 18 additional hashtags for maximum Indian Reels reach. \
-Mix these four types — do NOT include any branding or page-name tags:
-1. Indian Reels discovery (4 tags): e.g. #ReelsIndia #IndianReels #ReelItFeelIt #IndiaReels
-2. Emotion/feeling (6 tags): what someone in India searches RIGHT AFTER feeling what this quote expresses — specific, mid-size (500K–10M posts)
-3. Topic/theme (5 tags): the subject matter — relationships, self-growth, healing, etc.
-4. Niche community (3 tags): smaller targeted communities (100K–1M posts) for deep reach
+Then pick exactly 4 additional hashtags for deep Indian-audience reach. \
+Meta's current algorithm prefers a small set of HIGHLY RELEVANT tags over \
+large bundles — pick precision over volume. Mix these types:
+1. One Indian Reels discovery tag (e.g. #ReelsIndia or #IndianReels — pick ONE, not both)
+2. Two emotion / feeling tags — what an Indian 18-35 would search right after \
+   feeling what this quote expresses. Specific, mid-size (500K–10M posts).
+3. One niche community tag — smaller targeted community (100K–1M posts) for deep reach
 
 Must not duplicate or semantically overlap the anchor tags above. \
-No generic mega-tags (#love #life #india #quotes #motivation alone).
+No generic mega-tags (#love #life #india #quotes #motivation).
+No branding or page-name tags.
 
 Return ONLY valid JSON:
-{{"hook": "<2-3 line caption>", "hashtags": ["tag1", "tag2", "...18 total"]}}
+{{"hook": "<2-3 line caption>", "hashtags": ["tag1", "tag2", "tag3", "tag4"]}}
 """
 
 
@@ -220,10 +289,12 @@ def build_caption(quote: dict, theme_cfg: dict) -> str:
         if m:
             data = json.loads(m.group())
             hook = data.get("hook", "").strip()
-            dynamic_tags = [f"#{t.lstrip('#')}" for t in data.get("hashtags", [])[:18]]
+            dynamic_tags = [f"#{t.lstrip('#')}" for t in data.get("hashtags", [])[:4]]
+            # De-dupe case-insensitively against anchor tags before combining
+            seen = {t.lower() for t in anchor_tags}
+            dynamic_tags = [t for t in dynamic_tags if t.lower() not in seen]
             all_tags = anchor_tags + dynamic_tags
-            # Instagram cap: 30 hashtags
-            all_tags = all_tags[:30]
+            all_tags = all_tags[:7]   # cap to 7 total — Meta prefers small focused sets
             hashtag_str = " ".join(all_tags)
             caption = (
                 f'"{text}"\n'

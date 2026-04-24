@@ -26,76 +26,70 @@ IST = timezone(timedelta(hours=5, minutes=30))
 #   01:30 AM IST = 20:00 UTC  →  utc_hour=19
 
 THEMES = {
+    # Engagement-first lineup: 3 daily slots (down from 7) so per-post
+    # engagement rate isn't split across too many posts — this is what
+    # Meta's ranker weights most for pushing reach. Flip `enabled` to
+    # True on the others to re-activate them; also re-enable the matching
+    # cron-job.org trigger.
+    # Default post format per theme: "reel" | "carousel" | "image".
     "morning": {
         "name":      "Morning Motivation",
         "utc_hour":  1,
         "ist_label": "07:00 AM IST",
-        "hashtags": [
-            "#MorningMotivation", "#GoodMorningIndia", "#DailyMotivation",
-            "#Motivation", "#GrowthMindset", "#PositiveVibes",
-            "#IndianYouth", "#MorningVibes", "#Inspiration", "#SelfImprovement",
-        ],
+        "enabled":   True,
+        "format":    "reel",
+        # Anchor tags trimmed to 3 — Meta's recent guidance prefers 3-8 highly
+        # relevant tags over 30-tag walls, which are now penalised as spammy.
+        "hashtags": ["#MorningMotivation", "#IndianYouth", "#DailyMotivation"],
     },
     "wisdom": {
         "name":      "Life Wisdom",
         "utc_hour":  6,
         "ist_label": "12:00 PM IST",
-        "hashtags": [
-            "#Wisdom", "#LifeQuotes", "#IndianWisdom",
-            "#DeepThoughts", "#QuoteOfTheDay", "#DailyWisdom",
-            "#LifeLesson", "#ThinkDeep", "#IndianYouth", "#InspirationDaily",
-        ],
+        "enabled":   False,
+        "format":    "carousel",
+        "hashtags": ["#LifeQuotes", "#IndianYouth", "#DailyWisdom"],
     },
     "love": {
         "name":      "Love & Relationships",
         "utc_hour":  9,
         "ist_label": "03:00 PM IST",
-        "hashtags": [
-            "#LoveQuotes", "#Relationships", "#IndianLove",
-            "#HeartQuotes", "#RelationshipQuotes", "#LoveAndLife",
-            "#CoupleGoals", "#DesiLove", "#LoveVibes", "#HeartfeltQuotes",
-        ],
+        "enabled":   False,
+        "format":    "reel",
+        "hashtags": ["#LoveQuotes", "#Relationships", "#DesiLove"],
     },
     "mindfulness": {
         "name":      "Mindfulness & Inner Peace",
         "utc_hour":  12,
         "ist_label": "06:00 PM IST",
-        "hashtags": [
-            "#Mindfulness", "#InnerPeace", "#MentalHealthIndia",
-            "#SelfCare", "#Meditation", "#SelfLove",
-            "#MindfulLiving", "#InnerHealing", "#WellnessIndia", "#MentalHealth",
-        ],
+        "enabled":   False,
+        "format":    "carousel",
+        "hashtags": ["#Mindfulness", "#MentalHealthIndia", "#InnerPeace"],
     },
     "goodnight": {
         "name":      "Goodnight & Gratitude",
         "utc_hour":  15,
         "ist_label": "09:00 PM IST",
-        "hashtags": [
-            "#GoodNightIndia", "#GoodNight", "#NightVibes",
-            "#Gratitude", "#NightThoughts", "#GoodNightQuotes",
-            "#SleepWell", "#GratitudeDaily", "#NightOwl", "#Bedtime",
-        ],
+        "enabled":   False,
+        "format":    "reel",
+        "hashtags": ["#GoodNightIndia", "#NightThoughts", "#Gratitude"],
     },
     "latenight": {
         "name":      "Late Night Feels",
         "utc_hour":  19,
         "ist_label": "01:30 AM IST",
-        "hashtags": [
-            "#LateNightThoughts", "#MidnightThoughts", "#Overthinking",
-            "#3amThoughts", "#LateNightFeels", "#NightThoughts",
-            "#DeepThoughts", "#MidnightVibes", "#InsomniaThoughts", "#LateNight",
-        ],
+        "enabled":   True,
+        "format":    "reel",
+        "hashtags": ["#LateNightThoughts", "#3amThoughts", "#Overthinking"],
     },
     "womenpower": {
         "name":      "She Feels",
         "utc_hour":  4,
         "ist_label": "10:00 AM IST",
+        "enabled":   True,
+        "format":    "carousel",
         "tts":       False,  # background music only — no voice narration
-        "hashtags": [
-            "#WomenOfIndia", "#IndianWomen", "#GirlsWhoFeel",
-            "#Womanhood", "#SheFeels", "#WomenQuotes",
-            "#FeminineEnergy", "#GirlsTalk", "#Women", "#SheFelt",
-        ],
+        "hashtags": ["#SheFeels", "#IndianWomen", "#Womanhood"],
     },
 }
 

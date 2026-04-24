@@ -23,12 +23,16 @@ from src.config import (
     REEL_DURATION_SEC,
     TTS_MUSIC_VOLUME,
 )
-from src.image_composer import compose_base, compose_partial, get_reveal_counts
+from src.image_composer import compose, compose_base, compose_partial, get_reveal_counts
 
 logger = logging.getLogger(__name__)
 
 FPS            = 25
-INTRO_SEC      = 2.0    # background-only intro
+# INTRO_SEC is the silent background-only buffer before the quote appears.
+# Set to 0 so frame 0 already shows the full composed quote — critical for
+# Instagram because it drives both the auto-picked cover and the decision
+# viewers make in the first second of watching.
+INTRO_SEC      = 0.0
 TYPING_DUR     = 1.2    # total time for text to appear (line by line)
 XFADE_TYPING   = 0.35   # crossfade between typing steps — smooth dissolve
 FADE_DUR_SEC   = 2.0    # quote → base xfade at end
@@ -196,28 +200,38 @@ def _create_reel_fade(image_bytes: bytes, quote: dict, brief: dict, theme: str =
     # Clamp so per_step always exceeds XFADE_TYPING — prevents broken ffmpeg filter graph
     per_step = max(XFADE_TYPING + 0.05, TYPING_DUR / n_steps)
 
-    # Hold time so total output = REEL_DURATION_SEC
-    # output_dur = sum(durs) - sum(cfs)
-    # cfs = [XFADE_TYPING]*(n_steps) + [FADE_DUR_SEC]
-    # The FADE_DUR_SEC cf cancels with BASE_HOLD_SEC in sum(durs)
-    text_hold = (total - INTRO_SEC
-                 - n_steps * (per_step - XFADE_TYPING)
-                 - FADE_DUR_SEC - BASE_HOLD_SEC)
-
     base_pil = compose_base(image_bytes, brief)
 
-    # Build frame list: base → line steps → base_end
-    frames_and_durs: list[tuple[Image.Image, float]] = [(base_pil, INTRO_SEC)]
-    for i, count in enumerate(counts):
-        fb  = compose_partial(image_bytes, quote, brief, n_lines=count)
-        pil = Image.open(io.BytesIO(fb)).convert("RGB")
-        dur = per_step if i < n_steps - 1 else per_step + text_hold
-        frames_and_durs.append((pil, dur))
-    frames_and_durs.append((base_pil, FADE_DUR_SEC + BASE_HOLD_SEC))
+    # Engagement-first: when INTRO_SEC == 0 we skip the typing reveal and
+    # show the fully-composed quote from frame 0. This way the Reel's first
+    # frame (also the Explore cover) already contains the quote — viewers
+    # can decide to stop scrolling in the first second.
+    if INTRO_SEC <= 0.01:
+        full_fb  = compose(image_bytes, quote, brief)
+        full_pil = Image.open(io.BytesIO(full_fb)).convert("RGB")
+        hold_dur = total - FADE_DUR_SEC - BASE_HOLD_SEC
+        frames_and_durs: list[tuple[Image.Image, float]] = [
+            (full_pil, hold_dur + FADE_DUR_SEC),      # +FADE because xfade into base consumes it
+            (base_pil, FADE_DUR_SEC + BASE_HOLD_SEC),
+        ]
+        cfs = [FADE_DUR_SEC]
+    else:
+        # Legacy typing-reveal path — kept in case INTRO_SEC is ever reintroduced.
+        # output_dur = sum(durs) - sum(cfs)
+        text_hold = (total - INTRO_SEC
+                     - n_steps * (per_step - XFADE_TYPING)
+                     - FADE_DUR_SEC - BASE_HOLD_SEC)
+        frames_and_durs = [(base_pil, INTRO_SEC)]
+        for i, count in enumerate(counts):
+            fb  = compose_partial(image_bytes, quote, brief, n_lines=count)
+            pil = Image.open(io.BytesIO(fb)).convert("RGB")
+            dur = per_step if i < n_steps - 1 else per_step + text_hold
+            frames_and_durs.append((pil, dur))
+        frames_and_durs.append((base_pil, FADE_DUR_SEC + BASE_HOLD_SEC))
+        cfs = [XFADE_TYPING] * (len(frames_and_durs) - 2) + [FADE_DUR_SEC]
 
     N    = len(frames_and_durs)
     durs = [d for _, d in frames_and_durs]
-    cfs  = [XFADE_TYPING] * (N - 2) + [FADE_DUR_SEC]
 
     total_frames     = int(total * FPS)
     fade_starts_at   = total - FADE_DUR_SEC          # t=13.0
@@ -320,9 +334,13 @@ def _create_reel_fade(image_bytes: bytes, quote: dict, brief: dict, theme: str =
                 "-t", str(total), out_p]
 
         has_any_audio = has_audio or bool(tts_bytes)
+        if INTRO_SEC <= 0.01:
+            mode_label = f"quote@t=0 → hold → fade@{fade_starts_at:.1f}s → handle"
+        else:
+            mode_label = (f"{INTRO_SEC}s base → {n_steps}-step typing → "
+                          f"hold → fade@{fade_starts_at:.1f}s → handle")
         logger.info(
-            f"Reel: {total}s | {INTRO_SEC}s base → {n_steps}-step typing → "
-            f"hold → fade@{fade_starts_at:.1f}s → handle zoom | "
+            f"Reel: {total}s | {mode_label} | "
             f"music={'yes' if has_audio else 'no'}  tts={'yes' if tts_bytes else 'no'}"
         )
         return _run_ffmpeg(cmd, out_p, total, has_any_audio)
