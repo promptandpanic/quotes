@@ -22,7 +22,7 @@ import re
 logger = logging.getLogger(__name__)
 
 _MIN_READABILITY = 5   # hard gate — illegible text always rejects
-_MIN_SCORE       = 6   # minimum weighted score to accept
+_MIN_SCORE       = 7   # minimum weighted score to accept (mediocre images get retried)
 
 _JUDGE_PROMPT = '''\
 You are a quality reviewer for @_daily_dose_of_wisdom__, \
@@ -146,12 +146,17 @@ def judge_image(image_bytes: bytes, quote: dict) -> dict:
             has_signature     = bool(result.get("has_signature", False))
             has_text_artifact = bool(result.get("has_text_artifact", False))
 
+            # Hard gates — these are absolute disqualifiers, not score-based.
+            # main.py checks this to avoid the "best of N" fallback promoting
+            # a hard-gate-violating image just because it has the highest score.
+            result["hard_gate_failure"] = (
+                has_artifact or has_signature or has_text_artifact
+            )
+
             result["accept"] = (
                 weighted >= _MIN_SCORE
                 and readability >= _MIN_READABILITY
-                and not has_artifact
-                and not has_signature
-                and not has_text_artifact
+                and not result["hard_gate_failure"]
             )
 
             issues = result.get("issues", "")
@@ -169,4 +174,4 @@ def judge_image(image_bytes: bytes, quote: dict) -> dict:
     except Exception as exc:
         logger.warning(f"Judge failed: {exc} — accepting by default")
 
-    return {"score": 8, "issues": "", "accept": True}
+    return {"score": 8, "issues": "", "accept": True, "hard_gate_failure": False}

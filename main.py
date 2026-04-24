@@ -160,7 +160,7 @@ def run() -> bool:
     logger.info(f"Quote [{src}]: \"{quote['text'][:80]}…\"  — {author}")
 
     # 5–7. Creative direction → image generation → compose → judge (up to 2 attempts)
-    best: dict | None = None  # {"image": bytes, "brief": dict, "raw": bytes, "score": int}
+    best: dict | None = None  # {"image": bytes, "brief": dict, "raw": bytes, "score": int, "hard_gate_failure": bool, "accepted": bool}
 
     for attempt in range(1, MAX_DESIGN_ATTEMPTS + 1):
         logger.info(f"Design attempt {attempt}/{MAX_DESIGN_ATTEMPTS}…")
@@ -179,13 +179,23 @@ def run() -> bool:
 
         logger.info("Judging image quality…")
         verdict = judge_image(final_image, quote)
-        score   = verdict.get("score", 0)
+        score    = verdict.get("score", 0)
+        accepted = verdict.get("accept", False)
+        hard_gate = verdict.get("hard_gate_failure", False)
 
-        if best is None or score > best["score"]:
-            best = {"image": final_image, "brief": brief,
-                    "raw": image_bytes_raw, "score": score}
+        candidate = {"image": final_image, "brief": brief, "raw": image_bytes_raw,
+                     "score": score, "hard_gate_failure": hard_gate, "accepted": accepted}
 
-        if verdict.get("accept"):
+        # "Best" preference: any non-hard-gate image beats any hard-gate image,
+        # regardless of score. Within the same hard-gate category, higher score wins.
+        if best is None:
+            best = candidate
+        elif best["hard_gate_failure"] and not hard_gate:
+            best = candidate
+        elif best["hard_gate_failure"] == hard_gate and score > best["score"]:
+            best = candidate
+
+        if accepted:
             logger.info(f"  ✓ Accepted (score {score}/10)")
             break
         logger.warning(
@@ -193,6 +203,17 @@ def run() -> bool:
             + (f": {verdict['issues']}" if verdict.get("issues") else "")
             + (" — retrying" if attempt < MAX_DESIGN_ATTEMPTS else " — using best result")
         )
+
+    # Enforce hard gate across retries: if every attempt violated a hard gate
+    # (signature, text artifact, corrupted text), never publish one of those —
+    # substitute the theme's static image or a gradient instead.
+    if best is not None and not best.get("accepted") and best.get("hard_gate_failure"):
+        logger.warning("All attempts failed hard gates — substituting static theme image")
+        from src.image_generator import _static_image, _gradient_fallback
+        static_raw = _static_image(theme_key) or _gradient_fallback(theme_key)
+        static_image = compose(static_raw, quote, best["brief"])
+        best = {"image": static_image, "brief": best["brief"], "raw": static_raw,
+                "score": best["score"], "hard_gate_failure": False, "accepted": True}
 
     if best is None:
         # Emergency fallback: gradient background + default brief, always posts
@@ -213,7 +234,8 @@ def run() -> bool:
         fallback_brief.setdefault("overlay", {"type": "gradient_bottom", "opacity": 180, "color": "#000000"})
         fallback_image = compose(fallback_raw, quote, fallback_brief)
         best = {"image": fallback_image, "brief": fallback_brief,
-                "raw": fallback_raw, "score": 0}
+                "raw": fallback_raw, "score": 0,
+                "hard_gate_failure": False, "accepted": True}
 
     final_image     = best["image"]
     brief           = best["brief"]
