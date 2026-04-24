@@ -23,7 +23,8 @@
     "33c9b36f2a6a5244",
     "088d1f8a7eafd7a7",
     "136cb22287e426ca",
-    "75ae5e2317b9de83"
+    "75ae5e2317b9de83",
+    "40de5e70aa45ee5e"
   ],
   "history": [
     {
@@ -217,7 +218,15 @@
       "theme": "goodnight",
       "style": "ghibli_anime",
       "posted_at": "2026-04-24T17:01:18.858238+00:00"
+    },
+    {
+      "hash": "40de5e70aa45ee5e",
+      "text": "The hardest part isn't watching them leave. It's the drawer you still won't empty.",
+      "author": "Original",
+      "theme": "latenight",
+      "style": "carousel_drawer",
+      "posted_at": "2026-04-24T19:07:41.615922+00:00"
     }
   ],
-  "last_updated": "2026-04-24T17:01:18.858252+00:00"
+  "last_updated": "2026-04-24T19:07:41.615932+00:00"
 }
