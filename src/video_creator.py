@@ -116,9 +116,28 @@ def _zoompan_at(total_frames: int, start_frame: int) -> str:
 # Handle zoom animation frames (PIL)
 # ---------------------------------------------------------------------------
 
-def _render_handle_zoom_frames(handle_dir: Path, n_frames: int) -> None:
-    """Write n_frames PNGs of Follow+handle scaling from 25% to 100%."""
+def _sample_bg_luminance(base_pil: Image.Image) -> int:
+    """Mean luminance (0-255) of the vertical centre band where the handle sits."""
+    W, H = base_pil.size
+    band = base_pil.crop((0, int(H * 0.38), W, int(H * 0.62))).convert("L")
+    px = band.resize((32, 16)).getdata()
+    return sum(px) // len(px)
+
+
+def _render_handle_zoom_frames(handle_dir: Path, n_frames: int,
+                               base_pil: Image.Image) -> None:
+    """Write n_frames PNGs of Follow+handle scaling from 25% to 100%.
+    Text colour and stroke adapt to the base image's luminance in the
+    handle band so the end card stays legible on any background."""
     W, H = IMAGE_WIDTH, IMAGE_HEIGHT
+
+    # Light bg → dark text + light stroke; dark bg → white text + dark stroke.
+    lum = _sample_bg_luminance(base_pil)
+    if lum > 140:
+        text_rgb, stroke_rgb = (25, 25, 25), (255, 255, 255)
+    else:
+        text_rgb, stroke_rgb = (255, 255, 255), (0, 0, 0)
+
     for i in range(n_frames):
         t     = i / max(n_frames - 1, 1)
         ease  = 1 - (1 - t) ** 3          # cubic ease-out
@@ -148,8 +167,15 @@ def _render_handle_zoom_frames(handle_dir: Path, n_frames: int) -> None:
         tot_h = fh_h + gap + hh
         top_y = (H - tot_h) // 2
 
-        draw.text(((W - fw) // 2, top_y),           ftxt,   font=ff, fill=(200, 200, 200, alpha))
-        draw.text(((W - hw) // 2, top_y + fh_h + gap), HANDLE, font=fh, fill=(255, 255, 255, alpha))
+        sw_f   = max(1, int(3 * scale))
+        sw_h   = max(1, int(4 * scale))
+        fill_t = (*text_rgb, alpha)
+        fill_s = (*stroke_rgb, alpha)
+
+        draw.text(((W - fw) // 2, top_y), ftxt, font=ff,
+                  fill=fill_t, stroke_width=sw_f, stroke_fill=fill_s)
+        draw.text(((W - hw) // 2, top_y + fh_h + gap), HANDLE, font=fh,
+                  fill=fill_t, stroke_width=sw_h, stroke_fill=fill_s)
 
         img.save(handle_dir / f"h{i:03d}.png")
 
@@ -213,7 +239,7 @@ def _create_reel_fade(image_bytes: bytes, quote: dict, brief: dict, theme: str =
         # Render handle zoom PNG sequence
         handle_dir = tmpdir / "handle"
         handle_dir.mkdir()
-        _render_handle_zoom_frames(handle_dir, n_handle_frames)
+        _render_handle_zoom_frames(handle_dir, n_handle_frames, base_pil)
 
         out_p = str(tmpdir / "reel.mp4")
 
