@@ -35,7 +35,8 @@
     "38a698cfa5fd20c5",
     "b02f427ca53442c7",
     "4edaced7ccf540e3",
-    "1e51cdeb6bc717e2"
+    "1e51cdeb6bc717e2",
+    "f34744b1cf70d2ec"
   ],
   "history": [
     {
@@ -325,7 +326,15 @@
       "theme": "mindfulness",
       "style": "nocturnal_aesthetic",
       "posted_at": "2026-04-26T16:22:11.706736+00:00"
+    },
+    {
+      "hash": "f34744b1cf70d2ec",
+      "text": "The hardest part isn’t being unemployed. It’s the way your mother lowers the TV volume the moment you walk in with your ",
+      "author": "Original",
+      "theme": "latenight",
+      "style": "nocturnal_aesthetic",
+      "posted_at": "2026-04-26T20:03:32.394124+00:00"
     }
   ],
-  "last_updated": "2026-04-26T16:22:11.706751+00:00"
+  "last_updated": "2026-04-26T20:03:32.394136+00:00"
 }
