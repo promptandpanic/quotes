@@ -26,12 +26,10 @@ IST = timezone(timedelta(hours=5, minutes=30))
 #   01:30 AM IST = 20:00 UTC  →  utc_hour=19
 
 THEMES = {
-    # Engagement-first lineup: 3 daily slots (down from 7) so per-post
-    # engagement rate isn't split across too many posts — this is what
-    # Meta's ranker weights most for pushing reach. Flip `enabled` to
-    # True on the others to re-activate them; also re-enable the matching
-    # cron-job.org trigger.
-    # Default post format per theme: "reel" | "carousel" | "image".
+    # Live engagement data (2026-04-26): Reels reach 200+ views, carousels
+    # 10-15 — so default to Reel format for every theme. The carousel
+    # composer is still wired up; flip `format` to "carousel" once the
+    # account has follower-base big enough for feed reach to matter.
     "morning": {
         "name":      "Morning Motivation",
         "utc_hour":  1,
@@ -46,15 +44,15 @@ THEMES = {
         "name":      "Life Wisdom",
         "utc_hour":  6,
         "ist_label": "12:00 PM IST",
-        "enabled":   False,
-        "format":    "carousel",
+        "enabled":   True,
+        "format":    "reel",
         "hashtags": ["#LifeQuotes", "#IndianYouth", "#DailyWisdom"],
     },
     "love": {
         "name":      "Love & Relationships",
         "utc_hour":  9,
         "ist_label": "03:00 PM IST",
-        "enabled":   False,
+        "enabled":   True,
         "format":    "reel",
         "hashtags": ["#LoveQuotes", "#Relationships", "#DesiLove"],
     },
@@ -62,15 +60,15 @@ THEMES = {
         "name":      "Mindfulness & Inner Peace",
         "utc_hour":  12,
         "ist_label": "06:00 PM IST",
-        "enabled":   False,
-        "format":    "carousel",
+        "enabled":   True,
+        "format":    "reel",
         "hashtags": ["#Mindfulness", "#MentalHealthIndia", "#InnerPeace"],
     },
     "goodnight": {
         "name":      "Goodnight & Gratitude",
         "utc_hour":  15,
         "ist_label": "09:00 PM IST",
-        "enabled":   False,
+        "enabled":   True,
         "format":    "reel",
         "hashtags": ["#GoodNightIndia", "#NightThoughts", "#Gratitude"],
     },
@@ -87,7 +85,7 @@ THEMES = {
         "utc_hour":  4,
         "ist_label": "10:00 AM IST",
         "enabled":   True,
-        "format":    "carousel",
+        "format":    "reel",
         "tts":       False,  # background music only — no voice narration
         "hashtags": ["#SheFeels", "#IndianWomen", "#Womanhood"],
     },
