@@ -24,7 +24,8 @@ import yaml
 
 logger = logging.getLogger(__name__)
 
-MAX_ATTEMPTS       = 3   # up from 2 — pay a bit more so bar-raising sticks
+MAX_ATTEMPTS       = 2   # 5 candidates per call — usually enough on attempt 1
+N_CANDIDATES       = 5   # bigger pool to give the judge a real choice
 IMAGE_JUDGE_MAX    = 3   # kept in image_judge.py — noted here for clarity
 MIN_QUALITY_SCORE  = 7
 MIN_UNIQUENESS     = 7   # raised from 6 — higher bar to clear on repeat/clichéd content
@@ -182,7 +183,7 @@ def _build_real_prompt(category: str, max_words: int, topic_block: str) -> str:
 You are finding and evaluating real quotes for @_daily_dose_of_wisdom__, \
 an Indian Instagram page for emotionally intelligent youth aged 18-35.
 
-Find 3 DIFFERENT real quotes — each actually written or spoken by a known person. \
+Find {N_CANDIDATES} DIFFERENT real quotes — each actually written or spoken by a known person. \
 Prefer filmmakers, musicians, comedians, athletes, novelists, or contemporary thinkers \
 over the usual Rumi / Stoics / Einstein pool — those are overexposed. A sharp line from \
 a film, a lyric that works standalone, or a line from a novelist almost nobody quotes are all valid.
@@ -198,17 +199,17 @@ Rules for each quote:
 - Must feel RARE — not one of the top 1000 most quoted lines on the internet
 - No clichés: {cliches}
 - Short is fine — a complete 6-word quote beats a padded 20-word one
-- All 3 must be from different authors and different emotional angles
+- All {N_CANDIDATES} must be from different authors and different emotional angles
 
 Score each on 4 dimensions (1-10): virality, engagement, uniqueness (1-4 if widely circulated), freshness.
-Hard rule: uniqueness < 7 → reject. Generic self-help → reject.
 
-Then pick the single best-scoring quote and return ONLY that one as JSON — no markdown, no explanation:
-{{"quote":"PLAIN TEXT ONLY — the exact words, nothing else. No quotation marks (\", ", "), \
-no attribution suffix (no '- Author', '— Author'), no leading/trailing punctuation added by you. \
-Just the raw words as spoken/written.","author":"Full Name","score":<avg 1-10>,\
-"virality":<1-10>,"engagement":<1-10>,"uniqueness":<1-10>,"freshness":<1-10>,\
-"reason":"<one sentence>","accept":<true if score>=7 AND uniqueness>=6, else false>}}
+DO NOT pre-pick the best — return ALL {N_CANDIDATES} so the judge can choose.
+Return ONLY a valid JSON array — no markdown, no explanation:
+[
+  {{"quote":"PLAIN TEXT ONLY — the exact words. No quotation marks. No attribution suffix.","author":"Full Name",\
+"virality":<1-10>,"engagement":<1-10>,"uniqueness":<1-10>,"freshness":<1-10>,"reason":"<one short sentence>"}},
+  ... {N_CANDIDATES} items total
+]
 """
 
 
@@ -229,7 +230,7 @@ they felt seen. Not profound philosophy. Not a motivational poster. Just one tru
 
 {examples}
 
-Write 3 DIFFERENT candidates. Each should feel like:
+Write {N_CANDIDATES} DIFFERENT candidates. Each should feel like:
 - Something a real person said, not a writer performing wisdom
 - The kind of line you text a friend and they reply "damn"
 - Simple enough that the visual does half the work — short is often better
@@ -248,18 +249,18 @@ Rules for each:
 - Maximum {max_words} words. Short quotes (4-8 words) are especially welcome.
 - Concrete over abstract — one precise feeling, not a life philosophy
 - No clichés: {cliches}
-- All 3 must explore different feelings or angles
+- All {N_CANDIDATES} must explore different feelings or angles
 - Author field must be "Original"
 
 Score each on 4 dimensions (1-10): virality, engagement, uniqueness, freshness.
-Hard rule: uniqueness < 7 → reject. Generic self-help → reject.
-Specificity rule: if the quote has no concrete noun from the reader's real life
-(mom, car, bathroom, text, phone, Monday, school bag, morning, etc.) → reject.
 
-Then pick the single best-scoring quote and return ONLY that one as JSON — no markdown, no explanation:
-{{"quote":"PLAIN TEXT ONLY — no quotation marks, no attribution, just the words.","author":"Original","score":<avg 1-10>,\
-"virality":<1-10>,"engagement":<1-10>,"uniqueness":<1-10>,"freshness":<1-10>,\
-"reason":"<one sentence>","accept":<true if score>=7 AND uniqueness>=6, else false>}}
+DO NOT pre-pick the best — return ALL {N_CANDIDATES} so the judge can choose.
+Return ONLY a valid JSON array — no markdown, no explanation:
+[
+  {{"quote":"PLAIN TEXT ONLY — no quotation marks, no attribution, just the words.","author":"Original",\
+"virality":<1-10>,"engagement":<1-10>,"uniqueness":<1-10>,"freshness":<1-10>,"reason":"<one short sentence>"}},
+  ... {N_CANDIDATES} items total
+]
 """
 
 
@@ -272,7 +273,7 @@ def _build_llm_prompt(category: str, max_words: int, topic_block: str) -> str:
 You are writing original quotes for @_daily_dose_of_wisdom__, \
 an Indian Instagram page for emotionally intelligent youth aged 18-35.
 
-Write 3 DIFFERENT original quotes. Each should feel like something a thoughtful person \
+Write {N_CANDIDATES} DIFFERENT original quotes. Each should feel like something a thoughtful person \
 said once and never repeated — not assembled from parts of other quotes. Specific and earned, not performed.
 
 {topic_block}
@@ -296,17 +297,17 @@ Rules for each:
 - Must resonate with an Indian aged 18-30 at a gut level
 - No Pinterest-assembled philosophy — warm simple lines are fine if they're genuinely fresh
 - No clichés: {cliches}
-- All 3 must be emotionally distinct from each other
+- All {N_CANDIDATES} must be emotionally distinct from each other
 
 Score each on 4 dimensions (1-10): virality, engagement, uniqueness, freshness.
-Hard rule: uniqueness < 7 → reject. Generic self-help → reject.
-Specificity rule: if the quote has no concrete noun from the reader's real life
-(mom, car, bathroom, text, phone, Monday, school bag, morning, etc.) → reject.
 
-Then pick the single best-scoring quote and return ONLY that one as JSON — no markdown, no explanation:
-{{"quote":"PLAIN TEXT ONLY — no quotation marks, no attribution, just the words.","author":"Original","score":<avg 1-10>,\
-"virality":<1-10>,"engagement":<1-10>,"uniqueness":<1-10>,"freshness":<1-10>,\
-"reason":"<one sentence>","accept":<true if score>=7 AND uniqueness>=6, else false>}}
+DO NOT pre-pick the best — return ALL {N_CANDIDATES} so the judge can choose.
+Return ONLY a valid JSON array — no markdown, no explanation:
+[
+  {{"quote":"PLAIN TEXT ONLY — no quotation marks, no attribution, just the words.","author":"Original",\
+"virality":<1-10>,"engagement":<1-10>,"uniqueness":<1-10>,"freshness":<1-10>,"reason":"<one short sentence>"}},
+  ... {N_CANDIDATES} items total
+]
 """
 
 
@@ -379,6 +380,84 @@ def _parse_quote_json(raw: str) -> tuple[str, str] | None:
     return None
 
 
+def _parse_candidates_array(raw: str) -> list[dict]:
+    """Parse the JSON array of candidates returned by the generator prompts."""
+    import json
+    m = re.search(r"\[.*\]", raw, re.DOTALL)
+    if not m:
+        return []
+    try:
+        arr = json.loads(m.group())
+        return arr if isinstance(arr, list) else []
+    except Exception:
+        return []
+
+
+# ---------------------------------------------------------------------------
+# Quote judge — separate LLM pass that picks the best from N candidates.
+# Self-scored generation is too lenient on its own output; an outside
+# judge step is more rigorous.
+# ---------------------------------------------------------------------------
+
+_JUDGE_PROMPT = """\
+You are picking the SINGLE best quote to post on @_daily_dose_of_wisdom__,
+an Indian Instagram page for emotionally intelligent youth aged 18-35.
+
+Candidates:
+{numbered}
+
+Quality bar — pick the one that:
+  1. Has a specific concrete noun (object, place, relationship, scene)
+  2. Has an unexpected pivot or twist in its second half
+  3. Makes a strong claim — no hedging like "some of us", "sometimes"
+  4. Feels like an overheard confession, not performed wisdom
+  5. Would make a real Indian 18-35 say "oh that's exactly..." in 2 seconds
+
+Penalise: candidates that overuse {{chai, auto, rickshaw, beta, uncle, aunty}}
+when other candidates have richer specific anchors. The page should not feel
+like every post is about the same 3 nouns — prefer variety.
+
+Penalise: anything that sounds like Pinterest, motivation poster, or
+generic life advice. Reject performed wisdom in favour of lived truth.
+
+Return ONLY valid JSON — no markdown, no extra text:
+{{"pick": <1-based index>, "reason": "<one short sentence why this beat the others>"}}
+"""
+
+
+def _judge_candidates(candidates: list[dict]) -> dict | None:
+    """Pick the most save-worthy candidate via a separate LLM call.
+    Falls back to highest self-scored on judge failure."""
+    if not candidates:
+        return None
+    if len(candidates) == 1:
+        return candidates[0]
+
+    numbered = "\n".join(
+        f"  {i+1}. \"{c.get('text', '')}\" — {c.get('author', 'Original')}"
+        for i, c in enumerate(candidates)
+    )
+    prompt = _JUDGE_PROMPT.format(numbered=numbered)
+
+    try:
+        from src.llm import generate_text
+        raw = generate_text(prompt, role="quote_judge")
+        m = re.search(r"\{.*\}", raw, re.DOTALL)
+        if m:
+            import json as _json
+            data = _json.loads(m.group())
+            pick = int(data.get("pick", 0))
+            reason = data.get("reason", "")
+            if 1 <= pick <= len(candidates):
+                logger.info(f"  Judge picked #{pick}: {reason}")
+                return candidates[pick - 1]
+    except Exception as exc:
+        logger.warning(f"  Quote judge failed ({exc}) — falling back to highest self-score")
+
+    # Fallback: highest self-scored candidate
+    return max(candidates, key=lambda c: c.get("score", 0))
+
+
 # ---------------------------------------------------------------------------
 # Curated fallback
 # ---------------------------------------------------------------------------
@@ -425,73 +504,99 @@ def _generate_with_validation(
         base_prompt = _build_llm_prompt(theme, max_words, topic_block)
     prompt = _append_avoid_hint(base_prompt, recent_hints or [])
 
-    best: dict | None = None
+    source_name = ("gemini_real" if mode == "real_author"
+                   else "gemini_social" if mode == "social_viral"
+                   else "gemini_original")
+
+    fallback: dict | None = None  # best below-bar candidate, kept across attempts
 
     for attempt in range(1, MAX_ATTEMPTS + 1):
         logger.info(f"  Quote attempt {attempt}/{MAX_ATTEMPTS}…")
         try:
-            import json as _json
             raw = _call(prompt)
-            m = re.search(r"\{.*\}", raw, re.DOTALL)
-            if not m:
-                time.sleep(RETRY_DELAY)
-                continue
-            data = _json.loads(m.group())
-            text   = _clean_text(data.get("quote", ""))
-            author = data.get("author", "").strip()
-            if not text or not author:
+            arr = _parse_candidates_array(raw)
+            if not arr:
+                logger.info("    No JSON array returned — retrying")
                 time.sleep(RETRY_DELAY)
                 continue
 
-            wc = len(text.split())
-            if wc < 3 or wc > max_words + 5:
-                logger.info(f"    Skipped — word count {wc}")
-                time.sleep(RETRY_DELAY)
-                continue
-            if _hash(text) in posted_hashes:
-                logger.info("    Skipped — already posted")
-                time.sleep(RETRY_DELAY)
-                continue
+            # Validate each candidate, keep the ones that clear the hard gates
+            # (word count + duplication). Self-scored uniqueness is just a hint
+            # — the judge does the final pick.
+            valid: list[dict] = []
+            below_bar: list[dict] = []
+            for raw_item in arr:
+                if not isinstance(raw_item, dict):
+                    continue
+                text = _clean_text(raw_item.get("quote", ""))
+                author = (raw_item.get("author") or "").strip()
+                if not text or not author:
+                    continue
 
-            score      = int(data.get("score", 0))
-            uniqueness = int(data.get("uniqueness", 0))
-            accept     = bool(data.get("accept", False)) and uniqueness >= MIN_UNIQUENESS
+                wc = len(text.split())
+                if wc < 3 or wc > max_words + 5:
+                    continue
+                if _hash(text) in posted_hashes:
+                    continue
+
+                virality   = int(raw_item.get("virality",   0) or 0)
+                engagement = int(raw_item.get("engagement", 0) or 0)
+                uniqueness = int(raw_item.get("uniqueness", 0) or 0)
+                freshness  = int(raw_item.get("freshness",  0) or 0)
+                score = (virality + engagement + uniqueness + freshness) // 4
+
+                candidate = {
+                    "text":       text,
+                    "author":     author,
+                    "highlight":  _extract_highlight(text),
+                    "image_hint": image_hint,
+                    "score":      score,
+                    "uniqueness": uniqueness,
+                    "reason":     raw_item.get("reason", ""),
+                    "source":     source_name,
+                }
+
+                # Quality floor: uniqueness>=MIN_UNIQUENESS to be a "primary"
+                # candidate. Below-bar ones are kept only as fallback if every
+                # candidate fails the uniqueness gate.
+                if uniqueness >= MIN_UNIQUENESS:
+                    valid.append(candidate)
+                else:
+                    below_bar.append(candidate)
+
             logger.info(
-                f"    \"{text[:80]}\" — {author}"
+                f"    Got {len(arr)} candidates, "
+                f"{len(valid)} above bar, {len(below_bar)} below"
             )
-            logger.info(
-                f"    Quality: score={score}  virality={data.get('virality')}  "
-                f"engagement={data.get('engagement')}  uniqueness={uniqueness}  "
-                f"freshness={data.get('freshness')} | {data.get('reason', '')}"
-            )
+            for i, c in enumerate(valid, 1):
+                logger.info(f"      {i}. \"{c['text'][:90]}\" — {c['author']} (u={c['uniqueness']})")
 
-            candidate = {
-                "text":       text,
-                "author":     author,
-                "highlight":  _extract_highlight(text),
-                "image_hint": image_hint,
-                "score":      score,
-                "source":     "gemini_real" if mode == "real_author" else "gemini_social" if mode == "social_viral" else "gemini_original",
-            }
+            if valid:
+                pick = _judge_candidates(valid) or valid[0]
+                logger.info(f"  ✓ Accepted: \"{pick['text'][:80]}\" — {pick['author']}")
+                return pick
 
-            if accept:
-                logger.info(f"  ✓ Accepted (score {score}, uniqueness {uniqueness})")
-                return candidate
-
-            if best is None or score > best["score"]:
-                best = candidate
+            # Track the strongest below-bar candidate across attempts in case
+            # we exhaust retries.
+            if below_bar:
+                best_below = max(below_bar, key=lambda c: c.get("score", 0))
+                if fallback is None or best_below["score"] > fallback["score"]:
+                    fallback = best_below
 
         except Exception as exc:
             err = str(exc)
             if "RESOURCE_EXHAUSTED" in err or "429" in err:
-                logger.warning(f"  429 / quota exhausted — skipping Gemini entirely")
+                logger.warning(f"  429 / quota exhausted — skipping LLM entirely")
                 return None
             logger.warning(f"  Attempt {attempt} error: {exc}")
         time.sleep(RETRY_DELAY)
 
-    if best:
-        logger.warning(f"  Using best available (score {best['score']}) — quality gate not met")
-        return best
+    if fallback:
+        logger.warning(
+            f"  Using best below-bar candidate (score {fallback['score']}, "
+            f"uniqueness {fallback.get('uniqueness', '?')}) — bar not met"
+        )
+        return fallback
 
     return None
 
