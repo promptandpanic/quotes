@@ -149,10 +149,11 @@ def _leonardo(prompt: str, model_id: str | None = None) -> bytes | None:
                 "public": False,
                 "model":  model_id,
                 "parameters": {
-                    "prompt":   prompt[:1500],
-                    "quantity": 1,
-                    "width":    810,    # 810×1440 = exact 9:16, max quality
-                    "height":   1440,
+                    "prompt":         prompt[:1500],
+                    "negativePrompt": _NEGATIVE_PROMPT_KEYWORDS,
+                    "quantity":       1,
+                    "width":          810,    # 810×1440 = exact 9:16, max quality
+                    "height":         1440,
                 },
             }
         else:

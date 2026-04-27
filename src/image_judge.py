@@ -200,11 +200,15 @@ def judge_image(image_bytes: bytes, quote: dict) -> dict:
             has_text_artifact = bool(result.get("has_text_artifact", False))
             has_anatomy_flaw  = bool(result.get("has_anatomy_flaw", False))
 
-            # Hard gates — these are absolute disqualifiers, not score-based.
-            # main.py checks this to avoid the "best of N" fallback promoting
-            # a hard-gate-violating image just because it has the highest score.
+            # Signature alone is a soft fail when the image is otherwise excellent (score ≥ 8):
+            # corner signatures cost ~$0.05 to retry but rarely change between attempts, and
+            # an 8-9/10 image is better posted than thrown away. Below 8, still treat as hard.
+            signature_only = has_signature and not (has_artifact or has_text_artifact or has_anatomy_flaw)
+            soft_signature = signature_only and weighted >= 8
+
             result["hard_gate_failure"] = (
-                has_artifact or has_signature or has_text_artifact or has_anatomy_flaw
+                has_artifact or has_text_artifact or has_anatomy_flaw
+                or (has_signature and not soft_signature)
             )
 
             result["accept"] = (

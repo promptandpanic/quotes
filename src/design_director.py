@@ -257,8 +257,10 @@ bottom = subject in upper half, lower third is clear. \
 center = subject at edges, center band is clear.",
   "decoration": "rule|quote_mark|none",
   "layout": "big_center|sentence_reveal|full_card",
-  "highlight": "3-6 most emotionally powerful CONSECUTIVE words from the quote — \
-the line someone screenshots",
+  "highlight": "2-4 CONSECUTIVE words from the quote — the single most emotionally \
+powerful phrase, short enough to fit on one wrapped line. Hard cap: 4 words. Never \
+pick a phrase longer than 4 words even if it feels powerful — longer phrases get \
+split across lines and the highlight effect is lost.",
   "highlight_style": "color|italic|underline|caps|caps_italic|script",
   "skip_kenburns": false,
   "mood_note": "one sentence — the visual feeling that stops someone mid-scroll",
@@ -396,6 +398,12 @@ def generate_brief(quote: dict, theme: str, recent_styles: list[str] | None = No
     # Guarantee highlight is set
     if not brief.get("highlight"):
         brief["highlight"] = quote.get("highlight", text.split(".")[0][:40])
+
+    # Hard cap: highlight must fit on a single wrapped line. Long phrases get
+    # split by pixel_wrap and the highlight effect is lost — trim to first 4 words.
+    hi_words = str(brief["highlight"]).split()
+    if len(hi_words) > 4:
+        brief["highlight"] = " ".join(hi_words[:4])
 
     # Normalise voice_gender
     vg = str(brief.get("voice_gender", "")).lower().strip()
